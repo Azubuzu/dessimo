@@ -71,9 +71,34 @@
 
 				$creation_date = time();
 
-				$bdd->exec("INSERT INTO bien VALUES (NULL,'".$_POST['bien_nom']."','".$_POST['bien_prix']."','".$_POST['bien_piece']."','".$_POST['bien_chambre']."','".$_POST['bien_surface']."','".$_POST['bien_adresse']."','".$_POST['bien_annee']."','".$_POST['bien_desc']."','".$_POST['bien_situation']."','".$_POST['bien_particularite']."','".$_POST['bien_niveau']."','".$_POST['bien_nbre_WC']."','".$_POST['bien_nbre_niveau']."','".$_POST['bien_charges']."','".$_POST['bien_surface_terrain']."','".$_POST['bien_disponibilite']."',".$bien_favori.",'".$gmaps_data."',".$_POST['bien_type_id'].",".$_POST['bien_localite_id'].",".$_POST['bien_categorie_id'].",".$_POST['bien_agent_id'].",'".$creation_date."')");
+				$add_bien_rq = $bdd->prepare("INSERT INTO bien VALUES (NULL,:bien_nom,:bien_prix,:bien_piece,:bien_chambre,:bien_surface,:bien_adresse,:bien_annee,:bien_desc,:bien_situation,:bien_particularite,:bien_niveau,:bien_nbre_WC,:bien_nbre_niveau,:bien_charges,:bien_surface_terrain,:bien_disponibilite,:bien_favori,:bien_gmaps,:bien_type_id,:bien_localite_id,:bien_categorie_id,:bien_agent_id,:bien_creation_date)");
 
-				echo"INSERT INTO bien VALUES (NULL,'".$_POST['bien_nom']."','".$_POST['bien_prix']."','".$_POST['bien_piece']."','".$_POST['bien_chambre']."','".$_POST['bien_surface']."','".$_POST['bien_adresse']."','".$_POST['bien_annee']."','".$_POST['bien_desc']."','".$_POST['bien_situation']."','".$_POST['bien_particularite']."','".$_POST['bien_niveau']."','".$_POST['bien_nbre_WC']."','".$_POST['bien_nbre_niveau']."','".$_POST['bien_charges']."','".$_POST['bien_surface_terrain']."','".$_POST['bien_disponibilite']."',".$bien_favori.",'".$gmaps_data."',".$_POST['bien_type_id'].",".$_POST['bien_localite_id'].",".$_POST['bien_categorie_id'].",".$_POST['bien_agent_id'].",'".$creation_date."')";
+				$add_bien_rq->execute(
+					array(
+						':bien_nom' => $_POST['bien_nom'], 
+						':bien_prix' => $_POST['bien_prix'],
+						':bien_piece' => $_POST['bien_piece'],
+						':bien_chambre' => $_POST['bien_chambre'],
+						':bien_surface' => $_POST['bien_surface'],
+						':bien_adresse' => $_POST['bien_adresse'],
+						':bien_annee' => $_POST['bien_annee'],
+						':bien_desc' => $_POST['bien_desc'],
+						':bien_situation' => $_POST['bien_situation'],
+						':bien_particularite' => $_POST['bien_particularite'],
+						':bien_niveau' => $_POST['bien_niveau'],
+						':bien_nbre_WC' => $_POST['bien_nbre_WC'],
+						':bien_nbre_niveau' => $_POST['bien_nbre_niveau'],
+						':bien_charges' => $_POST['bien_charges'],
+						':bien_surface_terrain' => $_POST['bien_surface_terrain'],
+						':bien_disponibilite' => $_POST['bien_disponibilite'],
+						':bien_favori' => $bien_favori,
+						':bien_gmaps' => $gmaps_data,
+						':bien_type_id' => $_POST['bien_type_id'],
+						':bien_localite_id' => $_POST['bien_localite_id'],
+						':bien_categorie_id' => $_POST['bien_categorie_id'],
+						':bien_agent_id' => $_POST['bien_agent_id'],
+						':bien_creation_date' => $creation_date,
+					));
 
 				if(isset($_FILES['pictures'])) {
 
@@ -99,7 +124,7 @@
 							if($image->upload()){
 								$bdd->exec("INSERT INTO photo(name, selected, fk_bien_ID) VALUES ('".$image->getName().".".$image->getMime()."',".$img_first.",".$last_reg[0]['ID'].")");
 							} else {
-								echo $image->getError();
+								//echo $image->getError();
 							}
 
 							$img_first = 0;
