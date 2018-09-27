@@ -53,47 +53,73 @@
 
 			if ($_GET['admin_action'] == "add_bien") {
 
-				require_once  "../vendor/bulletproof/bulletproof.php";
-				require_once  "../vendor/script/bulletproof_config.php";
-
-				if (isset($_GET['bien_favori'])) {
-					$bien_favori = $_GET['bien_favori'];
+				if (isset($_POST['bien_favori'])) {
+					$bien_favori = $_POST['bien_favori'];
 				} else {
 					$bien_favori = 0;
 				}
-				
-				$bdd->exec("INSERT INTO bien VALUES (NULL,'".$_GET['bien_nom']."','".$_GET['bien_prix']."','".$_GET['bien_piece']."','".$_GET['bien_chambre']."','".$_GET['bien_surface']."','".$_GET['bien_adresse']."','".$_GET['bien_annee']."','".$_GET['bien_desc']."','".$_GET['bien_situation']."','".$_GET['bien_particularite']."','".$_GET['bien_niveau']."','".$_GET['bien_nbre_WC']."','".$_GET['bien_nbre_niveau']."','".$_GET['bien_charges']."','".$_GET['bien_surface_terrain']."','".$_GET['bien_disponibilite']."',".$bien_favori.",'".$_GET['bien_gmaps']."',".$_GET['bien_type_id'].",".$_GET['bien_localite_id'].",".$_GET['bien_categorie_id'].",".$_GET['bien_agent_id'].",'".time()."')");
+
+				if ($_POST['bien_gmaps'] == "") {
+					$gmaps_data = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1379.766188734781!2d7.367825183637874!3d46.23964330916706!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDbCsDE0JzIyLjciTiA3wrAyMicwNy4wIkU!5e0!3m2!1sfr!2sch!4v1538052863523";
+				}
+				else {
+					$gmaps_data = getBetween($_POST['bien_gmaps'],'src="','"');
+					if ($gmaps_data == "") {
+						$gmaps_data = $_POST['bien_gmaps'];
+					}
+				}
+
+				$bdd->exec("INSERT INTO bien VALUES (NULL,'".$_POST['bien_nom']."','".$_POST['bien_prix']."','".$_POST['bien_piece']."','".$_POST['bien_chambre']."','".$_POST['bien_surface']."','".$_POST['bien_adresse']."','".$_POST['bien_annee']."','".$_POST['bien_desc']."','".$_POST['bien_situation']."','".$_POST['bien_particularite']."','".$_POST['bien_niveau']."','".$_POST['bien_nbre_WC']."','".$_POST['bien_nbre_niveau']."','".$_POST['bien_charges']."','".$_POST['bien_surface_terrain']."','".$_POST['bien_disponibilite']."',".$bien_favori.",'".$gmaps_data."',".$_POST['bien_type_id'].",".$_POST['bien_localite_id'].",".$_POST['bien_categorie_id'].",".$_POST['bien_agent_id'].",'".time()."')");
 
 				if(isset($_FILES['pictures'])) {
+
+					require_once  "../vendor/bulletproof/bulletproof.php";
+					require_once  "../vendor/script/bulletproof_config.php";
+
 					$img = $_FILES['pictures'];
 
-					$last_reg = $bdd->query('SELECT * FROM bien WHERE nom LIKE "'.$_GET['bien_nom'].'" ORDER BY creation_date DESC')->fetchAll(PDO::FETCH_ASSOC);
+					$last_reg = $bdd->query('SELECT * FROM bien WHERE nom LIKE "'.$_POST['bien_nom'].'" ORDER BY creation_date DESC')->fetchAll(PDO::FETCH_ASSOC);
 
 					if(!empty($img))
 					{
 					    $img_desc = reArrayFiles($img);
-					    
+					    $img_first = 1;
 					    foreach($img_desc as $val)
 					    {
 					        $image = new Bulletproof\Image($val);
-							$image->setLocation($bulletproof_upload_dir);
+							$image->setLocation($bulletproof_upload_dir_admin);
 							$image->setSize($bulletproof_size_min, $bulletproof_size_max);
 							$image->setMime($bulletproof_accepted_format);
 							
 							if($image->upload()){
-								$bdd->exec("INSERT INTO photo(name, selected, fk_bien_ID) VALUES ('".$image->getFullPath()."',0,".$last_reg[0]['ID'].")");
+								$bdd->exec("INSERT INTO photo(name, selected, fk_bien_ID) VALUES ('".$image->getName().".".$image->getMime()."',".$img_first.",".$last_reg[0]['ID'].")");
 							} else {
 								echo $image->getError();
 							}
+
+							$img_first = 0;
 					    }
 					}
-				}
-
+				} 
 			}
 
 		} 
 	}
 	else {
 		header('Location: page-login.php');
+	}
+
+	function getBetween($string, $start = '', $end = ''){
+	    if (strpos($string, $start)) { // required if $start not exist in $string
+	        $startCharCount = strpos($string, $start) + strlen($start);
+	        $firstSubStr = substr($string, $startCharCount, strlen($string));
+	        $endCharCount = strpos($firstSubStr, $end);
+	        if ($endCharCount == 0) {
+	            $endCharCount = strlen($firstSubStr);
+	        }
+	        return substr($firstSubStr, 0, $endCharCount);
+	    } else {
+	        return '';
+	    }
 	}
 ?>

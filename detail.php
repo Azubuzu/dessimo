@@ -107,7 +107,7 @@
                 else
                   echo '<div class="item">';
 
-                echo '<img src="'.$item["name"].'" alt="Los Angeles" >';
+                echo '<img src="images/upload/'.$item["name"].'" >';
                 echo '</div>';
                }
               ?>
@@ -228,7 +228,7 @@
       <?php
         $foo = 0;
         foreach ($pictures as $item) {
-          echo '<div class=".col-4 .col-sm-4 shadow p-3 mb-3 nopadding"><span data-target="#myCarousel" data-slide-to="'.$foo++.'"><img src="'.$item["name"].'"></span></div>';
+          echo '<div class=".col-4 .col-sm-4 shadow p-3 mb-3 nopadding"><span data-target="#myCarousel" data-slide-to="'.$foo++.'"><img src="images/upload/'.$item["name"].'"></span></div>';
         }
       ?>
       </div>
@@ -258,7 +258,7 @@
 
       <div class="col-md-7 description">
         <h1>Descriptif</h1>
-        <p><?php echo $bien['bien_desc']; ?> </p>
+        <p><?php echo nl2br($bien['bien_desc']); ?> </p>
       </div>
     </div>
 

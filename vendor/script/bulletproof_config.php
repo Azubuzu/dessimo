@@ -1,5 +1,6 @@
 <?php
 	$bulletproof_upload_dir = "images/upload";
+	$bulletproof_upload_dir_admin = "../images/upload";
 	$bulletproof_size_min = 1;
 	$bulletproof_size_max = 20000000;
 	$bulletproof_accepted_format = array('jpeg', 'gif', 'png', 'bmp');

@@ -141,13 +141,13 @@
  
         </div>
          <div class="card-header"><strong>Ajouter un bien immobilier</strong>      </div>
+         <form method="POST" enctype="multipart/form-data" action="biens.php?admin_action=add_bien"> 
         <div class="row">
+           
            <div class="col-lg-6">
                     <div class="card">
                
                       <div class="card-body card-block">
-                        <form>
-                        <input type="hidden" name="admin_action" value="add_bien">
                         <div class="form-group"><label for="company" class=" form-control-label">Nom</label><input type="text" id="company" placeholder="Nom" class="form-control" name="bien_nom"></div>
                         <div class="form-group"><label for="company" class=" form-control-label">Prix</label><input type="text" id="company" placeholder="CHF" class="form-control" name="bien_prix"></div>
                         <div class="form-group"><label for="company" class=" form-control-label">Nombre de pièces</label><input type="text" id="company" placeholder="Pièces" class="form-control" name="bien_piece"></div>
@@ -162,15 +162,15 @@
                         <div class="form-group">
                             <label for="company" class=" form-control-label">Photos</label>
                             <input type="hidden" name="MAX_FILE_SIZE" value="20000000" class="form-control"/>
-                            <input type="file" name="pictures[]" accept="image/*"/ multiple class="form-control">
+                            <input type="file" name="pictures[]" accept="image/*" multiple class="form-control"/>
                         </div>
 
                     </div>
                 </div>
             </div>
-  <div class="col-lg-6">
-                    <div class="card">
-     <div class="card-body card-block">
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-body card-block">
                  
 
                         <div class="form-group"><label for="company" class=" form-control-label">Niveau</label><input type="text" id="company" placeholder="Nom" class="form-control" name="bien_niveau"></div>
@@ -265,17 +265,15 @@
                             }
                         ?>
                         </select>
-                        </select>
                         </div>                   
                         <button type="submit" class="btn btn-primary btn-m">
                         <i class="fa fa-dot-circle-o"></i> Valider</button>
                     </div>
-                    </form>
-                  
-                        </div>
-                    </div>
-
-                  </div>
+                </div>
+            </div>
+        
+        </div>
+        </form>
 
     <!-- Right Panel -->
 

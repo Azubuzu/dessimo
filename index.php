@@ -79,11 +79,11 @@
               $pictures = $bdd->query("SELECT * FROM photo WHERE fk_bien_ID = ".$item["bien_ID"]." AND selected = 1");
               while ($picture = $pictures->fetch()) {
                 if($first) {
-                  echo '<div class="carousel-item active" style="background-image: url(\''.$picture['name'].'\')">';
+                  echo '<div class="carousel-item active" style="background-image: url(\'images/upload/'.$picture['name'].'\')">';
                   $first = false;
                 }
                 else {
-                  echo '<div class="carousel-item" style="background-image: url(\''.$picture['name'].'\')">';
+                  echo '<div class="carousel-item" style="background-image: url(\'images/upload/'.$picture['name'].'\')">';
                 }
               }
                             ?>                   
