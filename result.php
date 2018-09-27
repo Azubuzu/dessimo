@@ -26,7 +26,15 @@
       $request .= "prix >= ".$_GET['prix_min']." AND ";
     }
 
-    $request .= "categorie.ID =".$_GET['categorie']." AND localite.ID =".$_GET['localite']." AND type.ID=".$_GET['type'].";";
+    if ($_GET['localite'] != 0) {
+      $request .= "localite.ID = ".$_GET['localite']." AND ";
+    }
+
+    if ($_GET['type'] != 0) {
+      $request .= "type.ID = ".$_GET['type']." AND ";
+    }
+
+    $request .= "categorie.ID =".$_GET['categorie'];
   }
 
   $result = $bdd->query($request);
@@ -218,6 +226,7 @@
                 <div class="form-group col-md-12">
                   <label for="localite">Localité</label>
                   <select class="form-control lord-select" name="localite" id="localite">
+                  <option value="0">Toutes</option> 
                   <?php
                   foreach ($localites as $item) {
                     echo "<option value='".$item['ID']."' ".isSeleced("localite",$item['ID']).">".$item['nom']."</option>";
@@ -230,6 +239,7 @@
                 <div class="form-group col-md-12">
                   <label for="type">Type de biens</label>
                   <select class="form-control lord-select" name="type">
+                  <option value="0">Tous</option> 
                   <?php
                   foreach ($types as $item) {
                     echo "<option value='".$item['ID']."' ".isSeleced("type",$item['ID']).">".$item['nom']."</option>";
@@ -302,6 +312,7 @@
                 <div class="form-group col-md-12">
                   <label for="localite">Localité</label>
                   <select class="form-control lord-select" name="localite" id="localite2">
+                  <option value="0">Toutes</option> 
                   <?php
                   foreach ($localites as $item) {
                     echo "<option value='".$item['ID']."' ".isSeleced("localite",$item['ID']).">".$item['nom']."</option>";
@@ -314,6 +325,7 @@
                 <div class="form-group col-md-12">
                 <label for="type">Type de biens</label>
                 <select class="form-control lord-select" name="type">
+                <option value="0">Tous</option> 
                 <?php
                 foreach ($types as $item) {
                   echo "<option value='".$item['ID']."' ".isSeleced("type",$item['ID']).">".$item['nom']."</option>";
@@ -326,16 +338,16 @@
 
                 <label for="piece">Nombre de pièces</label>
                 <div class="input-group">
-                <input type="number" class="form-control" placeholder="Min." name="nbre_piece_min" value="<?php echo $_GET['nbre_piece_min']; ?>">
-                <input type="number" class="form-control" placeholder="Max." name="nbre_piece_max" value="<?php echo $_GET['nbre_piece_max']; ?>">
+                <input type="number" class="form-control" placeholder="Min." name="nbre_piece_min" value="<?php if(isset($_GET['nbre_piece_min'])) {echo $_GET['nbre_piece_min'];} ?>">
+                <input type="number" class="form-control" placeholder="Max." name="nbre_piece_max" value="<?php if(isset($_GET['nbre_piece_max'])) {echo $_GET['nbre_piece_max'];} ?>">
                 </div>
               </div>
 
               <div class="form-group col-md-12">
                 <label for="prix">Prix</label>
                   <div class="input-group">
-                  <input type="text" class="form-control" placeholder="Min." name="prix_min" value="<?php echo $_GET['prix_min']; ?>">
-                  <input type="text" class="form-control" placeholder="Max." name="prix_max" value="<?php echo $_GET['prix_max']; ?>">
+                  <input type="text" class="form-control" placeholder="Min." name="prix_min" value="<?php if(isset($_GET['prix_min'])) {echo $_GET['prix_min'];} ?>">
+                  <input type="text" class="form-control" placeholder="Max." name="prix_max" value="<?php if(isset($_GET['prix_max'])) {echo $_GET['prix_max'];} ?>">
                   </div>
               </div>
 

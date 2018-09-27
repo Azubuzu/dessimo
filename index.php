@@ -160,6 +160,7 @@
             <div class="form-group col-md-4">
               <label for="localite">Localité</label>
               <select class="form-control lord-select" name="localite" id="localite">
+              <option value="0">Toutes</option> 
               <?php
               foreach ($localites as $item) {
                 echo "<option value='".$item['ID']."'>".$item['nom']."</option>";
@@ -172,6 +173,7 @@
             <div class="form-group col-md-4">
             <label for="type">Type de biens</label>
             <select class="form-control lord-select" name="type">
+            <option value="0">Tous</option> 
             <?php
             foreach ($types as $item) {
               echo "<option value='".$item['ID']."'>".$item['nom']."</option>";
