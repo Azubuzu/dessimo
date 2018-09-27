@@ -19,7 +19,7 @@
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet"/>
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
+<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
     <!-- Custom styles for this template -->
     <link href="css/lord-main.css" rel="stylesheet">
   </head>
@@ -49,11 +49,8 @@
             <li class="nav-item">
               <a class="nav-link-lord" href="#">Acheter</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link-lord" href="#">Services</a>
-            </li>
                <li class="nav-item">
-              <a class="nav-link-lord" href="#">Contact</a>
+              <a class="nav-link-lord" href="contact.html">A Propos</a>
             </li>
           </ul>
         </div>

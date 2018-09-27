@@ -4,6 +4,10 @@
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-half-slider/blob/master/LICENSE)
  */
 
+ body{
+  font-family:'Open Sans';
+ }
+
 .carousel-item {
   height: 65vh;
   min-height: 300px;
@@ -16,7 +20,7 @@
 .carousel-data {
 	    text-align: left;
 	    opacity: 0.95;
-font-family: Open Sans;
+  font-family:'Open Sans';
 background-color: #2b2b33;
 position: relative;
 top: 100px;
@@ -30,7 +34,7 @@ height:200px;
             left:25px;
 	    text-transform: uppercase;
 	 font-weight: bold;
-	font-family: Open Sans;
+	  font-family:'Open Sans';
 	color : #ffffff;
 	font-size: 18px;
 
@@ -39,7 +43,7 @@ height:200px;
 		   position:relative;
             left:25px;
 	    text-transform: uppercase;
-	font-family: Open Sans;
+  font-family:'Open Sans';
 	color : #ffffff;
 	font-size: 18px;
 
@@ -47,7 +51,7 @@ height:200px;
 .carousel-data p {
 		   position:relative;
             left:25px;
-	font-family: Open Sans;
+  font-family:'Open Sans';
 	color : #cacacc;
 	font-size: 18px;
 
@@ -58,7 +62,7 @@ height:200px;
 	 line-height: 35px;
   text-align: center;
 font-size: 12px;
-font-family: Open Sans;
+  font-family:'Open Sans';
 background-color: #a32627;
 width:170px;
 height:40px;
@@ -163,7 +167,7 @@ select.lord-select:focus {
 
 label{
  text-transform: uppercase;
-		font-family: Open Sans;
+  font-family:'Open Sans';
 		margin-left:10px;
  color: #222222;
 }
@@ -206,7 +210,7 @@ input {
 
 
 .lord-button{
-	font-family:Open Sans;
+  font-family:'Open Sans';
 	size: 12px;
 	background-color: #ffffff;
 	 text-transform: uppercase;
@@ -220,7 +224,49 @@ input {
     margin :25px;
 }
 
+.lord-button:hover{
+  font-family:'Open Sans';
+  size: 12px;
+  background-color: #a32627;
+   text-transform: uppercase;
+  color : #ffffff;
+  border: 1px solid #a32627 ;
+      text-align: center;
+    text-decoration: none;
+        padding: 5px 100px;
+    display: inline-block;
+   float: right;
+    margin :25px;
+}
+
 .footer-lord{
-		font-family:Open Sans;
+  font-family:'Open Sans';
 	size: 12px;
 }
+
+
+.carousel-data-link a{
+
+
+  color: #ffffff;
+  display: inline-block;  /* For IE11/ MS Edge bug */
+
+  text-decoration: none;
+}
+/* visited link */
+.carousel-caption a:visited {
+     color: #ffffff;
+}
+
+/* mouse over link */
+.carousel-caption a:hover {
+     color: #ffffff;
+
+
+  text-decoration: none;
+}
+
+.bottomDiv:hover{
+  background-color: #bd2d2e;
+}
+

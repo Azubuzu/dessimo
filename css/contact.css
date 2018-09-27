@@ -4,9 +4,11 @@
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-half-slider/blob/master/LICENSE)
  */
 
-
+ body{
+  font-family:'Open Sans';
+ }
 h2{
-    font-family: Open Sans;
+    font-family: 'Open Sans';
     text-align: center;
   font-size: 22px;
 }
@@ -16,65 +18,7 @@ p{
 }
 
 
-.carousel-item {
-  height: 65vh;
-  min-height: 300px;
-  background: no-repeat center center scroll;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-}
-.carousel-data {
-	    text-align: left;
-	    opacity: 0.95;
-font-family: Open Sans;
-background-color: #2b2b33;
-position: relative;
-top: 100px;
-left: 66%;
-width:300px;
-height:200px;
-}
 
-.carousel-data h1 {
-	   position:relative;
-            left:25px;
-	    text-transform: uppercase;
-	 font-weight: bold;
-	font-family: Open Sans;
-	color : #ffffff;
-	font-size: 18px;
-
-}
-.carousel-data h2 {
-		   position:relative;
-            left:25px;
-	    text-transform: uppercase;
-	font-family: Open Sans;
-	color : #ffffff;
-	font-size: 18px;
-
-}
-.carousel-data p {
-		   position:relative;
-            left:25px;
-	font-family: Open Sans;
-	color : #cacacc;
-	font-size: 18px;
-
-	 
-}
-
-.carousel-data-link {
-	 line-height: 35px;
-  text-align: center;
-font-size: 12px;
-font-family: Open Sans;
-background-color: #a32627;
-width:170px;
-height:40px;
-}
 
 .bottomDiv{
        position:relative;
@@ -184,7 +128,7 @@ select.lord-select:focus {
 
 label{
  text-transform: uppercase;
-		font-family: Open Sans;
+		font-family: 'Open Sans';
 		margin-left:10px;
  color: #222222;
 }
@@ -227,7 +171,7 @@ input {
 
 
 .lord-button{
-	font-family:Open Sans;
+font-family: 'Open Sans';
 	size: 12px;
 	background-color: #ffffff;
 	 text-transform: uppercase;
@@ -242,7 +186,7 @@ input {
 }
 
 h4{
-      font-family:Open Sans;
+font-family: 'Open Sans';
       margin-top: 15px;
             margin-bottom: 15px;
 font-size: 24px;
@@ -251,14 +195,14 @@ font-size: 24px;
 
 
 .description h3{
-      font-family:Open Sans;
+font-family: 'Open Sans';
       margin-top: 15px;
 
 font-size: 18px;
   text-align: center;
 }
 .footer-lord{
-		font-family:Open Sans;
+font-family: 'Open Sans';
 	size: 12px;
 }
 
@@ -309,7 +253,7 @@ margin-top: -60px;
 
 .card-body{
 
-    font-family:Open Sans;
+  font-family: 'Open Sans';
   size: 12px;
 }
 
