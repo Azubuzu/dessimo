@@ -69,7 +69,9 @@
 					}
 				}
 
-				$bdd->exec("INSERT INTO bien VALUES (NULL,'".$_POST['bien_nom']."','".$_POST['bien_prix']."','".$_POST['bien_piece']."','".$_POST['bien_chambre']."','".$_POST['bien_surface']."','".$_POST['bien_adresse']."','".$_POST['bien_annee']."','".$_POST['bien_desc']."','".$_POST['bien_situation']."','".$_POST['bien_particularite']."','".$_POST['bien_niveau']."','".$_POST['bien_nbre_WC']."','".$_POST['bien_nbre_niveau']."','".$_POST['bien_charges']."','".$_POST['bien_surface_terrain']."','".$_POST['bien_disponibilite']."',".$bien_favori.",'".$gmaps_data."',".$_POST['bien_type_id'].",".$_POST['bien_localite_id'].",".$_POST['bien_categorie_id'].",".$_POST['bien_agent_id'].",'".time()."')");
+				$creation_date = time();
+
+				$bdd->exec("INSERT INTO bien VALUES (NULL,'".$_POST['bien_nom']."','".$_POST['bien_prix']."','".$_POST['bien_piece']."','".$_POST['bien_chambre']."','".$_POST['bien_surface']."','".$_POST['bien_adresse']."','".$_POST['bien_annee']."','".$_POST['bien_desc']."','".$_POST['bien_situation']."','".$_POST['bien_particularite']."','".$_POST['bien_niveau']."','".$_POST['bien_nbre_WC']."','".$_POST['bien_nbre_niveau']."','".$_POST['bien_charges']."','".$_POST['bien_surface_terrain']."','".$_POST['bien_disponibilite']."',".$bien_favori.",'".$gmaps_data."',".$_POST['bien_type_id'].",".$_POST['bien_localite_id'].",".$_POST['bien_categorie_id'].",".$_POST['bien_agent_id'].",'".$creation_date."')");
 
 				if(isset($_FILES['pictures'])) {
 
@@ -78,7 +80,7 @@
 
 					$img = $_FILES['pictures'];
 
-					$last_reg = $bdd->query('SELECT * FROM bien WHERE nom LIKE "'.$_POST['bien_nom'].'" ORDER BY creation_date DESC')->fetchAll(PDO::FETCH_ASSOC);
+					$last_reg = $bdd->query('SELECT * FROM bien WHERE creation_date = '.$creation_date.' ORDER BY creation_date DESC')->fetchAll(PDO::FETCH_ASSOC);
 
 					if(!empty($img))
 					{
