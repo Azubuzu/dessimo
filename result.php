@@ -147,9 +147,11 @@
                 <?php
                   $pictures = $bdd->query("SELECT * FROM photo WHERE fk_bien_ID = ".$item["bien_ID"]." AND selected = 1");
                   while ($picture = $pictures->fetch()) {
-                    echo '<div class="lord-item shadow-lg p-3 mb-5 white rounded" style="background: url(images/upload/'.$picture['name'].');">';
+                    echo '<div class="lord-item  ">';
+                    echo '<img class="img-lord" src="images/upload/'.$picture["name"].'">';
                   }
                 ?>
+
 
                 <div class="lord-item-description">
                 <table>
