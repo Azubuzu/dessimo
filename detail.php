@@ -27,13 +27,18 @@
     <meta name="author" content="">
 
     <title>Accueil | DESSIMO1 Sàrl</title>
+
+  <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap-slide.css">
+ 
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet"/>
     <!-- Bootstrap core CSS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+ 
+
+
     <!-- Custom styles for this template -->
     <link href="css/detail.css" rel="stylesheet">
 
@@ -104,7 +109,7 @@
                 else
                   echo '<div class="item">';
 
-                echo '<img src="images/upload/'.$item["name"].'" >';
+                echo '<img class="img-lord" src="images/upload/'.$item["name"].'" >';
                 echo '</div>';
                }
               ?>
@@ -246,7 +251,7 @@
 
 <section>
   <div class= "container3">
-    <div class="row">
+    <div class="row description-map">
       <div class="col-md-5  ">
 
          <iframe src="<?php echo $bien['gmaps']; ?>"   width="100%" height="400px" frameborder="0" style="border:0;box-shadow: 0px 0px 10px 2px #cfcfcf;" allowfullscreen></iframe>

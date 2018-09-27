@@ -10,14 +10,15 @@
 }
 
 
+.img-lord{
+    object-fit: cover;
+  width: 100%;
+ height: 650px;
+}
 
+.item{
 
-.item img{
-
-display: block;
-margin-left: auto;
-margin-right: auto;
-
+ 
 }
 
 
@@ -28,14 +29,10 @@ margin-right: auto;
 }
 
 
+
 .carousel-inner{
 
-  display: block;
-margin-left: auto;
-margin-right: auto;
-   width: auto;
 
-  max-height: 650px;
 
 
   background-color: #2b2b33;
@@ -50,11 +47,17 @@ margin-right: auto;
 
 
 table{
-  top:100px;
-  position: relative;
-  left: 200px;
+   position: relative;
+  left: 25%;
+  top:-35px;
+
 }
 
+@media screen and (min-width: 1200px) and (max-width: 4640px) {
+table {
+    top:100px; 
+}
+}
 
 .lord-item-description{
   height: 650px;
@@ -77,15 +80,15 @@ table{
 
   color: #ffffff;
 
-  font-size:16px;
+  font-size:22px;
   text-decoration: none;
   padding: 5px 50px;
   display: inline-block;
-  position: relative;
-  float: center;
+ position: relative;
+left:38%;
+ bottom: 25px;
   opacity:0.95;
-  bottom: 325px;
-  right: 13%;
+    float: center;
   text-align: center;
   font-weight: bold;
   margin: 0px !important; 
@@ -95,7 +98,14 @@ table{
   font-family: Open Sans;
 }
 
-
+@media screen and (min-width: 1200px) and (max-width: 4640px) {
+.lord-price {
+    position: relative;
+  right: 13%;
+  
+ 
+}
+}
 
 
 
@@ -124,19 +134,19 @@ font-family: Open Sans;
   font-size : 18px;
 }
 
-.py-5{
-   background-color: #f8f8f8;
-padding-top: 0px;
-margin-top:0px;
-}
 
+@media screen and (min-width: 1200px) and (max-width: 4640px) {
 .container3{
-  padding-left: 250px;
+  padding-left: 225px;
   padding-top: 50px;
   background-color: #f8f8f8;
-    padding-right: 250px;
+    padding-right: 225px;
     padding-bottom: 50px;
 }
+}
+
+
+
 .nav-link-lord{
   size:24px;
   font-family: Open Sans;
@@ -153,7 +163,14 @@ margin-top:0px;
 	color: #222222;
 	text-align: center;
 	font-size: 30px;
+  
 	text-transform: uppercase;
+}
+
+@media screen and (min-width: 1200px) and (max-width: 4640px) {
+.description h1{
+   margin-top: -100px; 
+}
 }
 
  h1{
@@ -239,8 +256,14 @@ hr {
 
 .carousel-indicators {
   position: relative;
- top:150px;
+
     
+}
+
+@media screen and (min-width: 1200px) and (max-width: 4640px) {
+.carousel-indicators {
+    top:150px;
+}
 }
 
 
@@ -303,3 +326,6 @@ border:0px;
 
 
 
+.description-map{
+  padding-top: 50px;
+}

@@ -126,7 +126,7 @@
     <!-- Page Content -->
     <section class="py-5">
       <div class="container">
-        <div class="description col-md-8">
+        <div class="col-md-8 description ">
           <h1><?php echo $result->rowCount();?> résultat(s) trouvé(s)</h1>
         </div>
 
@@ -177,7 +177,7 @@
                 </tr>
                 </table>
 
-                <p> <?php echo (strlen($item['bien_desc']) > 150) ? substr($item['bien_desc'],0,147).'...' : $item['bien_desc']; ?> <a href="detail.php?bien_ID=<?php echo $item['bien_ID'] ;?>">Voir plus</a></p>
+                <p> <?php echo (strlen($item['bien_desc']) > 100) ? substr($item['bien_desc'],0,97).'...' : $item['bien_desc']; ?> <a href="detail.php?bien_ID=<?php echo $item['bien_ID'] ;?>">Voir plus</a></p>
                 </div>
 
                 </div>

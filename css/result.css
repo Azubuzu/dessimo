@@ -3,6 +3,15 @@
  * Copyright 2013-2017 Start Bootstrap
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-half-slider/blob/master/LICENSE)
  */
+
+html{
+  height:100%;
+}
+body{
+  height:85%;
+}
+
+
 .img-lord{
 
   margin-left: 0;
@@ -20,12 +29,13 @@ background-color: #000000;
    
 }
 .lord-item-description{
-  position: relative;
-  float: right;
+  position: absolute;
+  
   opacity:0.75;
-  bottom: 313px;
+  top: 25px;
+ right: 15px;
   width: 40%;
-  margin-top:20px;
+  margin-top:21px;
   height: 293px;
   background-color: #000000;
 
@@ -70,7 +80,7 @@ background-color: #000000;
   float: right;
   opacity:0.95;
   bottom: 20px;
-  left: 300px;
+  left: 20px;
   text-align: center;
   font-weight: bold;
   margin: 0px !important; 
@@ -222,18 +232,19 @@ width: 370px;
 }
 
 .py-5{
+  min-height: 100%;
   background-color: #f8f8f8;
 }
 
 
 
-@media screen and (min-width: 0px) and (max-width: 799) {
+@media screen and (min-width: 0px) and (max-width: 1200) {
     .search-box-little {
         display: block;
     }
     /* show it on small screens */
 }
-@media screen and (min-width: 800px) and (max-width: 3048px) {
+@media screen and (min-width: 1201px) and (max-width: 3048px) {
     .search-box-little {
         display: none;
     }
@@ -369,6 +380,7 @@ input {
 }
 
 .footer-lord{
+
 		font-family:Open Sans;
 	size: 12px;
 }
