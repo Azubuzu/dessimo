@@ -2,8 +2,6 @@
 	require_once  "vendor/bulletproof/bulletproof.php";
 	require_once  "vendor/script/bulletproof_config.php";
 	require_once  "vendor/script/db_connect.php";
-	require_once  "vendor/bulletproof/utils/func.image-resize.php";
-	require_once  "vendor/bulletproof/utils/func.image-crop.php";
 
 
 

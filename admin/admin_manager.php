@@ -50,6 +50,47 @@
 					$bdd->exec("INSERT INTO type(nom, description) VALUES ('".$_GET['type_name']."','".$_GET['type_desc']."')");
 				}
 			}
+
+			if ($_GET['admin_action'] == "add_bien") {
+
+				require_once  "../vendor/bulletproof/bulletproof.php";
+				require_once  "../vendor/script/bulletproof_config.php";
+
+				if (isset($_GET['bien_favori'])) {
+					$bien_favori = $_GET['bien_favori'];
+				} else {
+					$bien_favori = 0;
+				}
+				
+				$bdd->exec("INSERT INTO bien VALUES (NULL,'".$_GET['bien_nom']."','".$_GET['bien_prix']."','".$_GET['bien_piece']."','".$_GET['bien_chambre']."','".$_GET['bien_surface']."','".$_GET['bien_adresse']."','".$_GET['bien_annee']."','".$_GET['bien_desc']."','".$_GET['bien_situation']."','".$_GET['bien_particularite']."','".$_GET['bien_niveau']."','".$_GET['bien_nbre_WC']."','".$_GET['bien_nbre_niveau']."','".$_GET['bien_charges']."','".$_GET['bien_surface_terrain']."','".$_GET['bien_disponibilite']."',".$bien_favori.",'".$_GET['bien_gmaps']."',".$_GET['bien_type_id'].",".$_GET['bien_localite_id'].",".$_GET['bien_categorie_id'].",".$_GET['bien_agent_id'].",'".time()."')");
+
+				if(isset($_FILES['pictures'])) {
+					$img = $_FILES['pictures'];
+
+					$last_reg = $bdd->query('SELECT * FROM bien WHERE nom LIKE "'.$_GET['bien_nom'].'" ORDER BY creation_date DESC')->fetchAll(PDO::FETCH_ASSOC);
+
+					if(!empty($img))
+					{
+					    $img_desc = reArrayFiles($img);
+					    
+					    foreach($img_desc as $val)
+					    {
+					        $image = new Bulletproof\Image($val);
+							$image->setLocation($bulletproof_upload_dir);
+							$image->setSize($bulletproof_size_min, $bulletproof_size_max);
+							$image->setMime($bulletproof_accepted_format);
+							
+							if($image->upload()){
+								$bdd->exec("INSERT INTO photo(name, selected, fk_bien_ID) VALUES ('".$image->getFullPath()."',0,".$last_reg[0]['ID'].")");
+							} else {
+								echo $image->getError();
+							}
+					    }
+					}
+				}
+
+			}
+
 		} 
 	}
 	else {

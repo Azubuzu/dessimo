@@ -146,36 +146,25 @@
                     <div class="card">
                
                       <div class="card-body card-block">
+                        <form>
+                        <input type="hidden" name="admin_action" value="add_bien">
                         <div class="form-group"><label for="company" class=" form-control-label">Nom</label><input type="text" id="company" placeholder="Nom" class="form-control" name="bien_nom"></div>
-
-
                         <div class="form-group"><label for="company" class=" form-control-label">Prix</label><input type="text" id="company" placeholder="CHF" class="form-control" name="bien_prix"></div>
-
-
-
                         <div class="form-group"><label for="company" class=" form-control-label">Nombre de pièces</label><input type="text" id="company" placeholder="Pièces" class="form-control" name="bien_piece"></div>
-
-
                         <div class="form-group"><label for="company" class=" form-control-label">Nombre de chambres</label><input type="text" id="company" placeholder="Chambres" class="form-control" name="bien_chambre"></div>
-
-
                         <div class="form-group"><label for="company" class=" form-control-label">Surface</label><input type="text" id="company" placeholder="m2" class="form-control" name="bien_surface"></div>
-
                         <div class="form-group"><label for="company" class=" form-control-label">Surface de terrain</label><input type="text" id="company" placeholder="Nom" class="form-control" name="bien_surface_terrain"></div>
-
-
-                        
-
                         <div class="form-group"><label for="textarea-input" class=" form-control-label">Description</label>
-                        <textarea name="textarea-input" id="textarea-input" rows="6" placeholder="Contenu.." class="form-control" name="bien_description"></textarea></div>
-
-
-
+                        <textarea id="textarea-input" rows="6" placeholder="Contenu.." class="form-control" name="bien_desc"></textarea></div>
                         <div class="form-group"><label for="company" class=" form-control-label">Situation</label><input type="text" id="company" placeholder="Description" class="form-control" name="bien_situation"></div>
-                        
-                       <div class="form-group"><label for="company" class=" form-control-label">Particularité</label><input type="text" id="company" placeholder="Description" class="form-control" name="bien_particularite"></div>
+                        <div class="form-group"><label for="company" class=" form-control-label">Particularité</label><input type="text" id="company" placeholder="Description" class="form-control" name="bien_particularite"></div>
 
-                     <div class="form-group"><label for="company" class=" form-control-label">Photos</label><input type="file" id="company" placeholder="Nom" class="form-control"></div>
+                        <div class="form-group">
+                            <label for="company" class=" form-control-label">Photos</label>
+                            <input type="hidden" name="MAX_FILE_SIZE" value="20000000" class="form-control"/>
+                            <input type="file" name="pictures[]" accept="image/*"/ multiple class="form-control">
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -186,12 +175,13 @@
 
                         <div class="form-group"><label for="company" class=" form-control-label">Niveau</label><input type="text" id="company" placeholder="Nom" class="form-control" name="bien_niveau"></div>
 
-                        <div class="form-group"><label for="company" class=" form-control-label">Nombre de WC</label><input type="text" id="company" placeholder="WC" class="form-control" name="bien_nbre_wc"></div>
+                        <div class="form-group"><label for="company" class=" form-control-label">Nombre d'étages</label><input type="text" id="company" placeholder="WC" class="form-control" name="bien_nbre_niveau"></div>
+                        <div class="form-group"><label for="company" class=" form-control-label">Nombre de WC</label><input type="text" id="company" placeholder="WC" class="form-control" name="bien_nbre_WC"></div>
 
 
-                        <div class="form-group"><label for="company" class=" form-control-label">Charges</label><input type="text" id="company" placeholder="Nom" class="form-control" name="bien_charges"></div>              
+                        <div class="form-group"><label for="company" class=" form-control-label">Charges</label><input type="text" id="company" placeholder="Nom" class="form-control" name="bien_charges"></div>
 
-
+                        <div class="form-group"><label for="company" class=" form-control-label">Année de construction</label><input type="text" id="company" placeholder="Année" class="form-control" name="bien_annee"></div> 
                         <div class="form-group"><label for="company" class=" form-control-label">Disponibilité</label><input type="text" id="company" placeholder="Nom" class="form-control" name="bien_disponibilite"></div>
 
 
@@ -202,12 +192,12 @@
                               <div class="form-check">
                                 <div class="radio">
                                   <label for="radio1" class="form-check-label ">
-                                    <input type="radio" id="radio1" name="bien_favori" value="option1" class="form-check-input">Oui
+                                    <input type="radio" id="radio1" name="bien_favori" value="1" class="form-check-input">Oui
                                   </label>
                                 </div>
                                 <div class="radio">
                                   <label for="radio3" class="form-check-label ">
-                                    <input type="radio" id="radio3" name="bien_favori" value="option3" class="form-check-input">Non
+                                    <input type="radio" id="radio3" name="bien_favori" value="0" class="form-check-input">Non
                                   </label>
                                 </div>
                               </div>
@@ -215,12 +205,12 @@
                           </div>
 
 
-                        <div class="form-group"><label for="company" class=" form-control-label">Google Maps source</label><input type="text" id="company" placeholder="https://www.google.com/maps/embed ..." class="form-control"></div>
+                        <div class="form-group"><label for="company" class=" form-control-label">Google Maps source</label><input type="text" id="company" placeholder="https://www.google.com/maps/embed ..." class="form-control" name="bien_gmaps"></div>
 
 
                         <div class="form-group">
                         <label for="company" class=" form-control-label">Types de bien</label>
-                        <select name="select" id="select" class="form-control">
+                        <select name="bien_type_id"  class="form-control">
                         <?php
                             foreach ($types as $item) {
                               echo "<option value='".$item['ID']."'>".$item['nom']."</option>";
@@ -229,12 +219,12 @@
                         </select>
                         </div> 
 
-                        <div class="form-group"><label for="company" class=" form-control-label">Adresse</label><input type="text" id="company" placeholder="Nom" class="form-control"></div>
+                        <div class="form-group"><label for="company" class=" form-control-label">Adresse</label><input type="text" id="company" placeholder="Nom" class="form-control" name="bien_adresse"></div>
 
 
                         <div class="form-group">
                         <label for="company" class=" form-control-label">Canton</label>
-                        <select name="bien_canton" id="canton" class="form-control" onchange="fetch_select(this.value);">
+                        <select name="bien_canton_id" id="canton" class="form-control" onchange="fetch_select(this.value);">
                         <?php
                             foreach ($cantons as $item) {
                                 echo "<option value='".$item['ID']."'>".$item['nom']."</option>";
@@ -245,7 +235,7 @@
 
                         <div class="form-group">
                         <label for="company" class=" form-control-label">Localité</label>
-                        <select name="localite" class="form-control" id="localite">
+                        <select name="bien_localite_id" class="form-control" id="localite">
                         <?php
                           foreach ($localites as $item) {
                             echo "<option value='".$item['ID']."'>".$item['nom']."</option>";
@@ -256,7 +246,7 @@
 
                         <div class="form-group">
                         <label for="company" class=" form-control-label">Catégorie</label>
-                        <select name="select" id="select" class="form-control">
+                        <select name="bien_categorie_id" class="form-control">
                         <?php
                             foreach ($categories as $item) {
                               echo "<option value='".$item['ID']."'>".$item['nom']."</option>";
@@ -268,8 +258,7 @@
 
                         <div class="form-group">
                         <label for="company" class=" form-control-label">Agent</label>
-                        <select name="select" id="select" class="form-control">
-                        <select name="select" id="select" class="form-control">
+                        <select name="bien_agent_id" class="form-control">
                         <?php
                             foreach ($agents as $item) {
                               echo "<option value='".$item['ID']."'>".$item['nom']." ".$item['prenom']."</option>";
@@ -277,14 +266,11 @@
                         ?>
                         </select>
                         </select>
-                        </div> 
-
-
-
-
-                   
+                        </div>                   
                         <button type="submit" class="btn btn-primary btn-m">
-                        <i class="fa fa-dot-circle-o"></i> Valider
+                        <i class="fa fa-dot-circle-o"></i> Valider</button>
+                    </div>
+                    </form>
                   
                         </div>
                     </div>
