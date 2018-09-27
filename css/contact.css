@@ -235,6 +235,8 @@ font-family: 'Open Sans';
 
 }
 
+xt-transform: uppercase;
+}
 .map-wrap{
   padding-top: 50px;
 }
@@ -263,4 +265,11 @@ margin-top: -60px;
 
 .title-contact{
   margin-bottom: 50px;
+}
+
+
+.nav-link-lord:hover{
+  margin: 25px;
+  color: #a32627;
+  text-decoration: none;
 }
