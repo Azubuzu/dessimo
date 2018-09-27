@@ -5,12 +5,7 @@
  */
 
 .lord-item{
-
- max-width: 100%;
-  background-repeat: no-repeat;
-    background-size: auto;
-  height : 300px;
-  background-size: cover;
+height: 300px;
 }
 .lord-item-description{
   position: relative;

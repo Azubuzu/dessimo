@@ -149,7 +149,7 @@
                
                       <div class="card-body card-block">
                         <div class="form-group"><label for="company" class=" form-control-label">Nom</label><input type="text" id="company" placeholder="Nom" class="form-control" name="bien_nom"></div>
-                        <div class="form-group"><label for="company" class=" form-control-label">Prix</label><input type="text" id="company" placeholder="CHF" class="form-control" name="bien_prix"></div>
+                        <div class="form-group"><label for="company" class=" form-control-label">Prix</label><input type="number" id="company" placeholder="CHF" class="form-control" name="bien_prix"></div>
                         <div class="form-group"><label for="company" class=" form-control-label">Nombre de pièces</label><input type="text" id="company" placeholder="Pièces" class="form-control" name="bien_piece"></div>
                         <div class="form-group"><label for="company" class=" form-control-label">Nombre de chambres</label><input type="text" id="company" placeholder="Chambres" class="form-control" name="bien_chambre"></div>
                         <div class="form-group"><label for="company" class=" form-control-label">Surface</label><input type="text" id="company" placeholder="m2" class="form-control" name="bien_surface"></div>
