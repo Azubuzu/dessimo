@@ -5,24 +5,29 @@
 
   $request = "SELECT *,bien.ID AS bien_ID,bien.nom AS bien_nom,type.nom AS type_nom, localite.nom AS local_nom, bien.description AS bien_desc FROM bien INNER JOIN categorie ON categorie.ID = fk_Categorie_ID INNER JOIN type ON type.ID = fk_Type_ID INNER JOIN localite ON localite.ID = fk_Localite_ID WHERE ";
 
+  //wild card in function of type
+  if (isset($_GET['list'])) {
+    $request.= "categorie.ID =".$_GET['list'];
+  } else {
 
-  if ($_GET['nbre_piece_min'] != "" && $_GET['nbre_piece_max'] != "") {
-    $request .= "(piece BETWEEN ".$_GET['nbre_piece_min']." AND ".$_GET['nbre_piece_max'].") AND ";
-  }else if ($_GET['nbre_piece_min'] == "" && $_GET['nbre_piece_max'] != "") {
-    $request .= "piece <= ".$_GET['nbre_piece_max']." AND ";
-  }else if ($_GET['nbre_piece_max'] == "" && $_GET['nbre_piece_min'] != "") {
-    $request .= "piece >= ".$_GET['nbre_piece_min']." AND ";
+    if ($_GET['nbre_piece_min'] != "" && $_GET['nbre_piece_max'] != "") {
+      $request .= "(piece BETWEEN ".$_GET['nbre_piece_min']." AND ".$_GET['nbre_piece_max'].") AND ";
+    }else if ($_GET['nbre_piece_min'] == "" && $_GET['nbre_piece_max'] != "") {
+      $request .= "piece <= ".$_GET['nbre_piece_max']." AND ";
+    }else if ($_GET['nbre_piece_max'] == "" && $_GET['nbre_piece_min'] != "") {
+      $request .= "piece >= ".$_GET['nbre_piece_min']." AND ";
+    }
+
+    if ($_GET['prix_min'] != "" && $_GET['prix_max'] != "") {
+      $request .= "(prix BETWEEN ".$_GET['prix_min']." AND ".$_GET['prix_max'].") AND ";
+    }else if ($_GET['prix_min'] == "" && $_GET['prix_max'] != "") {
+      $request .= "prix <= ".$_GET['prix_max']." AND ";
+    }else if ($_GET['prix_max'] == "" && $_GET['prix_min'] != "") {
+      $request .= "prix >= ".$_GET['prix_min']." AND ";
+    }
+
+    $request .= "categorie.ID =".$_GET['categorie']." AND localite.ID =".$_GET['localite']." AND type.ID=".$_GET['type'].";";
   }
-
-  if ($_GET['prix_min'] != "" && $_GET['prix_max'] != "") {
-    $request .= "(prix BETWEEN ".$_GET['prix_min']." AND ".$_GET['prix_max'].") AND ";
-  }else if ($_GET['prix_min'] == "" && $_GET['prix_max'] != "") {
-    $request .= "prix <= ".$_GET['prix_max']." AND ";
-  }else if ($_GET['prix_max'] == "" && $_GET['prix_min'] != "") {
-    $request .= "prix >= ".$_GET['prix_min']." AND ";
-  }
-
-  $request .= "categorie.ID =".$_GET['categorie']." AND localite.ID =".$_GET['localite']." AND type.ID=".$_GET['type'].";";
 
   $result = $bdd->query($request);
 
@@ -69,21 +74,18 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item active">
-              <a class="nav-link-lord" href="#">Accueil
+              <a class="nav-link-lord" href=".">Accueil
                 <span class="sr-only">(current)</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link-lord" href="#">Louer</a>
+              <a class="nav-link-lord" href="result.php?list=2">Louer</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link-lord" href="#">Acheter</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link-lord" href="#">Services</a>
+              <a class="nav-link-lord" href="result.php?list=1">Acheter</a>
             </li>
                <li class="nav-item">
-              <a class="nav-link-lord" href="#">Contact</a>
+              <a class="nav-link-lord" href="contact.html">A Propos</a>
             </li>
           </ul>
         </div>
@@ -240,16 +242,16 @@
 
                   <label for="piece">Nombre de pièces</label>
                   <div class="input-group">
-                  <input type="number" class="form-control" placeholder="Min." name="nbre_piece_min" value="<?php echo $_GET['nbre_piece_min']; ?>">
-                  <input type="number" class="form-control" placeholder="Max." name="nbre_piece_max" value="<?php echo $_GET['nbre_piece_max']; ?>">
+                  <input type="number" class="form-control" placeholder="Min." name="nbre_piece_min" value="<?php if(isset($_GET['nbre_piece_min'])) {echo $_GET['nbre_piece_min'];} ?>">
+                  <input type="number" class="form-control" placeholder="Max." name="nbre_piece_max" value="<?php if(isset($_GET['nbre_piece_max'])) {echo $_GET['nbre_piece_max'];} ?>">
                   </div>
                 </div>
 
                 <div class="form-group col-md-12">
                   <label for="prix">Prix</label>
                   <div class="input-group">
-                  <input type="text" class="form-control" placeholder="Min." name="prix_min" value="<?php echo $_GET['prix_min']; ?>">
-                  <input type="text" class="form-control" placeholder="Max." name="prix_max" value="<?php echo $_GET['prix_max']; ?>">
+                  <input type="text" class="form-control" placeholder="Min." name="prix_min" value="<?php if(isset($_GET['prix_min'])) {echo $_GET['prix_min'];} ?>">
+                  <input type="text" class="form-control" placeholder="Max." name="prix_max" value="<?php if(isset($_GET['prix_max'])) {echo $_GET['prix_max'];} ?>">
                   </div>
                 </div>
               </div>          

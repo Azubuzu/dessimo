@@ -54,21 +54,18 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item active">
-              <a class="nav-link-lord" href="#">Accueil
+              <a class="nav-link-lord" href=".">Accueil
                 <span class="sr-only">(current)</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link-lord" href="#">Louer</a>
+              <a class="nav-link-lord" href="result.php?list=2">Louer</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link-lord" href="#">Acheter</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link-lord" href="#">Services</a>
+              <a class="nav-link-lord" href="result.php?list=1">Acheter</a>
             </li>
                <li class="nav-item">
-              <a class="nav-link-lord" href="#">Contact</a>
+              <a class="nav-link-lord" href="contact.html">Contact</a>
             </li>
           </ul>
         </div>
