@@ -37,7 +37,7 @@
 
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
  
-
+  <link rel="stylesheet" href="dist/css/lightbox.min.css">
 
     <!-- Custom styles for this template -->
     <link href="css/detail.css" rel="stylesheet">
@@ -100,7 +100,7 @@
 
     <!--SLIDER-->
         <div id="myCarousel" class="carousel slide" data-ride="carousel">
-
+ 
           <div class="carousel-inner">
               <?php
                foreach ($pictures as $item) {
@@ -109,11 +109,16 @@
                 else
                   echo '<div class="item">';
 
-                echo '<img class="img-lord" src="images/upload/'.$item["name"].'" >';
+
+                echo '   <a class="example-image-link" href="images/upload/'.$item["name"].'" data-lightbox="example-set" data-title="">';
+
+                echo '<img class="img-lord "   src="images/upload/'.$item["name"].'"   >';
+                echo '</a>';
                 echo '</div>';
                }
               ?>
           </div>
+               
         </div>
       </div> <!--lord item-->
       </div><!--col-6-->
@@ -317,22 +322,14 @@
 
     <!-- Bootstrap core JavaScript -->
     <script src="vendor/jquery/jquery.min.js"></script>
-        <script src="map.js"></script>
+       
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 
-<script>
-function myMap() {
-var mapOptions = {
 
 
-    center: new google.maps.LatLng(46.2257140, 7.6),
-    zoom: 10,
-    mapTypeId: google.maps.MapTypeId.HYBRID
-}
-var map = new google.maps.Map(document.getElementById("map"), mapOptions);
-}
-</script>
+
+  <script src="dist/js/lightbox-plus-jquery.min.js"></script>
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBt_8arMWwUwhSkryyrnhi7A5FVlo_LmA4&callback=myMap"></script>
   </body>

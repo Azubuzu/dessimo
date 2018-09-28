@@ -20,6 +20,9 @@
 
  
 }
+    img {
+      max-width: 100%;
+    }
 
 
 @media screen and (min-width:8px) and (max-width:980px){
@@ -338,3 +341,4 @@ border:0px;
 .description-map{
   padding-top: 50px;
 }
+
