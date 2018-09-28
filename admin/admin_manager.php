@@ -51,6 +51,20 @@
 				}
 			}
 
+			if ($_GET['admin_action'] == "add_client") {
+				$add_client = $bdd->prepare('INSERT INTO client VALUES(NULL,:client_nom,:client_prenom,:client_email,:client_remarque,:client_statut_ID)');
+				$add_client->execute(
+					array(
+						':client_email' => $_GET['client_email'],
+						':client_nom' => $_GET['client_nom'], 
+						':client_prenom' => $_GET['client_prenom'], 
+						':client_remarque' => $_GET['client_remarque'], 
+						':client_statut_ID' => $_GET['client_statut_ID'], 
+				));
+
+				header('Location: clients.php');
+			}
+
 			if ($_GET['admin_action'] == "modif_client") {
 				$update_client = $bdd->prepare('UPDATE client SET email = :client_email, nom = :client_nom, prenom = :client_prenom, remarque = :client_remarque, fk_statut_ID = :client_statut_ID WHERE client.ID = :client_ID;');
 				$update_client->execute(

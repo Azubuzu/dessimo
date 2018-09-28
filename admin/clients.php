@@ -148,7 +148,7 @@
 
 
         <?php
-        if (!isset($_GET['client_ID'])) {
+        if (!isset($_GET['client_ID']) && !isset($_GET['add_client'])) {
             $clients = $bdd->query('SELECT *,client.ID AS client_ID,client.nom AS client_nom,statut.nom AS statut_nom FROM client INNER JOIN statut ON statut.ID = fk_statut_ID')->fetchAll(PDO::FETCH_ASSOC);
         ?>
 
@@ -274,7 +274,59 @@
 
             <?php
                 }
+            ?>
+
+             <?php
+            if (isset($_GET['add_client'])) {
+                $statuts = $bdd->query('SELECT * FROM statut')->fetchAll(PDO::FETCH_ASSOC);
                 ?>
+            <div class="col-lg-12">
+                <div class="card">
+                  <div class="card-header"><strong>Ajouter un client</strong></div>
+                  <div class="card-body card-block">
+                    <form>
+                    <input type="hidden" name="admin_action" value="add_client">
+                    <input type="hidden" name="client_ID" value="<?php echo $clients[0]['client_ID'];?>">
+                    <div class="form-group">
+                        <label for="company" class=" form-control-label">Nom</label>
+                        <input type="text" id="company" placeholder="Nom" class="form-control" name="client_nom">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="company" class=" form-control-label">Prénom</label>
+                        <input type="text" id="company" placeholder="Prénom" class="form-control" name="client_prenom">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="company" class=" form-control-label">E-mail</label>
+                        <input type="text" id="company" placeholder="Nom" class="form-control" name="client_email">
+                    </div>
+
+                    <div class="form-group">
+                        <label class=" form-control-label">Statut</label>
+                        <select name="client_statut_ID" id="select" class="form-control">
+                        <?php
+                        foreach ($statuts as $statut) {
+                            echo "<option value='".$statut['ID']."'>".$statut['nom']."</option>";                          
+                        }
+                        ?>
+                        </select>
+                    </div> 
+
+                     <div class="form-group"><label for="textarea-input" class=" form-control-label">Remarques</label>
+                    <textarea name="client_remarque" id="textarea-input" rows="5" placeholder="Contenu.." class="form-control"></textarea></div>
+
+               
+                    <button type="submit" class="btn btn-primary btn-m">
+                    <i class="fa fa-dot-circle-o"></i> Valider</button>
+                    </form>
+              
+                    </div>
+                </div>
+            </div>
+            <?php
+                }
+            ?>
 
 
     <!-- Right Panel -->
