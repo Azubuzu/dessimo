@@ -49,7 +49,7 @@
 table{
    position: relative;
   left: 25%;
-  top:-35px;
+  top:10px;
 
 }
 
@@ -85,8 +85,8 @@ table {
   padding: 5px 50px;
   display: inline-block;
  position: relative;
-left:38%;
- bottom: 25px;
+left:35%;
+ bottom: 30px;
   opacity:0.95;
     float: center;
   text-align: center;
@@ -102,7 +102,8 @@ left:38%;
 .lord-price {
     position: relative;
   right: 13%;
-  
+  left:-30px;
+   bottom: 190px;
  
 }
 }
@@ -148,12 +149,19 @@ font-family: Open Sans;
 
 
 .nav-link-lord{
-  size:24px;
-  font-family: Open Sans;
-	margin: 25px;
-	color: #222222;
+  margin: 25px;
+  color: #222222;
     text-transform: uppercase;
 }
+
+
+.nav-link-lord:hover{
+  margin: 25px;
+  color: #a32627;
+  text-decoration: none;
+    text-transform: uppercase;
+}
+
 .description{
     font-family: Open Sans;
       margin-top: 30px;
@@ -256,6 +264,7 @@ hr {
 
 .carousel-indicators {
   position: relative;
+  top:20px;
 
     
 }

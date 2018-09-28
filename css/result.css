@@ -188,10 +188,19 @@ height:40px;
     }
 
 .nav-link-lord{
-	margin: 25px;
-	color: #222222;
+  margin: 25px;
+  color: #222222;
     text-transform: uppercase;
 }
+
+
+.nav-link-lord:hover{
+  margin: 25px;
+  color: #a32627;
+  text-decoration: none;
+    text-transform: uppercase;
+}
+
 .description{
       margin-top: 30px;
 }
