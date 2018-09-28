@@ -59,6 +59,10 @@
                         </li>
 
                         <li>
+                         <a href="clients.php"> <i class="menu-icon ti-wheelchair"></i>Clients</a>
+                        </li>
+
+                        <li>
                          <a href="cantons.php"> <i class="menu-icon ti-map"></i>Cantons</a>
                         </li>
 
@@ -152,6 +156,9 @@
                         <div class="form-group"><label for="company" class=" form-control-label">Prix</label><input type="number" id="company" placeholder="CHF" class="form-control" name="bien_prix"></div>
                         <div class="form-group"><label for="company" class=" form-control-label">Nombre de pièces</label><input type="text" id="company" placeholder="Pièces" class="form-control" name="bien_piece"></div>
                         <div class="form-group"><label for="company" class=" form-control-label">Nombre de chambres</label><input type="text" id="company" placeholder="Chambres" class="form-control" name="bien_chambre"></div>
+
+                        <div class="form-group"><label for="company" class=" form-control-label">Chauffage</label><input type="text" id="company" placeholder="Chauffage" class="form-control" name="bien_chauffage"></div>
+
                         <div class="form-group"><label for="company" class=" form-control-label">Surface</label><input type="text" id="company" placeholder="m2" class="form-control" name="bien_surface"></div>
                         <div class="form-group"><label for="company" class=" form-control-label">Surface de terrain</label><input type="text" id="company" placeholder="Nom" class="form-control" name="bien_surface_terrain"></div>
                         <div class="form-group"><label for="textarea-input" class=" form-control-label">Description</label>

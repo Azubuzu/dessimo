@@ -63,14 +63,14 @@
                 <span class="sr-only">(current)</span>
               </a>
             </li>
+        <li class="nav-item">
+              <a class="nav-link-lord" href="result.php?list=1">Acheter</a>
+            </li>
             <li class="nav-item">
               <a class="nav-link-lord" href="result.php?list=2">Louer</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link-lord" href="result.php?list=1">Acheter</a>
-            </li>
                <li class="nav-item">
-              <a class="nav-link-lord" href="contact.html">Contact</a>
+              <a class="nav-link-lord" href="contact.html">Services</a>
             </li>
           </ul>
         </div>

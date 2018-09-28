@@ -44,13 +44,13 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link-lord" href="result.php?list=2">Acheter</a>
+              <a class="nav-link-lord" href="result.php?list=1">Acheter</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link-lord" href="result.php?list=1">Louer</a>
+              <a class="nav-link-lord" href="result.php?list=2">Louer</a>
             </li>
                <li class="nav-item">
-              <a class="nav-link-lord" href="contact.html">A Propos</a>
+              <a class="nav-link-lord" href="contact.html">Services</a>
             </li>
           </ul>
         </div>

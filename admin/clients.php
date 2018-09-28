@@ -25,7 +25,7 @@
     <!-- <link rel="stylesheet" href="assets/css/bootstrap-select.less"> -->
     <link rel="stylesheet" href="assets/scss/style.css">
     <link href="assets/css/lib/vector-map/jqvmap.min.css" rel="stylesheet">
-
+    <link rel="stylesheet" href="assets/css/lib/datatable/dataTables.bootstrap.min.css">
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
 
     <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/html5shiv/3.7.3/html5shiv.min.js"></script> -->
@@ -62,7 +62,8 @@
                          <a href="clients.php"> <i class="menu-icon ti-wheelchair"></i>Clients</a>
                         </li>
 
-                        <li class="active">
+
+                        <li>
                          <a href="cantons.php"> <i class="menu-icon ti-map"></i>Cantons</a>
                         </li>
 
@@ -70,7 +71,7 @@
                          <a href="localites.php"> <i class="menu-icon ti-location-pin"></i>Localités</a>
                         </li>
 
-                        <li>
+                        <li class="active">
                          <a href="types.php"> <i class="menu-icon ti-direction"></i>Types de biens</a>
                         </li>
 
@@ -85,7 +86,7 @@
                                 <li><i class="ti-gallery"></i><a href="photos.php">Ajouter une photo</a></li>
                                 <li><i class="ti-gallery"></i><a href="photos.php">Gallerie</a></li>
                             </ul>
-                        </li>  
+                        </li> 
 
                         <li class="menu-item-has-children dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-table"></i>Listes des biens</a>
@@ -145,37 +146,135 @@
  
         </div>
 
+
+
+<div class="content mt-3">
+            <div class="animated fadeIn">
+                <div class="row">
+
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <strong class="card-title">Listes des clients</strong>
+                        </div>
+                        <div class="card-body">
+                  <table id="bootstrap-data-table" class="table table-striped table-bordered">
+                    <thead>
+                      <tr>
+                        <th>Nom</th>
+                        <th>E-mail</th>
+                        <th>Statut</th>
+                        <th>Remarques</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+
+                    <tr>
+                        <td>Renée Currit</td>
+                        <td>renee.currit@bluewin.ch</td>
+                        <td>Curieux</td>
+                        <td>M'a contacté au sujet de la villa à Shabani</td>
+                        <td>
+                            <a href="update_client.php"><button type="button" class="btn btn-info"><i class="fa fa-edit"></i>&nbsp; </button></a>
+                            <button type="button" class="btn btn-danger"><i class="fa fa-trash"></i>&nbsp; </button>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Bovier Christophe</td>
+                        <td>christophe.b@netplus.ch</td>
+                        <td>Curieux</td>
+                        <td>M'a contacté suite à l'annonce dans le nouvelliste de la villa à Shabani</td>
+                        <td>
+                            <a href="update_client.php"><button type="button" class="btn btn-info"><i class="fa fa-edit"></i>&nbsp; </button></a>
+                            <button type="button" class="btn btn-danger"><i class="fa fa-trash"></i>&nbsp; </button>
+                        </td>
+                    </tr>
+                    
+                    </tbody>
+                  </table>
+                        </div>
+                    </div>
+                </div>
+
+
+                </div>
+            </div><!-- .animated -->
+        </div><!-- .content -->
+
+
+
+
+
+
+
+
            <div class="col-lg-12">
                     <div class="card">
-                      <div class="card-header"><strong>Ajouter un canton</strong></div>
+                      <div class="card-header"><strong>Ajouter un client</strong></div>
                       <div class="card-body card-block">
                         <form>
-                            <input type="hidden" name="admin_action" value="add_canton">
-                            <div class="form-group"><label for="company" class=" form-control-label">Nom</label><input type="text" id="company" placeholder="Nom" class="form-control" name="canton_name"></div>
-            
-                            <button type="submit" class="btn btn-primary btn-m">
-                            <i class="fa fa-dot-circle-o"></i> Valider</button>
+                        <input type="hidden" name="admin_action" value="add_client">
+
+                        <div class="form-group"><label for="company" class=" form-control-label">Nom</label><input type="text" id="company" placeholder="Nom" class="form-control" name="client_name"></div>
+
+                        <div class="form-group"><label for="company" class=" form-control-label">E-mail</label><input type="text" id="company" placeholder="Nom" class="form-control" name="client_mail"></div>
+
+                        <div class="form-group">
+                            <label class=" form-control-label">Statut</label>
+                            <select name="client_statut" id="select" class="form-control">
+
+                            <option value="0">Client potentiel</option>
+                            <option value="1">Déjà acheté</option>
+                            <option value="2">Déjà loué</option>
+                            <option value="3">Curieux</option>
+                            <option value="4">Très intéressé</option>
+                            <option value="5">Importé (e-mail)</option>
+                            <option value="6">A rappeler</option>
+                            <option value="7">Transaction en cours</option>
+                            <option value="8">Autre</option>
+                            <option value="9">Archivé</option>
+
+                            </select>
+                        </div> 
+
+                         <div class="form-group"><label for="textarea-input" class=" form-control-label">Remarques</label>
+                        <textarea name="client_remarque" id="textarea-input" rows="5" placeholder="Contenu.." class="form-control"></textarea></div>
+
+                   
+                        <button type="submit" class="btn btn-primary btn-m">
+                        <i class="fa fa-dot-circle-o"></i> Valider</button>
                         </form>
+                  
                         </div>
                     </div>
 
                   </div>
 
+
+
+                   
+
     <!-- Right Panel -->
 
-    <script src="assets/js/vendor/jquery-2.1.4.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
+   <script src="assets/js/vendor/jquery-2.1.4.min.js"></script>
+    <script src="assets/js/popper.min.js"></script>
     <script src="assets/js/plugins.js"></script>
     <script src="assets/js/main.js"></script>
 
 
-    <script src="assets/js/lib/chart-js/Chart.bundle.js"></script>
-    <script src="assets/js/dashboard.js"></script>
-    <script src="assets/js/widgets.js"></script>
-    <script src="assets/js/lib/vector-map/jquery.vmap.js"></script>
-    <script src="assets/js/lib/vector-map/jquery.vmap.min.js"></script>
-    <script src="assets/js/lib/vector-map/jquery.vmap.sampledata.js"></script>
-    <script src="assets/js/lib/vector-map/country/jquery.vmap.world.js"></script>
+    <script src="assets/js/lib/data-table/datatables.min.js"></script>
+    <script src="assets/js/lib/data-table/dataTables.bootstrap.min.js"></script>
+    <script src="assets/js/lib/data-table/dataTables.buttons.min.js"></script>
+    <script src="assets/js/lib/data-table/buttons.bootstrap.min.js"></script>
+    <script src="assets/js/lib/data-table/jszip.min.js"></script>
+    <script src="assets/js/lib/data-table/pdfmake.min.js"></script>
+    <script src="assets/js/lib/data-table/vfs_fonts.js"></script>
+    <script src="assets/js/lib/data-table/buttons.html5.min.js"></script>
+    <script src="assets/js/lib/data-table/buttons.print.min.js"></script>
+    <script src="assets/js/lib/data-table/buttons.colVis.min.js"></script>
+    <script src="assets/js/lib/data-table/datatables-init.js"></script>
     <script>
         ( function ( $ ) {
             "use strict";

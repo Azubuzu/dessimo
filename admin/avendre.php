@@ -56,6 +56,10 @@
                         </li>
 
                         <li>
+                         <a href="clients.php"> <i class="menu-icon ti-wheelchair"></i>Clients</a>
+                        </li>
+
+                        <li>
                          <a href="cantons.html"> <i class="menu-icon ti-map"></i>Cantons</a>
                         </li>
 
