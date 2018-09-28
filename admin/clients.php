@@ -58,7 +58,7 @@
                          <a href="agents.php"> <i class="menu-icon ti-user"></i>Agents</a>
                         </li>
 
-                        <li>
+                        <li class="active">
                          <a href="clients.php"> <i class="menu-icon ti-wheelchair"></i>Clients</a>
                         </li>
 
@@ -71,7 +71,7 @@
                          <a href="localites.php"> <i class="menu-icon ti-location-pin"></i>Localités</a>
                         </li>
 
-                        <li class="active">
+                        <li>
                          <a href="types.php"> <i class="menu-icon ti-direction"></i>Types de biens</a>
                         </li>
 
@@ -147,8 +147,12 @@
         </div>
 
 
+        <?php
+        if (!isset($_GET['client_ID'])) {
+            $clients = $bdd->query('SELECT *,client.ID AS client_ID,client.nom AS client_nom,statut.nom AS statut_nom FROM client INNER JOIN statut ON statut.ID = fk_statut_ID')->fetchAll(PDO::FETCH_ASSOC);
+        ?>
 
-<div class="content mt-3">
+        <div class="content mt-3">
             <div class="animated fadeIn">
                 <div class="row">
 
@@ -170,28 +174,26 @@
                     </thead>
                     <tbody>
 
+                    <?php
+                        foreach ($clients as $client) {
+                    ?>
+
                     <tr>
-                        <td>Renée Currit</td>
-                        <td>renee.currit@bluewin.ch</td>
-                        <td>Curieux</td>
-                        <td>M'a contacté au sujet de la villa à Shabani</td>
+                        <td><?php echo $client['client_nom']." ".$client['prenom'];?></td>
+                        <td><?php echo $client['email'];?></td>
+                        <td><?php echo $client['statut_nom'];?></td>
+                        <td><?php echo $client['remarque'];?></td>
                         <td>
-                            <a href="update_client.php"><button type="button" class="btn btn-info"><i class="fa fa-edit"></i>&nbsp; </button></a>
-                            <button type="button" class="btn btn-danger"><i class="fa fa-trash"></i>&nbsp; </button>
+                            <a href="clients.php?client_ID=<?php echo $client['client_ID'];?>"><button type="button" class="btn btn-info"><i class="fa fa-edit"></i>&nbsp; </button></a>
+                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteWarning" onclick="changeClientID(<?php echo $client['client_ID'].",'".$client['client_nom']."','".$client['prenom']."'";?>)">
+                              <i class="fa fa-trash"></i>&nbsp; 
+                            </button>
                         </td>
                     </tr>
 
-                    <tr>
-                        <td>Bovier Christophe</td>
-                        <td>christophe.b@netplus.ch</td>
-                        <td>Curieux</td>
-                        <td>M'a contacté suite à l'annonce dans le nouvelliste de la villa à Shabani</td>
-                        <td>
-                            <a href="update_client.php"><button type="button" class="btn btn-info"><i class="fa fa-edit"></i>&nbsp; </button></a>
-                            <button type="button" class="btn btn-danger"><i class="fa fa-trash"></i>&nbsp; </button>
-                        </td>
-                    </tr>
-                    
+                    <?php
+                        }
+                    ?>                    
                     </tbody>
                   </table>
                         </div>
@@ -202,59 +204,78 @@
                 </div>
             </div><!-- .animated -->
         </div><!-- .content -->
+        <?php
+        }
+        ?>
 
 
 
 
 
-
-
+            <?php
+            if (isset($_GET['client_ID'])) {
+                $statuts = $bdd->query('SELECT * FROM statut')->fetchAll(PDO::FETCH_ASSOC);
+                $request = $bdd->prepare('SELECT *,client.ID AS client_ID,client.nom AS client_nom,statut.nom AS statut_nom,statut.ID AS statut_ID FROM client INNER JOIN statut ON statut.ID = fk_statut_ID WHERE client.ID = :client_ID');
+                $request->execute(
+                    array(
+                        ':client_ID' => $_GET['client_ID'],
+                    ));
+                $clients = $request->fetchAll();
+            ?>
 
            <div class="col-lg-12">
-                    <div class="card">
-                      <div class="card-header"><strong>Ajouter un client</strong></div>
-                      <div class="card-body card-block">
-                        <form>
-                        <input type="hidden" name="admin_action" value="add_client">
+                <div class="card">
+                    <div class="card-header"><strong>Modifier un client</strong></div>
+                    <div class="card-body card-block">
 
-                        <div class="form-group"><label for="company" class=" form-control-label">Nom</label><input type="text" id="company" placeholder="Nom" class="form-control" name="client_name"></div>
-
-                        <div class="form-group"><label for="company" class=" form-control-label">E-mail</label><input type="text" id="company" placeholder="Nom" class="form-control" name="client_mail"></div>
-
-                        <div class="form-group">
-                            <label class=" form-control-label">Statut</label>
-                            <select name="client_statut" id="select" class="form-control">
-
-                            <option value="0">Client potentiel</option>
-                            <option value="1">Déjà acheté</option>
-                            <option value="2">Déjà loué</option>
-                            <option value="3">Curieux</option>
-                            <option value="4">Très intéressé</option>
-                            <option value="5">Importé (e-mail)</option>
-                            <option value="6">A rappeler</option>
-                            <option value="7">Transaction en cours</option>
-                            <option value="8">Autre</option>
-                            <option value="9">Archivé</option>
-
-                            </select>
-                        </div> 
-
-                         <div class="form-group"><label for="textarea-input" class=" form-control-label">Remarques</label>
-                        <textarea name="client_remarque" id="textarea-input" rows="5" placeholder="Contenu.." class="form-control"></textarea></div>
-
-                   
-                        <button type="submit" class="btn btn-primary btn-m">
-                        <i class="fa fa-dot-circle-o"></i> Valider</button>
-                        </form>
-                  
-                        </div>
+                    <form>
+                    <input type="hidden" name="admin_action" value="modif_client">
+                    <input type="hidden" name="client_ID" value="<?php echo $clients[0]['client_ID'];?>">
+                    <div class="form-group">
+                        <label for="company" class=" form-control-label">Nom</label>
+                        <input type="text" id="company" placeholder="Nom" class="form-control" name="client_nom" value="<?php echo $clients[0]['client_nom'];?>">
                     </div>
 
-                  </div>
+                    <div class="form-group">
+                        <label for="company" class=" form-control-label">Prénom</label>
+                        <input type="text" id="company" placeholder="Prénom" class="form-control" name="client_prenom" value="<?php echo $clients[0]['prenom'];?>">
+                    </div>
 
+                    <div class="form-group">
+                        <label for="company" class=" form-control-label">E-mail</label>
+                        <input type="text" id="company" placeholder="Nom" class="form-control" name="client_email" value="<?php echo $clients[0]['email'];?>">
+                    </div>
 
+                    <div class="form-group">
+                        <label class=" form-control-label">Statut</label>
+                        <select name="client_statut_ID" id="select" class="form-control">
+                        <?php
+                        foreach ($statuts as $statut) {
+                            if ($statut['ID'] == $clients[0]['ID'])
+                                echo "<option value='".$statut['ID']."' selected>".$statut['nom']."</option>";
+                            else 
+                                 echo "<option value='".$statut['ID']."'>".$statut['nom']."</option>";                          
+                        }
+                        ?>
+                        </select>
+                    </div> 
 
-                   
+                     <div class="form-group"><label for="textarea-input" class=" form-control-label">Remarques</label>
+                    <textarea name="client_remarque" id="textarea-input" rows="5" placeholder="Contenu.." class="form-control"><?php echo $clients[0]['remarque'];?></textarea></div>
+
+               
+                    <button type="submit" class="btn btn-primary btn-m">
+                    <i class="fa fa-dot-circle-o"></i> Valider</button>
+                    </form>
+              
+                    </div>
+                </div>
+            </div>
+
+            <?php
+                }
+                ?>
+
 
     <!-- Right Panel -->
 
@@ -293,6 +314,34 @@
             } );
         } )( jQuery );
     </script>
+
+    <script type="text/javascript">
+        function changeClientID(client_ID,client_nom,client_prenom) {
+            document.getElementById("modal_message").innerHTML = "Êtes-vous sûr de vouloir supprimer " + client_nom + " " + client_prenom + " ?";
+            document.getElementById("modal_delete_button").href = "clients.php?admin_action=delete_client&delete_client_ID=" + client_ID;
+        }
+    </script>
+
+    <!-- Modal -->
+    <div class="modal fade" id="deleteWarning" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Attention !</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body" id="modal_message">
+            ...
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+            <a href="" id="modal_delete_button"><button type="button" class="btn btn-danger">SUPPRIMER</button></a>
+          </div>
+        </div>
+      </div>
+    </div>
 
 </body>
 </html>

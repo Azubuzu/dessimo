@@ -51,6 +51,29 @@
 				}
 			}
 
+			if ($_GET['admin_action'] == "modif_client") {
+				$update_client = $bdd->prepare('UPDATE client SET email = :client_email, nom = :client_nom, prenom = :client_prenom, remarque = :client_remarque, fk_statut_ID = :client_statut_ID WHERE client.ID = :client_ID;');
+				$update_client->execute(
+					array(
+						':client_email' => $_GET['client_email'],
+						':client_nom' => $_GET['client_nom'], 
+						':client_prenom' => $_GET['client_prenom'], 
+						':client_remarque' => $_GET['client_remarque'], 
+						':client_statut_ID' => $_GET['client_statut_ID'], 
+						':client_ID' => $_GET['client_ID'], 
+				));
+
+				header('Location: clients.php');
+			}
+
+			if ($_GET['admin_action'] == "delete_client") {
+				$update_client = $bdd->prepare('DELETE FROM client WHERE client.ID = :client_ID');
+				$update_client->execute(
+					array(
+						':client_ID' => $_GET['delete_client_ID'],
+				));			
+			}
+
 			if ($_GET['admin_action'] == "add_bien") {
 
 				if (isset($_POST['bien_favori'])) {
