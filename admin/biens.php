@@ -162,7 +162,11 @@
                         <div class="form-group"><label for="company" class=" form-control-label">Surface</label><input type="text" id="company" placeholder="m2" class="form-control" name="bien_surface"></div>
                         <div class="form-group"><label for="company" class=" form-control-label">Surface de terrain</label><input type="text" id="company" placeholder="Nom" class="form-control" name="bien_surface_terrain"></div>
                         <div class="form-group"><label for="textarea-input" class=" form-control-label">Description</label>
-                        <textarea id="textarea-input" rows="6" placeholder="Contenu.." class="form-control" name="bien_desc"></textarea></div>
+
+                        <textarea id="textarea-input" rows="4" placeholder="Contenu.." class="form-control" name="bien_desc"></textarea></div>
+                        <div class="form-group"><label for="textarea-input" class=" form-control-label">Commodités</label>
+                        <textarea id="textarea-input" rows="3" placeholder="Contenu.." class="form-control" name="bien_comm"></textarea></div>
+
                         <div class="form-group"><label for="company" class=" form-control-label">Situation</label><input type="text" id="company" placeholder="Description" class="form-control" name="bien_situation"></div>
                         <div class="form-group"><label for="company" class=" form-control-label">Particularité</label><input type="text" id="company" placeholder="Description" class="form-control" name="bien_particularite"></div>
 
