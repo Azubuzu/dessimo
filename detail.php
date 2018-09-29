@@ -84,7 +84,7 @@
     <!--Title Section -->
 <section>
   <div class="container">
-    <h1><?php echo $bien['bien_nom']; ?></h1>
+    <h1 style="margin-top: 90px; font-size: 28px;"><?php echo $bien['bien_nom']; ?></h1>
   </div>
 </section>
     <!--End Title Section -->
