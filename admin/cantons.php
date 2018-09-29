@@ -145,6 +145,74 @@
  
         </div>
 
+        <?php
+        if (!isset($_GET['add_canton'])) {
+            $cantons = $bdd->query('SELECT * FROM canton')->fetchAll(PDO::FETCH_ASSOC);
+        ?>
+
+        <div class="content mt-3">
+            <div class="animated fadeIn">
+                <div class="row">
+
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <strong class="card-title">Listes des Cantons</strong>
+                        </div>
+                        <div class="card-body">
+                  <table id="bootstrap-data-table" class="table table-striped table-bordered">
+                    <thead>
+                      <tr>
+                        <th>Nom</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+
+                    <?php
+                        foreach ($cantons as $canton) {
+                    ?>
+
+                    <tr>
+                        <td><?php echo $canton['nom']; ?></td>
+                        <td>
+                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteWarning" onclick="deleteElement(<?php echo $canton['ID'].",'".$canton['nom']."','canton'";?>)">
+                              <i class="fa fa-trash"></i>&nbsp; 
+                            </button>
+                        </td>
+                    </tr>
+
+                    <?php
+                        }
+                    ?>                    
+                    </tbody>
+                  </table>
+
+                    </div>
+                    <div class="lord-button" style="margin-left :25px; margin-bottom: 25px;">
+                    <a href="cantons.php?add_canton"><button type="submit" class="btn btn-success btn-m">
+                    <i class="fa fa-plus"></i> Ajouter un canton</button></div>
+                    </div>
+               
+                    </form></a>
+
+
+
+                </div>
+
+
+                </div>
+            </div><!-- .animated -->
+        </div><!-- .content -->
+        <?php
+        }
+        ?>
+
+        <?php
+        if (isset($_GET['add_canton'])) {
+            $cantons = $bdd->query('SELECT * FROM canton')->fetchAll(PDO::FETCH_ASSOC);
+        ?>
+
            <div class="col-lg-12">
                     <div class="card">
                       <div class="card-header"><strong>Ajouter un canton</strong></div>
@@ -159,7 +227,10 @@
                         </div>
                     </div>
 
-                  </div>
+            </div>
+         <?php
+        }
+        ?>
 
     <!-- Right Panel -->
 
@@ -194,6 +265,27 @@
             } );
         } )( jQuery );
     </script>
+
+        <!-- Modal -->
+    <div class="modal fade" id="deleteWarning" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Attention !</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body" id="modal_message">
+            ...
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+            <a href="" id="modal_delete_button"><button type="button" class="btn btn-danger">SUPPRIMER</button></a>
+          </div>
+        </div>
+      </div>
+    </div>
 
 </body>
 </html>

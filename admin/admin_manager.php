@@ -149,6 +149,14 @@
 				));			
 			}
 
+			if ($_GET['admin_action'] == "delete_canton") {
+				$update_client = $bdd->prepare('DELETE FROM canton WHERE canton.ID = :canton_ID');
+				$update_client->execute(
+					array(
+						':canton_ID' => $_GET['delete_ID'],
+				));			
+			}
+
 			if ($_GET['admin_action'] == "add_bien") {
 
 				if (isset($_POST['bien_favori'])) {

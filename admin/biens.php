@@ -189,7 +189,7 @@
                         <td><?php echo date('d/m/Y', $bien['creation_date']);?></td>
                         <td>
                             <a href="biens.php?bien_ID=<?php echo $bien['bien_ID'];?>"><button type="button" class="btn btn-info"><i class="fa fa-edit"></i>&nbsp; </button></a>
-                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteWarning" onclick="deleteElement(<?php echo $bien['bien_ID'].",'".$bien['bien_nom']."','delete_bien'";?>)">
+                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteWarning" onclick="deleteElement(<?php echo $bien['bien_ID'].",'".$bien['bien_nom']."','bien'";?>)">
                               <i class="fa fa-trash"></i>&nbsp; 
                             </button>
                         </td>
