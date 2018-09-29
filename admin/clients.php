@@ -27,7 +27,7 @@
     <link href="assets/css/lib/vector-map/jqvmap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/lib/datatable/dataTables.bootstrap.min.css">
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
-
+        <link rel="stylesheet" href="assets/css/lib/lord-main.css">
     <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/html5shiv/3.7.3/html5shiv.min.js"></script> -->
 
 </head>
@@ -196,8 +196,16 @@
                     ?>                    
                     </tbody>
                   </table>
-                        </div>
+
                     </div>
+                    <div class="lord-button" style="margin-left :25px; margin-bottom: 25px;">          <a href="clients.php?add_client="><button type="submit" class="btn btn-success btn-m">
+                    <i class="fa fa-plus"></i> Ajouter un client</button></div>
+                                </div>
+               
+                    </form></a>
+
+
+
                 </div>
 
 
