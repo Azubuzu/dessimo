@@ -82,6 +82,57 @@
 				header('Location: clients.php');
 			}
 
+			if ($_GET['admin_action'] == "modif_bien") {
+
+				if (isset($_POST['bien_favori'])) {
+					$bien_favori = $_POST['bien_favori'];
+				} else {
+					$bien_favori = 0;
+				}
+
+				if ($_POST['bien_gmaps'] == "") {
+					$gmaps_data = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1379.766188734781!2d7.367825183637874!3d46.23964330916706!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDbCsDE0JzIyLjciTiA3wrAyMicwNy4wIkU!5e0!3m2!1sfr!2sch!4v1538052863523";
+				}
+				else {
+					$gmaps_data = getBetween($_POST['bien_gmaps'],'src="','"');
+					if ($gmaps_data == "") {
+						$gmaps_data = $_POST['bien_gmaps'];
+					}
+				}
+
+				$update_client = $bdd->prepare('UPDATE bien SET nom = :bien_nom, prix = :bien_prix, piece = :bien_piece, chambre = :bien_chambre, surface = :bien_surface, adresse = :bien_adresse, annee = :bien_annee, description = :bien_desc, commodite = :bien_commodite, situation = :bien_situation, particularite = :bien_particularite, niveau = :bien_niveau, nbre_WC = :bien_nbre_WC, nbre_niveau = :bien_nbre_niveau, chauffage = :bien_chauffage, charges = :bien_charges, surface_terrain = :bien_surface_terrain, disponibilite = :bien_disponibilite, favori = :bien_favori, gmaps = :bien_gmaps, fk_Type_ID = :bien_type_id, fk_Localite_ID = :bien_localite_id,fk_Categorie_ID = :bien_categorie_id, fk_Agent_ID = :bien_agent_id WHERE bien.ID = :bien_ID;');
+				$update_client->execute(
+					array(
+						':bien_nom' => $_POST['bien_nom'], 
+						':bien_prix' => $_POST['bien_prix'],
+						':bien_piece' => $_POST['bien_piece'],
+						':bien_chambre' => $_POST['bien_chambre'],
+						':bien_surface' => $_POST['bien_surface'],
+						':bien_adresse' => $_POST['bien_adresse'],
+						':bien_annee' => $_POST['bien_annee'],
+						':bien_desc' => $_POST['bien_desc'],
+						':bien_commodite' => $_POST['bien_commodite'],
+						':bien_situation' => $_POST['bien_situation'],
+						':bien_particularite' => $_POST['bien_particularite'],
+						':bien_niveau' => $_POST['bien_niveau'],
+						':bien_nbre_WC' => $_POST['bien_nbre_WC'],
+						':bien_nbre_niveau' => $_POST['bien_nbre_niveau'],
+						':bien_chauffage' => $_POST['bien_chauffage'],
+						':bien_charges' => $_POST['bien_charges'],
+						':bien_surface_terrain' => $_POST['bien_surface_terrain'],
+						':bien_disponibilite' => $_POST['bien_disponibilite'],
+						':bien_favori' => $bien_favori,
+						':bien_gmaps' => $gmaps_data,
+						':bien_type_id' => $_POST['bien_type_id'],
+						':bien_localite_id' => $_POST['bien_localite_id'],
+						':bien_categorie_id' => $_POST['bien_categorie_id'],
+						':bien_agent_id' => $_POST['bien_agent_id'],
+						':bien_ID' => $_GET['bien_ID'], 
+				));
+
+				header('Location: biens.php');
+			}
+
 			if ($_GET['admin_action'] == "delete_client") {
 				$update_client = $bdd->prepare('DELETE FROM client WHERE client.ID = :client_ID');
 				$update_client->execute(

@@ -188,7 +188,7 @@
                         <td><?php echo $bien['favori'];?></td>
                         <td><?php echo date('d/m/Y', $bien['creation_date']);?></td>
                         <td>
-                            <a href="biens.php?bien_ID=<?php echo $client['bien_ID'];?>"><button type="button" class="btn btn-info"><i class="fa fa-edit"></i>&nbsp; </button></a>
+                            <a href="biens.php?bien_ID=<?php echo $bien['bien_ID'];?>"><button type="button" class="btn btn-info"><i class="fa fa-edit"></i>&nbsp; </button></a>
                             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteWarning" onclick="deleteElement(<?php echo $bien['bien_ID'].",'".$bien['bien_nom']."','delete_bien'";?>)">
                               <i class="fa fa-trash"></i>&nbsp; 
                             </button>
@@ -201,6 +201,9 @@
                     </tbody>
                   </table>
                         </div>
+                        <div class="lord-button" style="margin-left :25px; margin-bottom: 25px;">
+                    <a href="biens.php?add_bien"><button type="submit" class="btn btn-success btn-m">
+                    <i class="fa fa-plus"></i> Ajouter un bien</button></div>
                     </div>
                 </div>
 
@@ -214,7 +217,189 @@
 
 
 <!-- /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+        
+         <?php
+        if (isset($_GET['bien_ID']) && !isset($_GET['add_bien'])) {
+            
+            $bien_selected = $bdd->prepare("SELECT *,bien.ID AS bien_ID,bien.nom AS bien_nom,type.nom AS type_nom, localite.nom AS local_nom, bien.description AS bien_desc FROM bien INNER JOIN categorie ON categorie.ID = fk_Categorie_ID INNER JOIN type ON type.ID = fk_Type_ID INNER JOIN localite ON localite.ID = fk_Localite_ID WHERE bien.ID =:bien_ID");
+            $bien_selected->execute(
+                array(
+                    ':bien_ID' => $_GET['bien_ID'],
+            ));
+            $bien = $bien_selected->fetchAll();
+            
+        ?>
+ 
+        </div>
+         <div class="card-header"><strong>Modifier un bien immobilier</strong>      </div>
+         <form method="POST" enctype="multipart/form-data" action="biens.php?admin_action=modif_bien&bien_ID=<?php echo $bien[0]['bien_ID']; ?>"> 
+        <div class="row">
+           
+           <div class="col-lg-6">
+                    <div class="card">
+               
+                      <div class="card-body card-block">
+                        <div class="form-group"><label for="company" class=" form-control-label">Nom</label><input type="text" id="company" placeholder="Nom" class="form-control" name="bien_nom" value="<?php echo $bien[0]['bien_nom']; ?>"></div>
+                        <div class="form-group"><label for="company" class=" form-control-label">Prix</label><input type="number" id="company" placeholder="CHF" class="form-control" name="bien_prix" value="<?php echo $bien[0]['prix']; ?>"></div>
+                        <div class="form-group"><label for="company" class=" form-control-label">Nombre de pièces</label><input type="text" id="company" placeholder="Pièces" class="form-control" name="bien_piece" value="<?php echo $bien[0]['piece']; ?>"></div>
+                        <div class="form-group"><label for="company" class=" form-control-label">Nombre de chambres</label><input type="text" id="company" placeholder="Chambres" class="form-control" name="bien_chambre" value="<?php echo $bien[0]['chambre']; ?>"></div>
 
+                        <div class="form-group"><label for="company" class=" form-control-label">Chauffage</label><input type="text" id="company" placeholder="Chauffage" class="form-control" name="bien_chauffage" value="<?php echo $bien[0]['chauffage']; ?>"></div>
+
+                        <div class="form-group"><label for="company" class=" form-control-label">Surface</label><input type="text" id="company" placeholder="m2" class="form-control" name="bien_surface" value="<?php echo $bien[0]['surface']; ?>"></div>
+                        <div class="form-group"><label for="company" class=" form-control-label">Surface de terrain</label><input type="text" id="company" placeholder="Nom" class="form-control" name="bien_surface_terrain" value="<?php echo $bien[0]['surface_terrain']; ?>"></div>
+                        <div class="form-group"><label for="textarea-input" class=" form-control-label">Description</label>
+
+                        <textarea id="textarea-input" rows="4" placeholder="Contenu.." class="form-control" name="bien_desc"><?php echo $bien[0]['bien_desc']; ?></textarea></div>
+                        <div class="form-group"><label for="textarea-input" class=" form-control-label">Commodités</label>
+                        <textarea id="textarea-input" rows="4" placeholder="Contenu.." class="form-control" name="bien_commodite"><?php echo $bien[0]['commodite']; ?></textarea></div>
+
+                        <div class="form-group"><label for="company" class=" form-control-label">Situation</label><input type="text" id="company" placeholder="Description" class="form-control" name="bien_situation" value="<?php echo $bien[0]['situation']; ?>"></div>
+                        <div class="form-group"><label for="company" class=" form-control-label">Particularité</label><input type="text" id="company" placeholder="Description" class="form-control" name="bien_particularite" value="<?php echo $bien[0]['particularite']; ?>"></div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-body card-block">
+                 
+
+                        <div class="form-group"><label for="company" class=" form-control-label">Niveau</label><input type="text" id="company" placeholder="Nom" class="form-control" name="bien_niveau" value="<?php echo $bien[0]['niveau']; ?>"></div>
+
+                        <div class="form-group"><label for="company" class=" form-control-label">Nombre d'étages</label><input type="text" id="company" placeholder="WC" class="form-control" name="bien_nbre_niveau" value="<?php echo $bien[0]['nbre_niveau']; ?>"></div>
+
+                        <div class="form-group"><label for="company" class=" form-control-label">Nombre de WC</label><input type="text" id="company" placeholder="WC" class="form-control" name="bien_nbre_WC" value="<?php echo $bien[0]['nbre_WC']; ?>"></div>
+
+                        <div class="form-group"><label for="company" class=" form-control-label">Charges</label><input type="text" id="company" placeholder="Nom" class="form-control" name="bien_charges" value="<?php echo $bien[0]['charges']; ?>"></div>
+
+                        <div class="form-group"><label for="company" class=" form-control-label">Année de construction</label><input type="text" id="company" placeholder="Année" class="form-control" name="bien_annee" value="<?php echo $bien[0]['annee']; ?>"></div> 
+                        <div class="form-group"><label for="company" class=" form-control-label">Disponibilité</label><input type="text" id="company" placeholder="Nom" class="form-control" name="bien_disponibilite" value="<?php echo $bien[0]['disponibilite']; ?>"></div>
+
+
+
+                        <div class="row form-group">
+                            <div class="col col-md-3"><label class=" form-control-label">Favoris</label></div>
+                            <div class="col col-md-9">
+                              <div class="form-check">
+                                <div class="radio">
+                                  <label for="radio1" class="form-check-label ">
+                                    <?php 
+                                        if ($bien[0]['favori'] == 1)
+                                            echo '<input type="radio" id="radio1" name="bien_favori" value="1" class="form-check-input" checked>Oui';
+                                        else
+                                            echo '<input type="radio" id="radio1" name="bien_favori" value="1" class="form-check-input">Oui';
+                                        
+                                    ?>
+                                  </label>
+                                </div>
+                                <div class="radio">
+                                  <label for="radio3" class="form-check-label ">
+                                    <?php 
+                                        if ($bien[0]['favori'] == 0) 
+                                            echo '<input type="radio" id="radio3" name="bien_favori" value="0" class="form-check-input" checked>Non';
+                                        else
+                                            echo '<input type="radio" id="radio3" name="bien_favori" value="0" class="form-check-input">Non';
+                                        
+                                    ?>
+                                  </label>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+
+                        <div class="form-group"><label for="company" class=" form-control-label">Google Maps source</label><input type="text" id="company" placeholder='<iframe src="https://www.google.com/maps/embed ...' class="form-control" name="bien_gmaps" value="<?php echo $bien[0]['gmaps']; ?>"></div>
+
+
+                        <div class="form-group">
+                        <label for="company" class=" form-control-label">Types de bien</label>
+                        <select name="bien_type_id"  class="form-control">
+                        <?php
+                            foreach ($types as $item) {
+                                if ($item['ID'] == $bien[0]['fk_Type_ID'])
+                                    echo "<option value='".$item['ID']."' selected>".$item['nom']."</option>";
+                                else
+                                    echo "<option value='".$item['ID']."'>".$item['nom']."</option>";
+                            }
+                        ?>
+                        </select>
+                        </div> 
+
+                        <div class="form-group"><label for="company" class=" form-control-label">Adresse</label><input type="text" id="company" placeholder="Nom" class="form-control" name="bien_adresse"></div>
+
+
+                        <div class="form-group">
+                        <label for="company" class=" form-control-label">Canton</label>
+                        <select name="bien_canton_id" id="canton" class="form-control" onchange="fetch_select(this.value);">
+                        <?php
+                            foreach ($cantons as $item) {
+                                echo "<option value='".$item['ID']."'>".$item['nom']."</option>";
+                            }
+                        ?>
+                        </select>
+                        </div> 
+
+                        <div class="form-group">
+                        <label for="company" class=" form-control-label">Localité</label>
+                        <select name="bien_localite_id" class="form-control" id="localite">
+                        <?php
+                          foreach ($localites as $item) {
+                            if ($item['ID'] == $bien[0]['fk_Localite_ID'])
+                                echo "<option value='".$item['ID']."' selected>".$item['nom']."</option>";
+                            else
+                                echo "<option value='".$item['ID']."'>".$item['nom']."</option>";
+                          }
+                        ?>
+                        </select>
+                        </div>
+
+                        <div class="form-group">
+                        <label for="company" class=" form-control-label">Catégorie</label>
+                        <select name="bien_categorie_id" class="form-control">
+                        <?php
+                            foreach ($categories_admin as $item) {
+                                if ($item['ID'] == $bien[0]['fk_Categorie_ID'])
+                                    echo "<option value='".$item['ID']."' selected>".$item['nom']."</option>";
+                                else
+                                    echo "<option value='".$item['ID']."'>".$item['nom']."</option>";
+                            }
+                        ?>
+                        </select>
+                        </div> 
+
+
+                        <div class="form-group">
+                        <label for="company" class=" form-control-label">Agent</label>
+                        <select name="bien_agent_id" class="form-control">
+                        <?php
+                            foreach ($agents as $item) {
+                                if ($item['ID'] == $bien[0]['fk_Agent_ID'])
+                                    echo "<option value='".$item['ID']."'>".$item['nom']." ".$item['prenom']."</option>";
+                                else
+                                    echo "<option value='".$item['ID']."' selected>".$item['nom']." ".$item['prenom']."</option>";
+                            }
+                        ?>
+                        </select>
+                        </div>                   
+                        <button type="submit" class="btn btn-primary btn-m">
+                        <i class="fa fa-dot-circle-o"></i> Valider</button>
+                    </div>
+                </div>
+            </div>
+        
+        </div>
+        </form>
+        <?php
+        }
+        ?>
+
+
+        <!-- Add a new client ///////////////////////////////////////////////////////////////////////////////////////////// -->
+
+         <?php
+        if (!isset($_GET['bien_ID']) && isset($_GET['add_bien'])) {            
+        ?>
  
         </div>
          <div class="card-header"><strong>Ajouter un bien immobilier</strong>      </div>
@@ -358,6 +543,9 @@
         
         </div>
         </form>
+        <?php
+        }
+        ?>
 
     <!-- Right Panel -->
 

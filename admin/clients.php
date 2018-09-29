@@ -198,9 +198,10 @@
                   </table>
 
                     </div>
-                    <div class="lord-button" style="margin-left :25px; margin-bottom: 25px;">          <a href="clients.php?add_client="><button type="submit" class="btn btn-success btn-m">
+                    <div class="lord-button" style="margin-left :25px; margin-bottom: 25px;">
+                    <a href="clients.php?add_client="><button type="submit" class="btn btn-success btn-m">
                     <i class="fa fa-plus"></i> Ajouter un client</button></div>
-                                </div>
+                    </div>
                
                     </form></a>
 
