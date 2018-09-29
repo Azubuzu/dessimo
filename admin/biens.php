@@ -142,6 +142,75 @@
                     </div>
                 </div>
             </div>
+
+
+            <?php
+        if (!isset($_GET['bien_ID']) && !isset($_GET['add_bien'])) {
+
+            $biens = $bdd->query("SELECT *,bien.ID AS bien_ID,bien.nom AS bien_nom,type.nom AS type_nom, localite.nom AS local_nom, bien.description AS bien_desc FROM bien INNER JOIN categorie ON categorie.ID = fk_Categorie_ID INNER JOIN type ON type.ID = fk_Type_ID INNER JOIN localite ON localite.ID = fk_Localite_ID")->fetchAll(PDO::FETCH_ASSOC);
+        ?>
+
+        <div class="content mt-3">
+            <div class="animated fadeIn">
+                <div class="row">
+
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <strong class="card-title">Listes des clients</strong>
+                        </div>
+                        <div class="card-body">
+                  <table id="bootstrap-data-table" class="table table-striped table-bordered">
+                    <thead>
+                      <tr>
+                        <th>Nom</th>
+                        <th>Description</th>
+                        <th>Disponibilité</th>
+                        <th>Favori</th>
+                        <th>Date de création</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+
+                    <?php
+                        foreach ($biens as $bien) {
+                    ?>
+
+                    <tr>
+                        <td><?php echo $bien['bien_nom'];?></td>
+                        <td><?php echo $bien['bien_desc'];?></td>
+                        <td><?php echo $bien['disponibilite'];?></td>
+                        <td><?php echo $bien['favori'];?></td>
+                        <td><?php echo date('d/m/Y', $bien['creation_date']);?></td>
+                        <td>
+                            <a href="biens.php?bien_ID=<?php echo $client['bien_ID'];?>"><button type="button" class="btn btn-info"><i class="fa fa-edit"></i>&nbsp; </button></a>
+                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteWarning" onclick="deleteElement(<?php echo $bien['bien_ID'].",'".$bien['bien_nom']."','delete_bien'";?>)">
+                              <i class="fa fa-trash"></i>&nbsp; 
+                            </button>
+                        </td>
+                    </tr>
+
+                    <?php
+                        }
+                    ?>                    
+                    </tbody>
+                  </table>
+                        </div>
+                    </div>
+                </div>
+
+
+                </div>
+            </div><!-- .animated -->
+        </div><!-- .content -->
+        <?php
+        }
+        ?>
+
+
+<!-- /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+
  
         </div>
          <div class="card-header"><strong>Ajouter un bien immobilier</strong>      </div>
@@ -318,6 +387,27 @@
     }
 
     </script>
+
+    <!-- Modal -->
+    <div class="modal fade" id="deleteWarning" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Attention !</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body" id="modal_message">
+            ...
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+            <a href="" id="modal_delete_button"><button type="button" class="btn btn-danger">SUPPRIMER</button></a>
+          </div>
+        </div>
+      </div>
+    </div>
 
 </body>
 </html>

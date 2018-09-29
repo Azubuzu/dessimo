@@ -10,6 +10,8 @@
 		require_once "../vendor/script/db_connect.php";
 		require_once "../vendor/script/basic_query.php";
 
+		echo '<script type="text/javascript" src="confirm_delete.js"></script>';
+
 		
 		if (isset($_GET['admin_action'])) {
 			
@@ -85,6 +87,14 @@
 				$update_client->execute(
 					array(
 						':client_ID' => $_GET['delete_client_ID'],
+				));			
+			}
+
+			if ($_GET['admin_action'] == "delete_bien") {
+				$update_client = $bdd->prepare('DELETE FROM bien WHERE bien.ID = :bien_ID');
+				$update_client->execute(
+					array(
+						':bien_ID' => $_GET['delete_ID'],
 				));			
 			}
 
