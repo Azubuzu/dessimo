@@ -266,7 +266,18 @@
       <div class="col-md-7 description">
         <h1>Descriptif</h1>
         <p><?php echo nl2br($bien['bien_desc']); ?> </p>
+ <h1 style="margin-top: 0px;">Commodités</h1>
+
+      <div class="row">
+
+      <div class="col-md-12 description">      
+
+
+      <p style="margin-top: -25px;"><?php echo ($bien['commodite']); ?> </p>
       </div>
+
+</div>
+  </div>
     </div>
 
   </div>
