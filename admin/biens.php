@@ -165,7 +165,7 @@
 
                         <textarea id="textarea-input" rows="4" placeholder="Contenu.." class="form-control" name="bien_desc"></textarea></div>
                         <div class="form-group"><label for="textarea-input" class=" form-control-label">Commodités</label>
-                        <textarea id="textarea-input" rows="3" placeholder="Contenu.." class="form-control" name="bien_comm"></textarea></div>
+                        <textarea id="textarea-input" rows="4" placeholder="Contenu.." class="form-control" name="bien_commodite"></textarea></div>
 
                         <div class="form-group"><label for="company" class=" form-control-label">Situation</label><input type="text" id="company" placeholder="Description" class="form-control" name="bien_situation"></div>
                         <div class="form-group"><label for="company" class=" form-control-label">Particularité</label><input type="text" id="company" placeholder="Description" class="form-control" name="bien_particularite"></div>
@@ -187,8 +187,8 @@
                         <div class="form-group"><label for="company" class=" form-control-label">Niveau</label><input type="text" id="company" placeholder="Nom" class="form-control" name="bien_niveau"></div>
 
                         <div class="form-group"><label for="company" class=" form-control-label">Nombre d'étages</label><input type="text" id="company" placeholder="WC" class="form-control" name="bien_nbre_niveau"></div>
-                        <div class="form-group"><label for="company" class=" form-control-label">Nombre de WC</label><input type="text" id="company" placeholder="WC" class="form-control" name="bien_nbre_WC"></div>
 
+                        <div class="form-group"><label for="company" class=" form-control-label">Nombre de WC</label><input type="text" id="company" placeholder="WC" class="form-control" name="bien_nbre_WC"></div>
 
                         <div class="form-group"><label for="company" class=" form-control-label">Charges</label><input type="text" id="company" placeholder="Nom" class="form-control" name="bien_charges"></div>
 
@@ -216,7 +216,7 @@
                           </div>
 
 
-                        <div class="form-group"><label for="company" class=" form-control-label">Google Maps source</label><input type="text" id="company" placeholder="https://www.google.com/maps/embed ..." class="form-control" name="bien_gmaps"></div>
+                        <div class="form-group"><label for="company" class=" form-control-label">Google Maps source</label><input type="text" id="company" placeholder='<iframe src="https://www.google.com/maps/embed ...' class="form-control" name="bien_gmaps"></div>
 
 
                         <div class="form-group">
@@ -259,7 +259,7 @@
                         <label for="company" class=" form-control-label">Catégorie</label>
                         <select name="bien_categorie_id" class="form-control">
                         <?php
-                            foreach ($categories as $item) {
+                            foreach ($categories_admin as $item) {
                               echo "<option value='".$item['ID']."'>".$item['nom']."</option>";
                             }
                         ?>
@@ -309,7 +309,7 @@
      type: 'post',
      url: '../vendor/script/fetch_localite.php',
      data: {
-      get_localite_by_canton:val
+      get_localite_by_canton_no_wildcard:val
      },
      success: function (response) {
       document.getElementById("localite").innerHTML=response; 

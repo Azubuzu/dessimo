@@ -152,47 +152,46 @@
 
 
 
-           <div class="col-lg-12">
-                    <div class="card">
-                      <div class="card-header"><strong>Modifier un client</strong></div>
-                      <div class="card-body card-block">
-                        <form>
-                        <input type="hidden" name="admin_action" value="add_client">
+            <div class="col-lg-12">
+                <div class="card">
+                  <div class="card-header"><strong>Modifier un client</strong></div>
+                  <div class="card-body card-block">
+                    <form>
+                    <input type="hidden" name="admin_action" value="add_client">
 
-                        <div class="form-group"><label for="company" class=" form-control-label">Nom</label><input type="text" id="company" placeholder="Nom" class="form-control" name="client_name"></div>
+                    <div class="form-group"><label for="company" class=" form-control-label">Nom</label><input type="text" id="company" placeholder="Nom" class="form-control" name="client_name"></div>
 
-                        <div class="form-group"><label for="company" class=" form-control-label">E-mail</label><input type="text" id="company" placeholder="Nom" class="form-control" name="client_mail"></div>
+                    <div class="form-group"><label for="company" class=" form-control-label">E-mail</label><input type="text" id="company" placeholder="Nom" class="form-control" name="client_mail"></div>
 
-                        <div class="form-group">
-                            <label class=" form-control-label">Statut</label>
-                            <select name="client_statut" id="select" class="form-control">
+                    <div class="form-group">
+                        <label class=" form-control-label">Statut</label>
+                        <select name="client_statut" id="select" class="form-control">
 
-                            <option value="0">Client potentiel</option>
-                            <option value="1">Déjà acheté</option>
-                            <option value="2">Déjà loué</option>
-                            <option value="3">Curieux</option>
-                            <option value="4">Très intéressé</option>
-                            <option value="5">Importé (e-mail)</option>
-                            <option value="6">A rappeler</option>
-                            <option value="7">Transaction en cours</option>
-                            <option value="8">Autre</option>
-                            <option value="9">Archivé</option>
+                        <option value="0">Client potentiel</option>
+                        <option value="1">Déjà acheté</option>
+                        <option value="2">Déjà loué</option>
+                        <option value="3">Curieux</option>
+                        <option value="4">Très intéressé</option>
+                        <option value="5">Importé (e-mail)</option>
+                        <option value="6">A rappeler</option>
+                        <option value="7">Transaction en cours</option>
+                        <option value="8">Autre</option>
+                        <option value="9">Archivé</option>
 
-                            </select>
-                        </div> 
+                        </select>
+                    </div> 
 
-                         <div class="form-group"><label for="textarea-input" class=" form-control-label">Remarques</label>
-                        <textarea name="client_remarque" id="textarea-input" rows="5" placeholder="Contenu.." class="form-control"></textarea></div>
+                     <div class="form-group"><label for="textarea-input" class=" form-control-label">Remarques</label>
+                    <textarea name="client_remarque" id="textarea-input" rows="5" placeholder="Contenu.." class="form-control"></textarea></div>
 
-                   
-                        <button type="submit" class="btn btn-primary btn-m">
-                        <i class="fa fa-dot-circle-o"></i> Valider</button>
-                        </form>
-                  
-                        </div>
+               
+                    <button type="submit" class="btn btn-primary btn-m">
+                    <i class="fa fa-dot-circle-o"></i> Valider</button>
+                    </form>
+              
                     </div>
-
-                  </div>
+                </div>
+            </div>
 
 
 

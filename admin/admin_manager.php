@@ -108,7 +108,7 @@
 
 				$creation_date = time();
 
-				$add_bien_rq = $bdd->prepare("INSERT INTO bien VALUES (NULL,:bien_nom,:bien_prix,:bien_piece,:bien_chambre,:bien_surface,:bien_adresse,:bien_annee,:bien_desc,:bien_situation,:bien_particularite,:bien_niveau,:bien_nbre_WC,:bien_nbre_niveau,:bien_charges,:bien_surface_terrain,:bien_disponibilite,:bien_favori,:bien_gmaps,:bien_type_id,:bien_localite_id,:bien_categorie_id,:bien_agent_id,:bien_creation_date)");
+				$add_bien_rq = $bdd->prepare("INSERT INTO bien VALUES (NULL,:bien_nom,:bien_prix,:bien_piece,:bien_chambre,:bien_surface,:bien_adresse,:bien_annee,:bien_desc,:bien_commodite,:bien_situation,:bien_particularite,:bien_niveau,:bien_nbre_WC,:bien_nbre_niveau,:bien_chauffage,:bien_charges,:bien_surface_terrain,:bien_disponibilite,:bien_favori,:bien_gmaps,:bien_type_id,:bien_localite_id,:bien_categorie_id,:bien_agent_id,:bien_creation_date)");
 
 				$add_bien_rq->execute(
 					array(
@@ -120,11 +120,13 @@
 						':bien_adresse' => $_POST['bien_adresse'],
 						':bien_annee' => $_POST['bien_annee'],
 						':bien_desc' => $_POST['bien_desc'],
+						':bien_commodite' => $_POST['bien_commodite'],
 						':bien_situation' => $_POST['bien_situation'],
 						':bien_particularite' => $_POST['bien_particularite'],
 						':bien_niveau' => $_POST['bien_niveau'],
 						':bien_nbre_WC' => $_POST['bien_nbre_WC'],
 						':bien_nbre_niveau' => $_POST['bien_nbre_niveau'],
+						':bien_chauffage' => $_POST['bien_chauffage'],
 						':bien_charges' => $_POST['bien_charges'],
 						':bien_surface_terrain' => $_POST['bien_surface_terrain'],
 						':bien_disponibilite' => $_POST['bien_disponibilite'],

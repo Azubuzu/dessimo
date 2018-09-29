@@ -1,5 +1,6 @@
 <?php 
 	$categories = $bdd->query('SELECT * FROM categorie WHERE admin = 0 ORDER BY nom')->fetchAll(PDO::FETCH_ASSOC);
+	$categories_admin = $bdd->query('SELECT * FROM categorie ORDER BY nom')->fetchAll(PDO::FETCH_ASSOC);
 	$cantons = $bdd->query('SELECT * FROM canton ORDER BY nom')->fetchAll(PDO::FETCH_ASSOC);
 
 	if(isset($_GET['canton']))
