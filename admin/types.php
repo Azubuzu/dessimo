@@ -211,7 +211,7 @@
         ?>
 
         <?php
-        if (isset($_GET['add_type']) && !isset($_GET['type_id'])) {
+        if (isset($_GET['add_type']) && !isset($_GET['type_ID'])) {
         ?>
 
            <div class="col-lg-12">

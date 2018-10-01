@@ -131,6 +131,20 @@
 				header('Location: types.php');
 			}
 
+			if ($_GET['admin_action'] == "modif_agent") {
+				$update_client = $bdd->prepare('UPDATE agent SET nom = :agent_name, prenom = :agent_prenom, mail = :agent_mail, hash = :agent_hash WHERE agent.ID = :agent_ID;');
+				$update_client->execute(
+					array(
+						':agent_name' => $_GET['agent_name'],
+						':agent_prenom' => $_GET['agent_prenom'],
+						':agent_mail' => $_GET['agent_mail'],
+						':agent_hash' => hash('sha256', $_GET['agent_hash']."l0rdç$!"), 
+						':agent_ID' => $_GET['agent_ID'],
+				));
+
+				header('Location: agents.php');
+			}
+
 			if ($_GET['admin_action'] == "modif_bien") {
 
 				if (isset($_POST['bien_favori'])) {

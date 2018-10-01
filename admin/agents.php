@@ -140,9 +140,77 @@
                     </div>
                 </div>
             </div>
- 
         </div>
 
+        <?php
+        if (!isset($_GET['add_agent']) && !isset($_GET['agent_ID'])) {
+            $agents = $bdd->query('SELECT * FROM agent')->fetchAll(PDO::FETCH_ASSOC);
+        ?>
+
+        <div class="content mt-3">
+            <div class="animated fadeIn">
+                <div class="row">
+
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <strong class="card-title">Listes des Agents</strong>
+                        </div>
+                        <div class="card-body">
+                  <table id="bootstrap-data-table" class="table table-striped table-bordered">
+                    <thead>
+                      <tr>
+                        <th>Nom</th>
+                        <th>E-mail</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+
+                    <?php
+                        foreach ($agents as $agent) {
+                    ?>
+
+                    <tr>
+                        <td><?php echo $agent['nom']." ".$agent['prenom']; ?></td>
+                        <td><?php echo $agent['mail']; ?></td>
+                        <td>
+                            <a href="agents.php?agent_ID=<?php echo $agent['ID'];?>"><button type="button" class="btn btn-info"><i class="fa fa-edit"></i>&nbsp; </button></a>
+                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteWarning" onclick="deleteElement(<?php echo $agent['ID'].",'".$agent['nom']."','agent'";?>)">
+                              <i class="fa fa-trash"></i>&nbsp; 
+                            </button>
+                        </td>
+                    </tr>
+
+                    <?php
+                        }
+                    ?>                    
+                    </tbody>
+                  </table>
+
+                    </div>
+                    <div class="lord-button" style="margin-left :25px; margin-bottom: 25px;">
+                    <a href="agents.php?add_agent"><button type="submit" class="btn btn-success btn-m">
+                    <i class="fa fa-plus"></i> Ajouter un agent</button></div>
+                    </div>
+               
+                    </form></a>
+
+
+
+                </div>
+
+
+                </div>
+            </div><!-- .animated -->
+        </div><!-- .content -->
+        <?php
+        }
+        ?>
+
+        <?php
+        if (isset($_GET['add_agent']) && !isset($_GET['agent_ID'])) {
+        ?>
            <div class="col-lg-12">
                     <div class="card">
                       <div class="card-header"><strong>Ajouter un agent</strong></div>
@@ -164,7 +232,58 @@
                         </form>
                     </div>
 
-                  </div>
+          </div>
+          <?php
+        }
+        ?>
+
+        <?php
+        if (!isset($_GET['add_agent']) && isset($_GET['agent_ID'])) {
+            $rq_types = $bdd->prepare('SELECT * FROM agent WHERE agent.ID = :agent_ID');
+            $rq_types->execute(
+                array(
+                    ':agent_ID' => $_GET['agent_ID'],
+            )); 
+
+            $agent = $rq_types->fetchAll(PDO::FETCH_ASSOC);
+
+        ?>
+           <div class="col-lg-12">
+                    <div class="card">
+                      <div class="card-header"><strong>Modifier un agent</strong></div>
+                      <form id="myForm">
+                        <input type="hidden" name="admin_action" value="modif_agent">
+                        <input type="hidden" name="agent_hash" value="" id="hash">
+                        <input type="hidden" name="agent_ID" value="<?php echo $agent[0]['ID'];?>">
+                      <div class="card-body card-block">
+                        <div class="form-group">
+                            <label for="company" class=" form-control-label">Nom</label>
+                            <input type="text" id="company" placeholder="Nom" class="form-control" name="agent_name" value="<?php echo $agent[0]['nom'];?>">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="vat" class=" form-control-label">Prénom</label>
+                            <input type="text" id="vat" placeholder="Prénom" class="form-control" name="agent_prenom" value="<?php echo $agent[0]['prenom'];?>">
+                        </div>
+                        <div class="form-group">
+                            <label for="a" class=" form-control-label">E-mail</label>
+                            <input type="text" id="a" placeholder="E-mail" class="form-control" name="agent_mail" value="<?php echo $agent[0]['mail'];?>">
+                        </div>
+                        <div class="form-group"><label for="agent_pass" class=" form-control-label">Mot de passe</label><input type="password" id="agent_pass" placeholder="Mot de passe" class="form-control"></div>
+
+                        <div class="form-group"><label for="agent_pass2" class=" form-control-label">Confirmer le mot de passe</label><input type="password" id="agent_pass2" placeholder="Confirmer le mot de passe" class="form-control"></div>
+            
+                        <button type="button" class="btn btn-primary btn-m" onclick="generateHash()">
+                        <i class="fa fa-dot-circle-o"></i> Valider
+                  
+                        </div>
+                        </form>
+                    </div>
+
+          </div>
+          <?php
+        }
+        ?>
 
     <!-- Right Panel -->
 
@@ -216,6 +335,27 @@
         }
     }
     </script>
+
+        <!-- Modal -->
+    <div class="modal fade" id="deleteWarning" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Attention !</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body" id="modal_message">
+            ...
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+            <a href="" id="modal_delete_button"><button type="button" class="btn btn-danger">SUPPRIMER</button></a>
+          </div>
+        </div>
+      </div>
+    </div>
 
 </body>
 </html>
