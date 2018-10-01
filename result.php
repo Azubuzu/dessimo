@@ -3,43 +3,68 @@
   include "vendor/script/basic_query.php";
 
 
-  $request = "SELECT *,bien.ID AS bien_ID,bien.nom AS bien_nom,type.nom AS type_nom, localite.nom AS local_nom, bien.description AS bien_desc,categorie.ID AS cat_ID FROM bien INNER JOIN categorie ON categorie.ID = fk_Categorie_ID INNER JOIN type ON type.ID = fk_Type_ID INNER JOIN localite ON localite.ID = fk_Localite_ID WHERE ";
+  session_start();
 
-  //wild card in function of type
-  if (isset($_GET['list'])) {
-    $request.= "categorie.ID =".$_GET['list'];
-    $request.= " OR categorie.ID =".$categories_admin[$_GET['list']-1]['inverse_ID'];
+  if (isset($_GET['order_by']) && isset($_GET['order_order']) && isset($_SESSION['result'])) {
+
+      $result = $_SESSION['result'];
+      
+
+      if ($_GET['order_order'] == "ASC") {
+        usort($result, function($a, $b) {
+          return $a[$_GET['order_by']] - $b[$_GET['order_by']];
+        });
+        $order_order = "DESC";
+      }
+      else {
+        usort($result, function($a, $b) {
+          return $b[$_GET['order_by']] - $a[$_GET['order_by']];
+        });
+        $order_order = "ASC";
+      }
   } else {
 
-    if ($_GET['nbre_piece_min'] != "" && $_GET['nbre_piece_max'] != "") {
-      $request .= "(piece BETWEEN ".$_GET['nbre_piece_min']." AND ".$_GET['nbre_piece_max'].") AND ";
-    }else if ($_GET['nbre_piece_min'] == "" && $_GET['nbre_piece_max'] != "") {
-      $request .= "piece <= ".$_GET['nbre_piece_max']." AND ";
-    }else if ($_GET['nbre_piece_max'] == "" && $_GET['nbre_piece_min'] != "") {
-      $request .= "piece >= ".$_GET['nbre_piece_min']." AND ";
+    $order_order = "ASC";
+    $request = "SELECT *,bien.ID AS bien_ID,bien.nom AS bien_nom,type.nom AS type_nom, localite.nom AS local_nom, bien.description AS bien_desc,categorie.ID AS cat_ID FROM bien INNER JOIN categorie ON categorie.ID = fk_Categorie_ID INNER JOIN type ON type.ID = fk_Type_ID INNER JOIN localite ON localite.ID = fk_Localite_ID WHERE ";
+
+    //wild card in function of type
+    if (isset($_GET['list'])) {
+      $request.= "(categorie.ID =".$_GET['list'];
+      $request.= " OR categorie.ID =".$categories_admin[$_GET['list']-1]['inverse_ID'].")";
+    } else {
+
+      if ($_GET['nbre_piece_min'] != "" && $_GET['nbre_piece_max'] != "") {
+        $request .= "(piece BETWEEN ".$_GET['nbre_piece_min']." AND ".$_GET['nbre_piece_max'].") AND ";
+      }else if ($_GET['nbre_piece_min'] == "" && $_GET['nbre_piece_max'] != "") {
+        $request .= "piece <= ".$_GET['nbre_piece_max']." AND ";
+      }else if ($_GET['nbre_piece_max'] == "" && $_GET['nbre_piece_min'] != "") {
+        $request .= "piece >= ".$_GET['nbre_piece_min']." AND ";
+      }
+
+      if ($_GET['prix_min'] != "" && $_GET['prix_max'] != "") {
+        $request .= "(prix BETWEEN ".$_GET['prix_min']." AND ".$_GET['prix_max'].") AND ";
+      }else if ($_GET['prix_min'] == "" && $_GET['prix_max'] != "") {
+        $request .= "prix <= ".$_GET['prix_max']." AND ";
+      }else if ($_GET['prix_max'] == "" && $_GET['prix_min'] != "") {
+        $request .= "prix >= ".$_GET['prix_min']." AND ";
+      }
+
+      if ($_GET['localite'] != 0) {
+        $request .= "localite.ID = ".$_GET['localite']." AND ";
+      }
+
+      if ($_GET['type'] != 0) {
+        $request .= "type.ID = ".$_GET['type']." AND ";
+      }
+
+      $request .= "(categorie.ID =".$_GET['categorie']." OR ";
+      $request .= "categorie.ID =".$categories_admin[$_GET['categorie']-1]['inverse_ID'].")";
     }
 
-    if ($_GET['prix_min'] != "" && $_GET['prix_max'] != "") {
-      $request .= "(prix BETWEEN ".$_GET['prix_min']." AND ".$_GET['prix_max'].") AND ";
-    }else if ($_GET['prix_min'] == "" && $_GET['prix_max'] != "") {
-      $request .= "prix <= ".$_GET['prix_max']." AND ";
-    }else if ($_GET['prix_max'] == "" && $_GET['prix_min'] != "") {
-      $request .= "prix >= ".$_GET['prix_min']." AND ";
-    }
-
-    if ($_GET['localite'] != 0) {
-      $request .= "localite.ID = ".$_GET['localite']." AND ";
-    }
-
-    if ($_GET['type'] != 0) {
-      $request .= "type.ID = ".$_GET['type'];
-    }
-
-    $request .= "AND (categorie.ID =".$_GET['categorie']." OR ";
-    $request .= "categorie.ID =".$categories_admin[$_GET['categorie']-1]['inverse_ID'].")";
-  }
-
-  $result = $bdd->query($request);
+    $result = $bdd->query($request)->fetchAll(PDO::FETCH_ASSOC);
+    $_SESSION['result'] = $result;
+  } 
+  
 
   function isSeleced($name,$id) {
     if ($id == $_GET[$name])
@@ -47,6 +72,8 @@
     else
       return "";
   }
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -107,17 +134,17 @@
             <ul class="navbar-nav ml-auto">
 
             <li class="nav-item active">
-              <a class="nav-link-lord-filter" href="#">Date
+              <a class="nav-link-lord-filter" href="result.php?order_by=creation_date&order_order=<?php echo $order_order;?>">Date
                 <span class="sr-only">(current)</span>
               </a>
-            <a class="nav-link-lord-filter" href="#">Prix</a>
+            <a class="nav-link-lord-filter" href="result.php?order_by=prix&order_order=<?php echo $order_order;?>">Prix</a>
      
 
     
-            <a class="nav-link-lord-filter" href="#">Pièces</a>
+            <a class="nav-link-lord-filter" href="result.php?order_by=piece&order_order=<?php echo $order_order;?>">Pièces</a>
           
 
-            <a class="nav-link-lord-filter" href="#">Surface</a>
+            <a class="nav-link-lord-filter" href="result.php?order_by=surface&order_order=<?php echo $order_order;?>">Surface</a>
 
             </li>
             
@@ -129,7 +156,7 @@
     <section class="py-5">
       <div class="container">
         <div class="col-md-8 description ">
-          <h1><?php echo $result->rowCount();?> résultat(s) trouvé(s)</h1>
+          <h1><?php echo count($result);?> résultat(s) trouvé(s)</h1>
         </div>
 
 
@@ -139,8 +166,7 @@
 
           <!-- START ITEM -->
           <?php
-            while ($item = $result->fetch())
-            {
+            foreach ($result as $item) {
           ?>
             <div class="col-md-8">
                 <div class="lord-item-title ">
