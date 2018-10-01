@@ -67,6 +67,40 @@
 				header('Location: clients.php');
 			}
 
+			if ($_GET['admin_action'] == "add_photo") {
+
+				if(isset($_FILES['pictures'])) {
+
+					require_once  "../vendor/bulletproof/bulletproof.php";
+					require_once  "../vendor/script/bulletproof_config.php";
+
+					$img = $_FILES['pictures'];
+
+					if(!empty($img))
+					{
+					    $img_desc = reArrayFiles($img);
+					    foreach($img_desc as $val)
+					    {
+					        $image = new Bulletproof\Image($val);
+							$image->setLocation($bulletproof_upload_dir_admin);
+							$image->setSize($bulletproof_size_min, $bulletproof_size_max);
+							$image->setMime($bulletproof_accepted_format);
+							
+							if($image->upload()){
+								$add_entry = $bdd->prepare("INSERT INTO photo(name, selected, fk_bien_ID) VALUES (:img_name,0,:img_bien_ID)");
+								$add_entry->execute(
+									array(
+										':img_name' => $image->getName().".".$image->getMime(),
+										':img_bien_ID' => $_POST['bien_ID'],  
+								));
+							} else {
+								//echo $image->getError();
+							}
+					    }
+					}
+				}				
+			}
+
 			if ($_GET['admin_action'] == "modif_client") {
 				$update_client = $bdd->prepare('UPDATE client SET email = :client_email, nom = :client_nom, prenom = :client_prenom, remarque = :client_remarque, fk_statut_ID = :client_statut_ID WHERE client.ID = :client_ID;');
 				$update_client->execute(

@@ -151,7 +151,7 @@
             <?php
         if (!isset($_GET['bien_ID']) && !isset($_GET['add_bien'])) {
 
-            $biens = $bdd->query("SELECT *,bien.ID AS bien_ID,bien.nom AS bien_nom,type.nom AS type_nom, localite.nom AS local_nom, bien.description AS bien_desc FROM bien INNER JOIN categorie ON categorie.ID = fk_Categorie_ID INNER JOIN type ON type.ID = fk_Type_ID INNER JOIN localite ON localite.ID = fk_Localite_ID")->fetchAll(PDO::FETCH_ASSOC);
+            $biens = $bdd->query("SELECT *,bien.ID AS bien_ID,bien.nom AS bien_nom,type.nom AS type_nom, localite.nom AS local_nom, bien.description AS bien_desc,categorie.nom AS cat_nom FROM bien INNER JOIN categorie ON categorie.ID = fk_Categorie_ID INNER JOIN type ON type.ID = fk_Type_ID INNER JOIN localite ON localite.ID = fk_Localite_ID")->fetchAll(PDO::FETCH_ASSOC);
         ?>
 
         <div class="content mt-3">
@@ -168,8 +168,8 @@
                     <thead>
                       <tr>
                         <th>Nom</th>
-                        
-                        <th>Disponibilité</th>
+                        <th>Type de bien</th>
+                        <th>Catégorie</th>
                         <th>Favori</th>
                         <th>Date de création</th>
                         <th>Action</th>
@@ -183,8 +183,8 @@
 
                     <tr>
                         <td><?php echo $bien['bien_nom'];?></td>
-            
-                        <td><?php echo $bien['disponibilite'];?></td>
+                        <td><?php echo $bien['type_nom'];?></td>
+                        <td><?php echo $bien['cat_nom'];?></td>
                         <td><?php echo $bien['favori'];?></td>
                         <td><?php echo date('d/m/Y', $bien['creation_date']);?></td>
                         <td>
@@ -444,7 +444,7 @@
 
                         <div class="form-group"><label for="company" class=" form-control-label">Niveau</label><input type="text" id="company" placeholder="Nom" class="form-control" name="bien_niveau"></div>
 
-                        <div class="form-group"><label for="company" class=" form-control-label">Nombre d'étages</label><input type="text" id="company" placeholder="WC" class="form-control" name="bien_nbre_niveau"></div>
+                        <div class="form-group"><label for="company" class=" form-control-label">Nombre d'étages</label><input type="text" id="company" placeholder="Nombre" class="form-control" name="bien_nbre_niveau"></div>
 
                         <div class="form-group"><label for="company" class=" form-control-label">Nombre de WC</label><input type="text" id="company" placeholder="WC" class="form-control" name="bien_nbre_WC"></div>
 

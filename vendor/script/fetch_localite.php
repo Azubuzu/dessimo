@@ -24,4 +24,21 @@
     	}
 
 	}
+
+	if(isset($_POST['photo_search'])) {
+		include "db_connect.php";
+		
+		$select_bien = $bdd->prepare('SELECT bien.ID,bien.nom FROM bien WHERE fk_Type_ID = :type_ID AND fk_Localite_ID = :localite_ID ORDER BY nom');
+		$select_bien->execute(
+					array(
+						':type_ID' => $_POST['type_ID'],
+						':localite_ID' => $_POST['localite_ID'], 
+				));
+
+		while ($item = $select_bien->fetch())
+    	{
+    		echo "<option value='".$item['ID']."'>".$item['nom']."</option>";
+    	}
+
+	}
 ?>

@@ -2,7 +2,7 @@
   include "vendor/script/db_connect.php";
   if (isset($_GET['bien_ID']) && $_GET['bien_ID'] != "") {
 
-      if($bien = $bdd->query("SELECT *,bien.ID AS bien_ID,bien.nom AS bien_nom,type.nom AS type_nom, localite.nom AS local_nom,agent.nom AS agent_nom,agent.prenom AS agent_prenom,bien.description AS bien_desc FROM bien INNER JOIN categorie ON categorie.ID = fk_Categorie_ID INNER JOIN type ON type.ID = fk_Type_ID INNER JOIN localite ON localite.ID = fk_Localite_ID INNER JOIN agent ON agent.ID = fk_Agent_ID WHERE bien.ID = ".$_GET['bien_ID'])->fetch()) {
+      if($bien = $bdd->query("SELECT *,bien.ID AS bien_ID,bien.nom AS bien_nom,categorie.ID AS cat_ID,type.nom AS type_nom, localite.nom AS local_nom,agent.nom AS agent_nom,agent.prenom AS agent_prenom,bien.description AS bien_desc FROM bien INNER JOIN categorie ON categorie.ID = fk_Categorie_ID INNER JOIN type ON type.ID = fk_Type_ID INNER JOIN localite ON localite.ID = fk_Localite_ID INNER JOIN agent ON agent.ID = fk_Agent_ID WHERE bien.ID = ".$_GET['bien_ID'])->fetch()) {
 
       $pictures = $bdd->query('SELECT * FROM photo WHERE fk_bien_ID = '.$_GET['bien_ID'])->fetchAll(PDO::FETCH_ASSOC);
     } else {
@@ -163,6 +163,17 @@
       ?>
 
       <?php 
+        if($bien['chauffage'] != "") {
+          ?>
+            <tr>
+            <td>Chauffages</td>
+            <td><b><?php echo $bien['chauffage'] ?></b></td>
+            </tr>
+          <?php
+        }
+      ?>
+
+      <?php 
         if($bien['nbre_WC'] != "") {
           ?>
             <tr>
@@ -179,6 +190,17 @@
             <tr>
             <td>Niveau</td>
             <td><b><?php echo $bien['niveau'] ?></b></td>
+            </tr>
+          <?php
+        }
+      ?>
+
+      <?php 
+        if($bien['nbre_niveau'] != "") {
+          ?>
+            <tr>
+            <td>Nombre de niveaux</td>
+            <td><b><?php echo $bien['nbre_niveau'] ?></b></td>
             </tr>
           <?php
         }
@@ -218,6 +240,28 @@
       ?>
 
       <?php 
+        if($bien['adresse'] != "") {
+          ?>
+            <tr>
+            <td>Adresse</td>
+            <td><b><?php echo $bien['adresse'] ?></b></td>
+            </tr>
+          <?php
+        }
+      ?>
+
+      <?php 
+        if($bien['charges'] != "") {
+          ?>
+            <tr>
+            <td>Charges</td>
+            <td><b><?php echo $bien['charges'] ?></b></td>
+            </tr>
+          <?php
+        }
+      ?>
+
+      <?php 
         if($bien['disponibilite'] != "") {
           ?>
             <tr>
@@ -245,7 +289,15 @@
     </div>
 
     <span class="lord-price shadow p-3 mb-5">
-    CHF <?php echo number_format($bien['prix'], 0, ',', '\''); ?>
+    <?php
+        //Oui c'est pas beau
+        if ($bien['cat_ID'] == 3) {
+          echo "Vendu";
+        } elseif ($bien['cat_ID'] == 4) {
+          echo "Loué";
+        } else
+           echo "CHF ".number_format($bien['prix'], 0, ',', '\''); 
+        ?>
     </span>
    </div><!--end col-6 col-md-4-->
    </div><!--row-->

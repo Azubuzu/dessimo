@@ -1,5 +1,7 @@
 <?php
     require_once "admin_manager.php";
+
+    $biens = $bdd->query("SELECT *,bien.ID AS bien_ID,bien.nom AS bien_nom,type.nom AS type_nom, localite.nom AS local_nom, bien.description AS bien_desc,categorie.nom AS cat_nom FROM bien INNER JOIN categorie ON categorie.ID = fk_Categorie_ID INNER JOIN type ON type.ID = fk_Type_ID INNER JOIN localite ON localite.ID = fk_Localite_ID ORDER BY bien.ID DESC")->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!doctype html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
@@ -145,19 +147,18 @@
             </div>
  
         </div>
-
+        <form method="POST" enctype="multipart/form-data" action="photos.php?admin_action=add_photo">
         <div class="row">
            <div class="col-lg-6">
                     <div class="card">
                         <div class="card-header"><strong>Ajouter une photo</strong></div>
                       <div class="card-body card-block">
-                        <div class="form-group"><label for="company" class=" form-control-label">Nom</label><input type="text" id="company" placeholder="Nom" class="form-control"></div>
-
-
-
-
-
-                        <div class="form-group"><label for="company" class=" form-control-label">Sélectionner l'image</label><input type="file" id="company" placeholder="Nom" class="form-control"></div>
+                        
+                        <div class="form-group">
+                            <label for="company" class=" form-control-label">Sélectionner les images</label>
+                            <input type="hidden" name="MAX_FILE_SIZE" value="20000000" class="form-control"/>
+                            <input type="file" name="pictures[]" accept="image/*" multiple class="form-control"/>
+                        </div>
 
 
                     </div>
@@ -170,60 +171,53 @@
                  
 
 
-                      
-
-  
-
-
-                                 
-
+            
+                            
+                        <input type="hidden" name="admin_action" value="add_photo">
                         <div class="form-group">
                         <label for="company" class=" form-control-label">Types de bien</label>
-                        <select name="select" id="select" class="form-control">
-                        <option value="0">Appartement</option>
-                        <option value="1">Option #1</option>
-                        <option value="2">Option #2</option>
-                        <option value="3">Option #3</option>
+                        <select id="type_ID" class="form-control" onchange="fetch_select();">
+                        <option value="0">Sélectionner un type</option>
+                            <?php
+                            foreach ($types as $type) {
+                                echo '<option value="'.$type["ID"].'">'.$type["nom"].'</option>';
+                            }
+                            ?>
                         </select>
                         </div> 
 
 
                         <div class="form-group">
                         <label for="company" class=" form-control-label">Localité</label>
-                        <select name="select" id="select" class="form-control">
-                        <option value="0">Sierre</option>
-                        <option value="1">Option #1</option>
-                        <option value="2">Option #2</option>
-                        <option value="3">Option #3</option>
+                        <select id="localite_ID" class="form-control" onchange="fetch_select();">
+                        <option value="0">Sélectionner une ville</option>
+                            <?php
+                            $all_local = $bdd->query('SELECT * FROM localite ORDER BY nom')->fetchAll(PDO::FETCH_ASSOC);
+                            foreach ($all_local as $local) {
+                                echo '<option value="'.$local["ID"].'">'.$local["nom"].'</option>';
+                            }
+                            ?>
                         </select>
-                        </div> 
-
-
-                        <div class="form-group">
-                        <label for="company" class=" form-control-label">Catégorie</label>
-                        <select name="select" id="select" class="form-control">
-                        <option value="0">À louer</option>
-                        <option value="1">Option #1</option>
-                        <option value="2">Option #2</option>
-                        <option value="3">Option #3</option>
-                        </select>
-                        </div> 
+                        </div>  
 
 
                       <div class="form-group">
                         <label for="company" class=" form-control-label"><bold>Bien sélectionné</bold></label>
-                        <select name="select" id="select" class="form-control" data-live-search="true">
-                        <option value="0">Choisir</option>
-                        <option value="1">Option #1</option>
-                        <option value="2">Option #2</option>
-                        <option value="3">Option #3</option>
+                        <select name="bien_ID" id="bien" class="form-control" data-live-search="true">
+                            <option value="">Sélectionner un bien</option>
+                            <?php
+                            foreach ($biens as $bien) {
+                                echo '<option value="'.$bien["bien_ID"].'">'.$bien["bien_nom"].'</option>';
+                            }
+                            ?>
                         </select>
                         </div> 
 
 
                    
                         <button type="submit" class="btn btn-primary btn-m">
-                        <i class="fa fa-dot-circle-o"></i> Valider
+                        <i class="fa fa-dot-circle-o"></i> Valider</button>
+                        </form> 
                   
                         </div>
                     </div>
@@ -245,23 +239,23 @@
     <script src="assets/js/lib/vector-map/jquery.vmap.min.js"></script>
     <script src="assets/js/lib/vector-map/jquery.vmap.sampledata.js"></script>
     <script src="assets/js/lib/vector-map/country/jquery.vmap.world.js"></script>
-    <script>
-        ( function ( $ ) {
-            "use strict";
+    <script type="text/javascript">
+    function fetch_select()
+    {
+     jQuery.ajax({
+     type: 'post',
+     url: '../vendor/script/fetch_localite.php',
+     data: {
+      photo_search:1,
+      type_ID:document.getElementById("type_ID").value,
+      localite_ID:document.getElementById("localite_ID").value
+     },
+     success: function (response) {
+      document.getElementById("bien").innerHTML=response; 
+     }
+     });
+    }
 
-            jQuery( '#vmap' ).vectorMap( {
-                map: 'world_en',
-                backgroundColor: null,
-                color: '#ffffff',
-                hoverOpacity: 0.7,
-                selectedColor: '#1de9b6',
-                enableZoom: true,
-                showTooltip: true,
-                values: sample_data,
-                scaleColors: [ '#1de9b6', '#03a9f5' ],
-                normalizeFunction: 'polynomial'
-            } );
-        } )( jQuery );
     </script>
 
 </body>

@@ -3,11 +3,12 @@
   include "vendor/script/basic_query.php";
 
 
-  $request = "SELECT *,bien.ID AS bien_ID,bien.nom AS bien_nom,type.nom AS type_nom, localite.nom AS local_nom, bien.description AS bien_desc FROM bien INNER JOIN categorie ON categorie.ID = fk_Categorie_ID INNER JOIN type ON type.ID = fk_Type_ID INNER JOIN localite ON localite.ID = fk_Localite_ID WHERE ";
+  $request = "SELECT *,bien.ID AS bien_ID,bien.nom AS bien_nom,type.nom AS type_nom, localite.nom AS local_nom, bien.description AS bien_desc,categorie.ID AS cat_ID FROM bien INNER JOIN categorie ON categorie.ID = fk_Categorie_ID INNER JOIN type ON type.ID = fk_Type_ID INNER JOIN localite ON localite.ID = fk_Localite_ID WHERE ";
 
   //wild card in function of type
   if (isset($_GET['list'])) {
     $request.= "categorie.ID =".$_GET['list'];
+    $request.= " OR categorie.ID =".$categories_admin[$_GET['list']-1]['inverse_ID'];
   } else {
 
     if ($_GET['nbre_piece_min'] != "" && $_GET['nbre_piece_max'] != "") {
@@ -31,10 +32,11 @@
     }
 
     if ($_GET['type'] != 0) {
-      $request .= "type.ID = ".$_GET['type']." AND ";
+      $request .= "type.ID = ".$_GET['type'];
     }
 
-    $request .= "categorie.ID =".$_GET['categorie'];
+    $request .= "AND (categorie.ID =".$_GET['categorie']." OR ";
+    $request .= "categorie.ID =".$categories_admin[$_GET['categorie']-1]['inverse_ID'].")";
   }
 
   $result = $bdd->query($request);
@@ -182,7 +184,15 @@
 
                 </div>
                 <span class="lord-price shadow p-3 mb-5">
-                CHF <?php echo number_format($item['prix'], 0, ',', '\''); ?>
+                <?php
+                //Oui c'est pas beau
+                if ($item['cat_ID'] == 3) {
+                  echo "Vendu";
+                } elseif ($item['cat_ID'] == 4) {
+                  echo "Loué";
+                } else
+                   echo "CHF ".number_format($item['prix'], 0, ',', '\''); 
+                ?>
                 </span>
             </div>
             
