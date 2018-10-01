@@ -43,6 +43,7 @@
 						':localite_NPA' => $_GET['localite_npa'], 
 						':localite_canton_ID' => $_GET['canton_id'], 
 				));
+				header('Location: localites.php');
 			}
 
 			if ($_GET['admin_action'] == "add_type") {
@@ -52,6 +53,7 @@
 				} else {
 					$bdd->exec("INSERT INTO type(nom, description) VALUES ('".$_GET['type_name']."','".$_GET['type_desc']."')");
 				}
+				header('Location: types.php');
 			}
 
 			if ($_GET['admin_action'] == "add_client") {
@@ -117,6 +119,18 @@
 				header('Location: clients.php');
 			}
 
+			if ($_GET['admin_action'] == "modif_type") {
+				$update_client = $bdd->prepare('UPDATE type SET nom = :type_name, description = :type_desc WHERE type.ID = :type_ID;');
+				$update_client->execute(
+					array(
+						':type_name' => $_GET['type_name'],
+						':type_desc' => $_GET['type_desc'], 
+						':type_ID' => $_GET['type_ID'],
+				));
+
+				header('Location: types.php');
+			}
+
 			if ($_GET['admin_action'] == "modif_bien") {
 
 				if (isset($_POST['bien_favori'])) {
@@ -173,7 +187,8 @@
 				$update_client->execute(
 					array(
 						':client_ID' => $_GET['delete_client_ID'],
-				));			
+				));	
+				header('Location: clients.php');		
 			}
 
 			if ($_GET['admin_action'] == "delete_bien") {
@@ -181,7 +196,8 @@
 				$update_client->execute(
 					array(
 						':bien_ID' => $_GET['delete_ID'],
-				));			
+				));		
+				header('Location: biens.php');	
 			}
 
 			if ($_GET['admin_action'] == "delete_canton") {
@@ -189,7 +205,8 @@
 				$update_client->execute(
 					array(
 						':canton_ID' => $_GET['delete_ID'],
-				));			
+				));	
+				header('Location: cantons.php');		
 			}
 
 			if ($_GET['admin_action'] == "delete_localite") {
@@ -197,7 +214,17 @@
 				$update_client->execute(
 					array(
 						':localite_ID' => $_GET['delete_ID'],
-				));			
+				));	
+				header('Location: localites.php');		
+			}
+
+			if ($_GET['admin_action'] == "delete_type") {
+				$update_client = $bdd->prepare('DELETE FROM type WHERE type.ID = :type_ID');
+				$update_client->execute(
+					array(
+						':type_ID' => $_GET['delete_ID'],
+				));	
+				header('Location: types.php');		
 			}
 
 			if ($_GET['admin_action'] == "add_bien") {

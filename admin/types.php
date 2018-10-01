@@ -142,8 +142,77 @@
                     </div>
                 </div>
             </div>
- 
         </div>
+
+        <?php
+        if (!isset($_GET['add_type']) && !isset($_GET['type_ID'])) {
+            $cantons = $bdd->query('SELECT * FROM type')->fetchAll(PDO::FETCH_ASSOC);
+        ?>
+
+        <div class="content mt-3">
+            <div class="animated fadeIn">
+                <div class="row">
+
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <strong class="card-title">Listes des Types</strong>
+                        </div>
+                        <div class="card-body">
+                  <table id="bootstrap-data-table" class="table table-striped table-bordered">
+                    <thead>
+                      <tr>
+                        <th>Nom</th>
+                        <th>Description</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+
+                    <?php
+                        foreach ($types as $type) {
+                    ?>
+
+                    <tr>
+                        <td><?php echo $type['nom']; ?></td>
+                        <td><?php echo $type['description']; ?></td>
+                        <td>
+                            <a href="types.php?type_ID=<?php echo $type['ID'];?>"><button type="button" class="btn btn-info"><i class="fa fa-edit"></i>&nbsp; </button></a>
+                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteWarning" onclick="deleteElement(<?php echo $type['ID'].",'".$type['nom']."','type'";?>)">
+                              <i class="fa fa-trash"></i>&nbsp; 
+                            </button>
+                        </td>
+                    </tr>
+
+                    <?php
+                        }
+                    ?>                    
+                    </tbody>
+                  </table>
+
+                    </div>
+                    <div class="lord-button" style="margin-left :25px; margin-bottom: 25px;">
+                    <a href="types.php?add_type"><button type="submit" class="btn btn-success btn-m">
+                    <i class="fa fa-plus"></i> Ajouter un type</button></div>
+                    </div>
+               
+                    </form></a>
+
+
+
+                </div>
+
+
+                </div>
+            </div><!-- .animated -->
+        </div><!-- .content -->
+        <?php
+        }
+        ?>
+
+        <?php
+        if (isset($_GET['add_type']) && !isset($_GET['type_id'])) {
+        ?>
 
            <div class="col-lg-12">
                     <div class="card">
@@ -164,7 +233,49 @@
                         </div>
                     </div>
 
-                  </div>
+          </div>
+          <?php
+        }
+        ?>
+
+        <?php
+        if (!isset($_GET['add_type']) && isset($_GET['type_ID'])) {
+            $rq_types = $bdd->prepare('SELECT * FROM type WHERE type.ID = :type_ID');
+            $rq_types->execute(
+                array(
+                    ':type_ID' => $_GET['type_ID'],
+            )); 
+
+            $types = $rq_types->fetchAll(PDO::FETCH_ASSOC);
+
+        ?>
+
+           <div class="col-lg-12">
+                    <div class="card">
+                      <div class="card-header"><strong>Ajouter un type de biens</strong></div>
+                      <div class="card-body card-block">
+                        <form>
+                        <input type="hidden" name="admin_action" value="modif_type">
+                        <input type="hidden" name="type_ID" value="<?php echo $_GET['type_ID'];?>">                        
+                        <div class="form-group"><label for="company" class=" form-control-label">Nom</label>
+                            <input type="text" id="company" placeholder="Nom" class="form-control" name="type_name" value="<?php echo $types[0]['nom'];?>">
+                        </div>
+
+                             <div class="form-group"><label for="textarea-input" class=" form-control-label">Description</label>
+                            <textarea name="type_desc" id="textarea-input" rows="9" placeholder="Contenu.." class="form-control"><?php echo $types[0]['description'];?></textarea></div>
+
+                   
+                        <button type="submit" class="btn btn-primary btn-m">
+                        <i class="fa fa-dot-circle-o"></i> Valider</button>
+                        </form>
+                  
+                        </div>
+                    </div>
+
+          </div>
+          <?php
+        }
+        ?>
 
     <!-- Right Panel -->
 
@@ -181,24 +292,27 @@
     <script src="assets/js/lib/vector-map/jquery.vmap.min.js"></script>
     <script src="assets/js/lib/vector-map/jquery.vmap.sampledata.js"></script>
     <script src="assets/js/lib/vector-map/country/jquery.vmap.world.js"></script>
-    <script>
-        ( function ( $ ) {
-            "use strict";
 
-            jQuery( '#vmap' ).vectorMap( {
-                map: 'world_en',
-                backgroundColor: null,
-                color: '#ffffff',
-                hoverOpacity: 0.7,
-                selectedColor: '#1de9b6',
-                enableZoom: true,
-                showTooltip: true,
-                values: sample_data,
-                scaleColors: [ '#1de9b6', '#03a9f5' ],
-                normalizeFunction: 'polynomial'
-            } );
-        } )( jQuery );
-    </script>
+    <!-- Modal -->
+    <div class="modal fade" id="deleteWarning" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Attention !</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body" id="modal_message">
+            ...
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+            <a href="" id="modal_delete_button"><button type="button" class="btn btn-danger">SUPPRIMER</button></a>
+          </div>
+        </div>
+      </div>
+    </div>
 
 </body>
 </html>
