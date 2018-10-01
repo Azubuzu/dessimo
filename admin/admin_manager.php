@@ -36,12 +36,13 @@
 			}
 
 			if ($_GET['admin_action'] == "add_localite") {
-				$check_localite = $bdd->query("SELECT * FROM localite WHERE LOWER(nom) LIKE LOWER('".$_GET['localite_name']."') OR NPA = ".$_GET['localite_npa']);
-				if ($check_localite->rowCount() > 0) {
-					echo "<script>alert('Localité peut-être déjà enregistré, vérifier les données entrées !')</script>";
-				} else {
-					$bdd->exec("INSERT INTO localite(nom,NPA,fk_Canton_ID) VALUES ('".$_GET['localite_name']."',".$_GET['localite_npa'].",".$_GET['canton_id'].")");
-				}
+				$add_client = $bdd->prepare('INSERT INTO localite VALUES(NULL,:localite_nom,:localite_NPA,:localite_canton_ID)');
+				$add_client->execute(
+					array(
+						':localite_nom' => $_GET['localite_name'],
+						':localite_NPA' => $_GET['localite_npa'], 
+						':localite_canton_ID' => $_GET['canton_id'], 
+				));
 			}
 
 			if ($_GET['admin_action'] == "add_type") {
@@ -188,6 +189,14 @@
 				$update_client->execute(
 					array(
 						':canton_ID' => $_GET['delete_ID'],
+				));			
+			}
+
+			if ($_GET['admin_action'] == "delete_localite") {
+				$update_client = $bdd->prepare('DELETE FROM localite WHERE localite.ID = :localite_ID');
+				$update_client->execute(
+					array(
+						':localite_ID' => $_GET['delete_ID'],
 				));			
 			}
 

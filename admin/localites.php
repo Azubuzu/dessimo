@@ -145,6 +145,77 @@
  
         </div>
 
+        <?php
+        if (!isset($_GET['add_localite'])) {
+            $localites = $bdd->query('SELECT *,localite.nom AS local_nom,localite.ID AS local_ID,canton.nom AS canton_nom,canton.ID AS canton_ID FROM localite INNER JOIN canton ON canton.ID = fk_Canton_ID ORDER BY canton.nom,localite.nom')->fetchAll(PDO::FETCH_ASSOC);
+        ?>
+
+        <div class="content mt-3">
+            <div class="animated fadeIn">
+                <div class="row">
+
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <strong class="card-title">Listes des Cantons</strong>
+                        </div>
+                        <div class="card-body">
+                  <table id="bootstrap-data-table" class="table table-striped table-bordered">
+                    <thead>
+                      <tr>
+                        <th>NPA</th>
+                        <th>Nom</th>
+                        <th>Canton</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+
+                    <?php
+                        foreach ($localites as $localite) {
+                    ?>
+
+                    <tr>
+                        <td><?php echo $localite['NPA']; ?></td>
+                        <td><?php echo $localite['local_nom']; ?></td>
+                        <td><?php echo $localite['canton_nom']; ?></td>
+                        <td>
+                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteWarning" onclick="deleteElement(<?php echo $localite['local_ID'].",'".$localite['local_nom']."','localite'";?>)">
+                              <i class="fa fa-trash"></i>&nbsp; 
+                            </button>
+                        </td>
+                    </tr>
+
+                    <?php
+                        }
+                    ?>                    
+                    </tbody>
+                  </table>
+
+                    </div>
+                    <div class="lord-button" style="margin-left :25px; margin-bottom: 25px;">
+                    <a href="localites.php?add_localite"><button type="submit" class="btn btn-success btn-m">
+                    <i class="fa fa-plus"></i> Ajouter une localité</button></div>
+                    </div>
+               
+                    </form></a>
+
+
+
+                </div>
+
+
+                </div>
+            </div><!-- .animated -->
+        </div><!-- .content -->
+        <?php
+        }
+        ?>
+
+        <?php
+        if (isset($_GET['add_localite'])) {
+            $cantons = $bdd->query('SELECT * FROM canton')->fetchAll(PDO::FETCH_ASSOC);
+        ?>
            <div class="col-lg-12">
                     <div class="card">
                       <div class="card-header"><strong>Ajouter une localité</strong></div>
@@ -172,7 +243,10 @@
                         </div>
                     </div>
 
-                  </div>
+            </div>
+        <?php
+        }
+        ?>
 
     <!-- Right Panel -->
 
@@ -189,24 +263,26 @@
     <script src="assets/js/lib/vector-map/jquery.vmap.min.js"></script>
     <script src="assets/js/lib/vector-map/jquery.vmap.sampledata.js"></script>
     <script src="assets/js/lib/vector-map/country/jquery.vmap.world.js"></script>
-    <script>
-        ( function ( $ ) {
-            "use strict";
-
-            jQuery( '#vmap' ).vectorMap( {
-                map: 'world_en',
-                backgroundColor: null,
-                color: '#ffffff',
-                hoverOpacity: 0.7,
-                selectedColor: '#1de9b6',
-                enableZoom: true,
-                showTooltip: true,
-                values: sample_data,
-                scaleColors: [ '#1de9b6', '#03a9f5' ],
-                normalizeFunction: 'polynomial'
-            } );
-        } )( jQuery );
-    </script>
+        <!-- Modal -->
+    <div class="modal fade" id="deleteWarning" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Attention !</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body" id="modal_message">
+            ...
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+            <a href="" id="modal_delete_button"><button type="button" class="btn btn-danger">SUPPRIMER</button></a>
+          </div>
+        </div>
+      </div>
+    </div>
 
 </body>
 </html>
