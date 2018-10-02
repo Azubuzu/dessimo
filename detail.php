@@ -361,7 +361,11 @@
       </div>
 
     <hr/> 
-    <button type="submit" class="lord-button">Je suis intéressé</button>
+    <a href="mailto:yvan@dessimo.ch
+?subject=<?php echo $bien['bien_nom']; ?>
+&body=Bonjour je suis intéressé par votre bien : <?php echo $bien['bien_nom']; ?>"><button type="submit" class="lord-button">Je suis intéressé</button></a>
+
+
 
   </div>
 </section>

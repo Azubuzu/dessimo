@@ -18,6 +18,15 @@
     <link rel="apple-touch-icon" href="apple-icon.png">
     <link rel="shortcut icon" href="favicon.ico">
 
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<style>
+
+
+
+
+</style>
+
+
     <link rel="stylesheet" href="assets/css/normalize.css">
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/font-awesome.min.css">
@@ -31,6 +40,7 @@
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
 
     <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/html5shiv/3.7.3/html5shiv.min.js"></script> -->
+
 
 </head>
 <body>
@@ -86,19 +96,11 @@
                             <i class="menu-icon ti-gallery"></i>Photos</a>
                             <ul class="sub-menu children dropdown-menu">
                                 <li><i class="ti-gallery"></i><a href="photos.php">Ajouter une photo</a></li>
-                                <li><i class="ti-gallery"></i><a href="photos.php">Gallerie</a></li>
+                                <li><i class="ti-gallery"></i><a href="gallery.php">Gallerie</a></li>
                             </ul>
                         </li>                         
 
-                        <li class="menu-item-has-children dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-table"></i>Listes des biens</a>
-                            <ul class="sub-menu children dropdown-menu">
-                                <li><i class="fa fa-table"></i><a href="biens.php">À vendre</a></li>
-                                <li><i class="fa fa-table"></i><a href="biens.php">À louer</a></li>
-                                <li><i class="fa fa-table"></i><a href="biens.php">Vendu</a></li>
-                                <li><i class="fa fa-table"></i><a href="biens.php">Loué</a></li>
-                            </ul>
-                        </li>
+
                 </ul>-->
             </div><!-- /.navbar-collapse -->
         </nav>
@@ -149,6 +151,13 @@
         </div>
         <form method="POST" enctype="multipart/form-data" action="photos.php?admin_action=add_photo">
         <div class="row">
+
+
+
+</div>
+
+
+
            <div class="col-lg-6">
                     <div class="card">
                         <div class="card-header"><strong>Ajouter une photo</strong></div>
@@ -219,8 +228,23 @@
                         <i class="fa fa-dot-circle-o"></i> Valider</button>
                         </form> 
                   
-                        </div>
-                    </div>
+                   
+
+
+
+</div>
+</div>
+
+
+
+
+
+
+
+</div>
+        </div>
+
+
 
                   </div>
 
@@ -257,6 +281,8 @@
     }
 
     </script>
+
+
 
 </body>
 </html>

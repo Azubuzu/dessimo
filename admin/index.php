@@ -83,20 +83,12 @@
                             <i class="menu-icon ti-gallery"></i>Photos</a>
                             <ul class="sub-menu children dropdown-menu">
                                 <li><i class="ti-gallery"></i><a href="photos.php">Ajouter une photo</a></li>
-                                <li><i class="ti-gallery"></i><a href="photos.php">Gallerie</a></li>
+                                <li><i class="ti-gallery"></i><a href="gallery.php">Gallerie</a></li>
                             </ul>
                         </li>  
 
 
-                        <li class="menu-item-has-children dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-table"></i>Listes des biens</a>
-                            <ul class="sub-menu children dropdown-menu">
-                                <li><i class="fa fa-table"></i><a href="biens.php">À vendre</a></li>
-                                <li><i class="fa fa-table"></i><a href="biens.php">À louer</a></li>
-                                <li><i class="fa fa-table"></i><a href="biens.php">Vendu</a></li>
-                                <li><i class="fa fa-table"></i><a href="biens.php">Loué</a></li>
-                            </ul>
-                        </li>
+
                 </ul>-->
             </div><!-- /.navbar-collapse -->
         </nav>

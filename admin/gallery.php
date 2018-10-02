@@ -1,5 +1,7 @@
 <?php
     require_once "admin_manager.php";
+
+    $biens = $bdd->query("SELECT *,bien.ID AS bien_ID,bien.nom AS bien_nom,type.nom AS type_nom, localite.nom AS local_nom, bien.description AS bien_desc,categorie.nom AS cat_nom FROM bien INNER JOIN categorie ON categorie.ID = fk_Categorie_ID INNER JOIN type ON type.ID = fk_Type_ID INNER JOIN localite ON localite.ID = fk_Localite_ID ORDER BY bien.ID DESC")->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!doctype html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
@@ -15,6 +17,15 @@
 
     <link rel="apple-touch-icon" href="apple-icon.png">
     <link rel="shortcut icon" href="favicon.ico">
+    <link rel="stylesheet" href="assets/css/lib/datatable/dataTables.bootstrap.min.css">
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<style>
+
+
+
+
+</style>
+
 
     <link rel="stylesheet" href="assets/css/normalize.css">
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
@@ -25,10 +36,11 @@
     <!-- <link rel="stylesheet" href="assets/css/bootstrap-select.less"> -->
     <link rel="stylesheet" href="assets/scss/style.css">
     <link href="assets/css/lib/vector-map/jqvmap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/lib/datatable/dataTables.bootstrap.min.css">
+
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
 
     <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/html5shiv/3.7.3/html5shiv.min.js"></script> -->
+
 
 </head>
 <body>
@@ -70,7 +82,7 @@
                          <a href="localites.php"> <i class="menu-icon ti-location-pin"></i>Localités</a>
                         </li>
 
-                        <li class="active">
+                        <li>
                          <a href="types.php"> <i class="menu-icon ti-direction"></i>Types de biens</a>
                         </li>
 
@@ -78,15 +90,15 @@
                          <a href="biens.php"> <i class="menu-icon ti-home"></i>Biens</a>
                         </li>
 
-                        <li class="menu-item-has-children dropdown">
+
+                        <li class="menu-item-has-children dropdown active" >
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 
                             <i class="menu-icon ti-gallery"></i>Photos</a>
                             <ul class="sub-menu children dropdown-menu">
                                 <li><i class="ti-gallery"></i><a href="photos.php">Ajouter une photo</a></li>
                                 <li><i class="ti-gallery"></i><a href="gallery.php">Gallerie</a></li>
                             </ul>
-                        </li> 
-
+                        </li>                         
 
                 </ul>-->
             </div><!-- /.navbar-collapse -->
@@ -134,12 +146,20 @@
                     </div>
                 </div>
             </div>
+ 
         </div>
+        <form method="POST" enctype="multipart/form-data" action="photos.php?admin_action=add_photo">
+        <div class="row">
 
-        <?php
-        if (!isset($_GET['add_type']) && !isset($_GET['type_ID'])) {
-            $cantons = $bdd->query('SELECT * FROM type')->fetchAll(PDO::FETCH_ASSOC);
-        ?>
+
+
+
+
+  <div class="col-lg-12">
+                    <div class="card">
+                         <div class="card-header"><strong>Sélectionner le bien immobilier</strong>      </div>
+     <div class="card-body card-block">
+                 
 
         <div class="content mt-3">
             <div class="animated fadeIn">
@@ -148,129 +168,77 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
-                            <strong class="card-title">Listes des Types</strong>
-                        </div>
-                        <div class="card-body">
-                  <table id="bootstrap-data-table" class="table table-striped table-bordered">
-                    <thead>
-                      <tr>
-                        <th>Nom</th>
-                        <th>Description</th>
-                        <th>Action</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-
-                    <?php
-                        foreach ($types as $type) {
-                    ?>
-
-                    <tr>
-                        <td><?php echo $type['nom']; ?></td>
-                        <td><?php echo $type['description']; ?></td>
-                        <td>
-                            <a href="types.php?type_ID=<?php echo $type['ID'];?>"><button type="button" class="btn btn-info"><i class="fa fa-edit"></i>&nbsp; </button></a>
-                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteWarning" onclick="deleteElement(<?php echo $type['ID'].",'".$type['nom']."','type'";?>)">
-                              <i class="fa fa-trash"></i>&nbsp; 
-                            </button>
-                        </td>
-                    </tr>
-
-                    <?php
-                        }
-                    ?>                    
-                    </tbody>
-                  </table>
-
-                    </div>
-                    <div class="lord-button" style="margin-left :25px; margin-bottom: 25px;">
-                    <a href="types.php?add_type"><button type="submit" class="btn btn-success btn-m">
-                    <i class="fa fa-plus"></i> Ajouter un type</button></div>
-                    </div>
-               
-                    </form></a>
-
-
-
-                </div>
-
-
-                </div>
-            </div><!-- .animated -->
-        </div><!-- .content -->
-        <?php
-        }
-        ?>
-
-        <?php
-        if (isset($_GET['add_type']) && !isset($_GET['type_ID'])) {
-        ?>
-
-           <div class="col-lg-12">
-                    <div class="card">
-                      <div class="card-header"><strong>Ajouter un type de biens</strong></div>
-                      <div class="card-body card-block">
-                        <form>
-                        <input type="hidden" name="admin_action" value="add_type">
-                        <div class="form-group"><label for="company" class=" form-control-label">Nom</label><input type="text" id="company" placeholder="Nom" class="form-control" name="type_name"></div>
-
-                             <div class="form-group"><label for="textarea-input" class=" form-control-label">Description</label>
-                            <textarea name="type_desc" id="textarea-input" rows="9" placeholder="Contenu.." class="form-control"></textarea></div>
-
-                   
-                        <button type="submit" class="btn btn-primary btn-m">
-                        <i class="fa fa-dot-circle-o"></i> Valider</button>
-                        </form>
-                  
-                        </div>
-                    </div>
-
-          </div>
-          <?php
-        }
-        ?>
-
-        <?php
-        if (!isset($_GET['add_type']) && isset($_GET['type_ID'])) {
-            $rq_types = $bdd->prepare('SELECT * FROM type WHERE type.ID = :type_ID');
-            $rq_types->execute(
-                array(
-                    ':type_ID' => $_GET['type_ID'],
-            )); 
-
-            $types = $rq_types->fetchAll(PDO::FETCH_ASSOC);
-
-        ?>
-
-           <div class="col-lg-12">
-                    <div class="card">
-                      <div class="card-header"><strong>Ajouter un type de biens</strong></div>
-                      <div class="card-body card-block">
-                        <form>
-                        <input type="hidden" name="admin_action" value="modif_type">
-                        <input type="hidden" name="type_ID" value="<?php echo $_GET['type_ID'];?>">                        
-                        <div class="form-group"><label for="company" class=" form-control-label">Nom</label>
-                            <input type="text" id="company" placeholder="Nom" class="form-control" name="type_name" value="<?php echo $types[0]['nom'];?>">
+                            <strong class="card-title">Listes des clients</strong>
                         </div>
 
-                             <div class="form-group"><label for="textarea-input" class=" form-control-label">Description</label>
-                            <textarea name="type_desc" id="textarea-input" rows="9" placeholder="Contenu.." class="form-control"><?php echo $types[0]['description'];?></textarea></div>
+                            <div class="card-body">
+                                <table id="bootstrap-data-table" class="table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                    <th>Nom</th>
+                                    <th>Photo</th>
+                                    <th>Action</th>
+                                    </tr>
+                                </thead>
 
-                   
-                        <button type="submit" class="btn btn-primary btn-m">
-                        <i class="fa fa-dot-circle-o"></i> Valider</button>
-                        </form>
-                  
-                        </div>
-                    </div>
+                                <tbody>
+                                    <tr>
+                                    <td>Me gusta la noche</td>
+                                    <td style="width: 60%;">     
+                                        <a href="#" class="d-block  h-45">
+                                        <img class="img-fluid img-thumbnail" src="http://placehold.it/400x300" alt="">
+                                        </a>
+                                    </td>
 
-          </div>
-          <?php
-        }
-        ?>
+                              
+                                    <td style="width: 155px;">
+                                        <a href="clients.php?"><button type="button" class="btn btn-info"><i class="fa fa-star"></i>&nbsp;favoris </button></a>
+                                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteWarning" onclick="">
+                                        <i class="fa fa-trash"></i>&nbsp; 
+                                        </button>
+                                    </td>
+                                    </tr>
+
+
+                                     <tr>
+                                    <td>Me gusta la noche</td>
+                                     <td style="width: 60%;">     
+                                        <a href="#" class="d-block  h-45">
+                                        <img class="img-fluid img-thumbnail" src="http://placehold.it/400x300" alt="">
+                                        </a>
+                                    </td>
+
+                                    <td style="width: 155px;">
+                                        <a href="clients.php?"><button type="button" class="btn btn-info"><i class="fa fa-star"></i>&nbsp;favoris </button></a>
+                                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteWarning" onclick="">
+                                        <i class="fa fa-trash"></i>&nbsp; 
+                                        </button>
+                                    </td>
+                                    </tr>
+                                                                       
+                                </tbody>
+
+                                </table>
+                            </div>
+
+
+
+</div>
+
+
+
+
+
+
+
+</div>
+        </div>
+
+
+
+                  </div>
 
     <!-- Right Panel -->
-
    <script src="assets/js/vendor/jquery-2.1.4.min.js"></script>
     <script src="assets/js/popper.min.js"></script>
     <script src="assets/js/plugins.js"></script>
@@ -289,26 +257,26 @@
     <script src="assets/js/lib/data-table/buttons.colVis.min.js"></script>
     <script src="assets/js/lib/data-table/datatables-init.js"></script>
 
-    <!-- Modal -->
-    <div class="modal fade" id="deleteWarning" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Attention !</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body" id="modal_message">
-            ...
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-            <a href="" id="modal_delete_button"><button type="button" class="btn btn-danger">SUPPRIMER</button></a>
-          </div>
-        </div>
-      </div>
-    </div>
+    <script type="text/javascript">
+    function fetch_select()
+    {
+     jQuery.ajax({
+     type: 'post',
+     url: '../vendor/script/fetch_localite.php',
+     data: {
+      photo_search:1,
+      type_ID:document.getElementById("type_ID").value,
+      localite_ID:document.getElementById("localite_ID").value
+     },
+     success: function (response) {
+      document.getElementById("bien").innerHTML=response; 
+     }
+     });
+    }
+
+    </script>
+
+
 
 </body>
 </html>
