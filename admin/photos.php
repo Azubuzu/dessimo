@@ -176,17 +176,13 @@
   <div class="col-lg-6">
                     <div class="card">
                          <div class="card-header"><strong>Sélectionner le bien immobilier</strong>      </div>
-     <div class="card-body card-block">
-                 
-
-
-            
+                            <div class="card-body card-block">
                             
                         <input type="hidden" name="admin_action" value="add_photo">
                         <div class="form-group">
                         <label for="company" class=" form-control-label">Types de bien</label>
                         <select id="type_ID" class="form-control" onchange="fetch_select();">
-                        <option value="0">Sélectionner un type</option>
+                        <option value="0">Tous les types</option>
                             <?php
                             foreach ($types as $type) {
                                 echo '<option value="'.$type["ID"].'">'.$type["nom"].'</option>';
@@ -199,7 +195,7 @@
                         <div class="form-group">
                         <label for="company" class=" form-control-label">Localité</label>
                         <select id="localite_ID" class="form-control" onchange="fetch_select();">
-                        <option value="0">Sélectionner une ville</option>
+                        <option value="0">Toutes les localités</option>
                             <?php
                             $all_local = $bdd->query('SELECT * FROM localite ORDER BY nom')->fetchAll(PDO::FETCH_ASSOC);
                             foreach ($all_local as $local) {
@@ -227,13 +223,8 @@
                         <button type="submit" class="btn btn-primary btn-m">
                         <i class="fa fa-dot-circle-o"></i> Valider</button>
                         </form> 
-                  
-                   
-
-
-
-</div>
-</div>
+                    </div>
+                </div>
 
 
 

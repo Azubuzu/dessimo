@@ -145,6 +145,20 @@
 				header('Location: agents.php');
 			}
 
+			if ($_GET['admin_action'] == "modif_gallery") {
+				$selected_to_0 = $bdd->prepare('UPDATE photo SET selected = 0 WHERE fk_bien_ID = :bien_ID');
+				$selected_to_0->execute(
+					array(
+						':bien_ID' => $_GET['bien_ID'],
+				));
+
+				$photo_selected = $bdd->prepare('UPDATE photo SET selected = 0^1 WHERE ID = :photo_ID');
+				$photo_selected->execute(
+					array(
+						':photo_ID' => $_GET['photo_ID'],
+				));
+			}
+
 			if ($_GET['admin_action'] == "modif_bien") {
 
 				if (isset($_POST['bien_favori'])) {
@@ -239,6 +253,37 @@
 						':type_ID' => $_GET['delete_ID'],
 				));	
 				header('Location: types.php');		
+			}
+
+			if ($_GET['admin_action'] == "delete_gallery") {
+				$select_photos = $bdd->prepare("SELECT * FROM photo WHERE fk_bien_ID = :bien_ID");
+	            $select_photos->execute(
+	                array(
+	                    ':bien_ID' => $_GET['bien_ID'], 
+	            ));
+	            $photos = $select_photos->fetchAll();
+
+	            if (count($photos) == 1) {
+	            	echo "<script>alert('Au moins une photo doit être présente !')</script>";
+	            } else {
+	            	$select_photos = $bdd->prepare("SELECT * FROM photo WHERE ID = :photo_ID");
+		            $select_photos->execute(
+		                array(
+		                    ':photo_ID' => $_GET['delete_ID'], 
+		            ));
+
+		            $photos = $select_photos->fetchAll();
+
+		            if ($photos[0]['selected'] == 1) {
+		            	echo "<script>alert('Impossible de supprimer la photo favori')</script>";
+		            } else {
+		            	$delete_photo = $bdd->prepare('DELETE FROM photo WHERE ID = :photo_ID');
+						$delete_photo->execute(
+							array(
+								':photo_ID' => $_GET['delete_ID'],
+						));
+		            } 
+	            }
 			}
 
 			if ($_GET['admin_action'] == "add_bien") {

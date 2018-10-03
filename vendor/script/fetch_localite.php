@@ -27,13 +27,29 @@
 
 	if(isset($_POST['photo_search'])) {
 		include "db_connect.php";
+
+		if ($_POST['type_ID'] == 0) {
+			$select_bien = $bdd->prepare('SELECT bien.ID,bien.nom FROM bien WHERE fk_Localite_ID = :localite_ID ORDER BY nom');
+			$select_bien->execute(
+				array(
+					':localite_ID' => $_POST['localite_ID'], 
+			));
+		} elseif ($_POST['localite_ID'] == 0) {
+			$select_bien = $bdd->prepare('SELECT bien.ID,bien.nom FROM bien WHERE fk_Type_ID = :type_ID ORDER BY nom');
+			$select_bien->execute(
+				array(
+					':type_ID' => $_POST['type_ID'], 
+			));
+		} else {
+			$select_bien = $bdd->prepare('SELECT bien.ID,bien.nom FROM bien WHERE fk_Type_ID = :type_ID AND fk_Localite_ID = :localite_ID ORDER BY nom');
+			$select_bien->execute(
+				array(
+					':type_ID' => $_POST['type_ID'],
+					':localite_ID' => $_POST['localite_ID'], 
+			));
+		}
 		
-		$select_bien = $bdd->prepare('SELECT bien.ID,bien.nom FROM bien WHERE fk_Type_ID = :type_ID AND fk_Localite_ID = :localite_ID ORDER BY nom');
-		$select_bien->execute(
-					array(
-						':type_ID' => $_POST['type_ID'],
-						':localite_ID' => $_POST['localite_ID'], 
-				));
+		
 
 		while ($item = $select_bien->fetch())
     	{

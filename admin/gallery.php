@@ -1,7 +1,5 @@
 <?php
     require_once "admin_manager.php";
-
-    $biens = $bdd->query("SELECT *,bien.ID AS bien_ID,bien.nom AS bien_nom,type.nom AS type_nom, localite.nom AS local_nom, bien.description AS bien_desc,categorie.nom AS cat_nom FROM bien INNER JOIN categorie ON categorie.ID = fk_Categorie_ID INNER JOIN type ON type.ID = fk_Type_ID INNER JOIN localite ON localite.ID = fk_Localite_ID ORDER BY bien.ID DESC")->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!doctype html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
@@ -148,90 +146,144 @@
             </div>
  
         </div>
-        <form method="POST" enctype="multipart/form-data" action="photos.php?admin_action=add_photo">
-        <div class="row">
+
+            <?php
+            if (!isset($_GET['bien_ID'])) {
+                $biens = $bdd->query("SELECT *,bien.ID AS bien_ID,bien.nom AS bien_nom,type.nom AS type_nom, localite.nom AS local_nom, bien.description AS bien_desc,categorie.nom AS cat_nom FROM bien INNER JOIN categorie ON categorie.ID = fk_Categorie_ID INNER JOIN type ON type.ID = fk_Type_ID INNER JOIN localite ON localite.ID = fk_Localite_ID ORDER BY bien.ID DESC")->fetchAll(PDO::FETCH_ASSOC);
+            ?>   
+
+        <div class="col-lg-12">
+                    <div class="card">
+                         <div class="card-header"><strong>Sélectionner le bien immobilier</strong>      </div>
+                            <div class="card-body card-block">
+                            <form>
+                        <div class="form-group">
+                        <label for="company" class=" form-control-label">Types de bien</label>
+                        <select id="type_ID" class="form-control" onchange="fetch_select();">
+                        <option value="0">Tous les types</option>
+                            <?php
+                            foreach ($types as $type) {
+                                echo '<option value="'.$type["ID"].'">'.$type["nom"].'</option>';
+                            }
+                            ?>
+                        </select>
+                        </div> 
 
 
+                        <div class="form-group">
+                        <label for="company" class=" form-control-label">Localité</label>
+                        <select id="localite_ID" class="form-control" onchange="fetch_select();">
+                        <option value="0">Toutes les localités</option>
+                            <?php
+                            $all_local = $bdd->query('SELECT * FROM localite ORDER BY nom')->fetchAll(PDO::FETCH_ASSOC);
+                            foreach ($all_local as $local) {
+                                echo '<option value="'.$local["ID"].'">'.$local["nom"].'</option>';
+                            }
+                            ?>
+                        </select>
+                        </div>  
 
 
+                      <div class="form-group">
+                        <label for="company" class=" form-control-label"><bold>Bien sélectionné</bold></label>
+                        <select name="bien_ID" id="bien" class="form-control" data-live-search="true">
+                            <option value="">Sélectionner un bien</option>
+                            <?php
+                            foreach ($biens as $bien) {
+                                echo '<option value="'.$bien["bien_ID"].'">'.$bien["bien_nom"].'</option>';
+                            }
+                            ?>
+                        </select>
+                        </div> 
 
+
+                   
+                        <button type="submit" class="btn btn-primary btn-m">
+                        <i class="fa fa-dot-circle-o"></i> Valider</button>
+                        </form> 
+                    </div>
+                </div>
+            </div>
+
+        <?php
+        }
+        ?>
+
+
+        <?php
+        if (isset($_GET['bien_ID'])) {
+
+            $select_photos = $bdd->prepare("SELECT bien.nom AS bien_nom,bien.ID AS bien_ID,photo.name AS photo_nom,photo.selected,photo.ID AS photo_ID FROM photo INNER JOIN bien ON bien.ID = fk_bien_ID WHERE fk_bien_ID = :bien_ID");
+            $select_photos->execute(
+                array(
+                    ':bien_ID' => $_GET['bien_ID'], 
+            ));
+            $photos = $select_photos->fetchAll();
+        ?> 
   <div class="col-lg-12">
                     <div class="card">
-                         <div class="card-header"><strong>Gallerie</strong>      </div>
+                         <div class="card-header"><strong>Gallerie de : <?php echo $photos[0]['bien_nom'] ?> </strong>      </div>
      <div class="card-body card-block">
                  
 
         <div class="content mt-3">
             <div class="animated fadeIn">
                 <div class="row">
-
-                <div class="col-md-12">
-                            <div class="card-body">
-                                <table id="bootstrap-data-table" class="table table-striped table-bordered">
+                    <div class="col-md-12">
+                        <div class="card-body">
+                            <table id="bootstrap-data-table" class="table table-striped table-bordered">
                                 <thead>
                                     <tr>
-                                    <th>Nom</th>
                                     <th>Photo</th>
+                                    <th>Favori</th>
                                     <th>Action</th>
                                     </tr>
                                 </thead>
 
                                 <tbody>
+
+                                    <?php
+                                    foreach ($photos as $photo) {
+                                    ?>
+
                                     <tr>
-                                    <td>Me gusta la noche</td>
-                                    <td style="width: 60%;">     
-                                        <a href="#" class="d-block  h-45">
-                                        <img class="img-fluid img-thumbnail" src="http://placehold.it/400x300" alt="">
-                                        </a>
-                                    </td>
+                                         <td style="width: 70%;">     
+                                            <a href="#" class="d-block  h-45">
+                                            <img class="img-fluid img-thumbnail" src="../images/upload/<?php echo $photo['photo_nom'] ?>" alt="">
+                                            </a>
+                                        </td>
 
-                              
-                                    <td style="width: 155px;">
-                                        <a href="clients.php?"><button type="button" class="btn btn-info"><i class="fa fa-star"></i>&nbsp;favoris </button></a>
-                                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteWarning" onclick="">
-                                        <i class="fa fa-trash"></i>&nbsp; 
-                                        </button>
-                                    </td>
+                                        <td style="width: 15%;"><?php echo ($photo['selected'] == 1) ? "Oui" : "Non"; ?></td>
+
+                                        <td style="width: 15%;">
+                                            <a href="gallery.php?admin_action=modif_gallery&bien_ID=<?php echo $photo['bien_ID']; ?>&photo_ID=<?php echo $photo['photo_ID']; ?>">
+                                                <button type="button" class="btn btn-info">
+                                                    <i class="fa fa-star"></i>&nbsp;favoris 
+                                                </button>
+                                            </a>
+                                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteWarning" onclick="deleteElementGallery(<?php echo $photo['photo_ID'].",".$photo['bien_ID'].",'cette photo','gallery'";?>)">
+                                            <i class="fa fa-trash"></i>&nbsp; 
+                                            </button>
+                                        </td>
                                     </tr>
-
-
-                                     <tr>
-                                    <td>Me gusta la noche</td>
-                                     <td style="width: 60%;">     
-                                        <a href="#" class="d-block  h-45">
-                                        <img class="img-fluid img-thumbnail" src="http://placehold.it/400x300" alt="">
-                                        </a>
-                                    </td>
-
-                                    <td style="width: 155px;">
-                                        <a href="clients.php?"><button type="button" class="btn btn-info"><i class="fa fa-star"></i>&nbsp;favoris </button></a>
-                                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteWarning" onclick="">
-                                        <i class="fa fa-trash"></i>&nbsp; 
-                                        </button>
-                                    </td>
-                                    </tr>
+                                    <?php
+                                    }
+                                    ?>
                                                                        
                                 </tbody>
-
-                                </table>
-                            </div>
-
-
-
-</div>
-
-
-
-
-
-
-
-</div>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+    </div>
+</div>
 
 
-
-                  </div>
+        <?php
+        }
+        ?>
 
     <!-- Right Panel -->
    <script src="assets/js/vendor/jquery-2.1.4.min.js"></script>
@@ -251,7 +303,6 @@
     <script src="assets/js/lib/data-table/buttons.print.min.js"></script>
     <script src="assets/js/lib/data-table/buttons.colVis.min.js"></script>
     <script src="assets/js/lib/data-table/datatables-init.js"></script>
-
     <script type="text/javascript">
     function fetch_select()
     {
@@ -270,6 +321,27 @@
     }
 
     </script>
+
+        <!-- Modal -->
+    <div class="modal fade" id="deleteWarning" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Attention !</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body" id="modal_message">
+            ...
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+            <a href="" id="modal_delete_button"><button type="button" class="btn btn-danger">SUPPRIMER</button></a>
+          </div>
+        </div>
+      </div>
+    </div>
 
 
 

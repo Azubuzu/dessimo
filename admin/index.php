@@ -1,5 +1,8 @@
 <?php
     require_once "admin_manager.php";
+    $biens_count = $bdd->query('SELECT count(*) AS a FROM bien')->fetchAll(PDO::FETCH_ASSOC);
+    $biens_active_count = $bdd->query('SELECT count(*) AS a FROM bien WHERE fk_Categorie_ID != 5')->fetchAll(PDO::FETCH_ASSOC);
+    $clients_count = $bdd->query('SELECT count(*) AS a FROM client')->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!doctype html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
@@ -166,7 +169,7 @@
                             </div>
                         </div>
                         <h4 class="mb-0">
-                            <span class="count">8</span>
+                            <span class="count"><?php echo $biens_active_count[0]['a']; ?></span>
                         </h4>
                         <p class="text-light">Biens actifs</p>
 
@@ -196,7 +199,7 @@
                             </div>
                         </div>
                         <h4 class="mb-0">
-                            <span class="count">22</span>
+                            <span class="count"><?php echo $biens_count[0]['a']; ?></span>
                         </h4>
                         <p class="text-light">Biens totaux</p>
 
@@ -231,7 +234,7 @@
                             <div class="stat-icon dib"><i class="ti-user text-primary border-primary"></i></div>
                             <div class="stat-content dib">
                                 <div class="stat-text">Clients</div>
-                                <div class="stat-digit">41</div>
+                                <div class="stat-digit"><?php echo $clients_count[0]['a']; ?></div>
                             </div>
                         </div>
                     </div>
