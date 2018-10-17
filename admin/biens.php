@@ -67,6 +67,10 @@
                         </li>
 
                         <li>
+                         <a href="mandataires.php"> <i class="menu-icon ti-announcement"></i>Mandataires</a>
+                        </li>
+
+                        <li>
                          <a href="cantons.php"> <i class="menu-icon ti-map"></i>Cantons</a>
                         </li>
 
@@ -367,9 +371,9 @@
                         <?php
                             foreach ($agents as $item) {
                                 if ($item['ID'] == $bien[0]['fk_Agent_ID'])
-                                    echo "<option value='".$item['ID']."'>".$item['nom']." ".$item['prenom']."</option>";
-                                else
                                     echo "<option value='".$item['ID']."' selected>".$item['nom']." ".$item['prenom']."</option>";
+                                else
+                                    echo "<option value='".$item['ID']."'>".$item['nom']." ".$item['prenom']."</option>";
                             }
                         ?>
                         </select>

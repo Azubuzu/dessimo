@@ -70,6 +70,19 @@
 				header('Location: clients.php');
 			}
 
+			if ($_GET['admin_action'] == "add_mandataire") {
+				$add_client = $bdd->prepare('INSERT INTO mandataire VALUES(NULL,:client_nom,:client_prenom,:client_email,:client_remarque)');
+				$add_client->execute(
+					array(
+						':client_email' => $_GET['mandataire_email'],
+						':client_nom' => $_GET['mandataire_nom'], 
+						':client_prenom' => $_GET['mandataire_prenom'], 
+						':client_remarque' => $_GET['mandataire_remarque'], 
+				));
+
+				//header('Location: mandataires.php');
+			}
+
 			if ($_GET['admin_action'] == "add_photo") {
 
 				if(isset($_FILES['pictures'])) {
@@ -117,6 +130,20 @@
 				));
 
 				header('Location: clients.php');
+			}
+
+			if ($_GET['admin_action'] == "modif_mandataire") {
+				$update_client = $bdd->prepare('UPDATE mandataire SET email = :client_email, nom = :client_nom, prenom = :client_prenom, remarque = :client_remarque WHERE mandataire.ID = :client_ID;');
+				$update_client->execute(
+					array(
+						':client_email' => $_GET['mandataire_email'],
+						':client_nom' => $_GET['mandataire_nom'], 
+						':client_prenom' => $_GET['mandataire_prenom'], 
+						':client_remarque' => $_GET['mandataire_remarque'], 
+						':client_ID' => $_GET['mandataire_ID'], 
+				));
+
+				header('Location: mandataires.php');
 			}
 
 			if ($_GET['admin_action'] == "modif_type") {
@@ -217,6 +244,24 @@
 						':client_ID' => $_GET['delete_client_ID'],
 				));	
 				header('Location: clients.php');		
+			}
+
+			if ($_GET['admin_action'] == "delete_mandataire") {
+				$update_client = $bdd->prepare('DELETE FROM mandataire WHERE mandataire.ID = :client_ID');
+				$update_client->execute(
+					array(
+						':client_ID' => $_GET['delete_ID'],
+				));	
+				header('Location: mandataires.php');		
+			}
+
+			if ($_GET['admin_action'] == "delete_agent") {
+				$update_client = $bdd->prepare('DELETE FROM agent WHERE agent.ID = :agent_ID');
+				$update_client->execute(
+					array(
+						':agent_ID' => $_GET['delete_ID'],
+				));	
+				header('Location: agents.php');		
 			}
 
 			if ($_GET['admin_action'] == "delete_bien") {

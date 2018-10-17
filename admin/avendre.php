@@ -60,6 +60,10 @@
                         </li>
 
                         <li>
+                         <a href="mandataires.php"> <i class="menu-icon ti-announcement"></i>Mandataires</a>
+                        </li>
+
+                        <li>
                          <a href="cantons.html"> <i class="menu-icon ti-map"></i>Cantons</a>
                         </li>
 

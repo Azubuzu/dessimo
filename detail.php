@@ -4,15 +4,15 @@
 
       if($bien = $bdd->query("SELECT *,bien.ID AS bien_ID,bien.nom AS bien_nom,categorie.ID AS cat_ID,type.nom AS type_nom, localite.nom AS local_nom,agent.nom AS agent_nom,agent.prenom AS agent_prenom,bien.description AS bien_desc FROM bien INNER JOIN categorie ON categorie.ID = fk_Categorie_ID INNER JOIN type ON type.ID = fk_Type_ID INNER JOIN localite ON localite.ID = fk_Localite_ID INNER JOIN agent ON agent.ID = fk_Agent_ID WHERE bien.ID = ".$_GET['bien_ID'])->fetch()) {
 
-      $pictures = $bdd->query('SELECT * FROM photo WHERE fk_bien_ID = '.$_GET['bien_ID'])->fetchAll(PDO::FETCH_ASSOC);
-    } else {
+          $pictures = $bdd->query('SELECT * FROM photo WHERE fk_bien_ID = '.$_GET['bien_ID'])->fetchAll(PDO::FETCH_ASSOC);
+      } else {
       //Error 404
       header('Location: index.php');
-    } 
+       }
     
   } else {
     //Error 404
-      header('Location: index.php');
+     header('Location: index.php');
   } 
 
 ?>
