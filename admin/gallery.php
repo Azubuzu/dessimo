@@ -219,7 +219,7 @@
         <?php
         if (isset($_GET['bien_ID'])) {
 
-            $select_photos = $bdd->prepare("SELECT bien.nom AS bien_nom,bien.ID AS bien_ID,photo.name AS photo_nom,photo.selected,photo.ID AS photo_ID FROM photo INNER JOIN bien ON bien.ID = fk_bien_ID WHERE fk_bien_ID = :bien_ID");
+            $select_photos = $bdd->prepare("SELECT bien.nom AS bien_nom,bien.ID AS bien_ID,photo.name AS photo_nom,photo.selected,photo.ID AS photo_ID,photo.position FROM photo INNER JOIN bien ON bien.ID = fk_bien_ID WHERE fk_bien_ID = :bien_ID ORDER BY photo.position,photo.ID");
             $select_photos->execute(
                 array(
                     ':bien_ID' => $_GET['bien_ID'], 
@@ -242,6 +242,7 @@
                                     <tr>
                                     <th>Photo</th>
                                     <th>Favori</th>
+                                    <th>Ordre</th>
                                     <th>Action</th>
                                     </tr>
                                 </thead>
@@ -259,12 +260,27 @@
                                             </a>
                                         </td>
 
-                                        <td style="width: 15%;"><?php echo ($photo['selected'] == 1) ? "Oui" : "Non"; ?></td>
+                                        <td style="width: 2%;"><?php echo ($photo['selected'] == 1) ? "Oui" : "Non"; ?></td>
+
+                                        <td style="width: 10%;">
+                                            <select id="order" class="form-control" onchange="change_order(<?php echo $photo['photo_ID'] ?>,this.value);">
+                                                <option value="9000">Aucun</option>
+                                                <?php
+                                                for ($i=0; $i < count($photos); $i++) {
+                                                    if ($photo['position'] == $i+1) 
+                                                        echo '<option value="'.($i + 1).'" selected>'.($i + 1).'</option>';
+                                                    else
+                                                        echo '<option value="'.($i + 1).'">'.($i + 1).'</option>';
+                                                    
+                                                } 
+                                                ?>
+                                            </select>
+                                        </td>
 
                                         <td style="width: 15%;">
                                             <a href="gallery.php?admin_action=modif_gallery&bien_ID=<?php echo $photo['bien_ID']; ?>&photo_ID=<?php echo $photo['photo_ID']; ?>">
                                                 <button type="button" class="btn btn-info">
-                                                    <i class="fa fa-star"></i>&nbsp;favoris 
+                                                    <i class="fa fa-star"></i>&nbsp;favori 
                                                 </button>
                                             </a>
                                             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteWarning" onclick="deleteElementGallery(<?php echo $photo['photo_ID'].",".$photo['bien_ID'].",'cette photo','gallery'";?>)">
@@ -310,20 +326,19 @@
     <script src="assets/js/lib/data-table/buttons.colVis.min.js"></script>
     <script src="assets/js/lib/data-table/datatables-init.js"></script>
     <script type="text/javascript">
-    function fetch_select()
+    function change_order(id,val)
     {
-     jQuery.ajax({
-     type: 'post',
-     url: '../vendor/script/fetch_localite.php',
-     data: {
-      photo_search:1,
-      type_ID:document.getElementById("type_ID").value,
-      localite_ID:document.getElementById("localite_ID").value
-     },
-     success: function (response) {
-      document.getElementById("bien").innerHTML=response; 
-     }
-     });
+        $.ajax({
+        type: 'post',
+        url: '../vendor/script/change_order.php',
+        data: {
+            photo_ID:id,
+            order:val
+        },
+        success: function (response) {
+            window.location.reload(false);
+        }
+        });
     }
 
     </script>
