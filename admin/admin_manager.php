@@ -80,7 +80,7 @@
 						':client_remarque' => $_GET['mandataire_remarque'], 
 				));
 
-				//header('Location: mandataires.php');
+				header('Location: mandataires.php');
 			}
 
 			if ($_GET['admin_action'] == "add_photo") {
@@ -101,6 +101,7 @@
 							$image->setLocation($bulletproof_upload_dir_admin);
 							$image->setSize($bulletproof_size_min, $bulletproof_size_max);
 							$image->setMime($bulletproof_accepted_format);
+							$image->setDimension($bulletproof_dimension_max, $bulletproof_dimension_max); 
 							
 							if($image->upload()){
 								$add_entry = $bdd->prepare("INSERT INTO photo(name, selected, fk_bien_ID) VALUES (:img_name,0,:img_bien_ID)");
@@ -109,6 +110,7 @@
 										':img_name' => $image->getName().".".$image->getMime(),
 										':img_bien_ID' => $_POST['bien_ID'],  
 								));
+								header('Location: gallery.php?bien_ID='.$_POST['bien_ID']);
 							} else {
 								//echo $image->getError();
 							}

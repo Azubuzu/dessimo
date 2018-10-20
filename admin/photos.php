@@ -169,7 +169,7 @@
                         
                         <div class="form-group">
                             <label for="company" class=" form-control-label">Sélectionner les images</label>
-                            <input type="hidden" name="MAX_FILE_SIZE" value="20000000" class="form-control"/>
+                            
                             <input type="file" name="pictures[]" accept="image/*" multiple class="form-control"/>
                         </div>
 
