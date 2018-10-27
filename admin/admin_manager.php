@@ -104,7 +104,7 @@
 							$image->setDimension($bulletproof_dimension_max, $bulletproof_dimension_max); 
 							
 							if($image->upload()){
-								$add_entry = $bdd->prepare("INSERT INTO photo(name, selected, fk_bien_ID) VALUES (:img_name,0,:img_bien_ID)");
+								$add_entry = $bdd->prepare("INSERT INTO photo(name, selected, position, fk_bien_ID) VALUES (:img_name,0,9000,:img_bien_ID)");
 								$add_entry->execute(
 									array(
 										':img_name' => $image->getName().".".$image->getMime(),
