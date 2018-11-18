@@ -157,7 +157,7 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
-                            <strong class="card-title">Listes des clients</strong>
+                            <strong class="card-title">Listes des Biens</strong>
                         </div>
                         <div class="card-body">
                   <table id="bootstrap-data-table" class="table table-striped table-bordered">
@@ -185,6 +185,7 @@
                         <td><?php echo date('d/m/Y', $bien['creation_date']);?></td>
                         <td>
                             <a href="biens.php?bien_ID=<?php echo $bien['bien_ID'];?>"><button type="button" class="btn btn-info"><i class="fa fa-edit"></i>&nbsp; </button></a>
+                            <a href="pdf_generator.php?bien_ID=<?php echo $bien['bien_ID'];?>"><button type="button" class="btn btn-success"><i class="fa fa-file-pdf-o"></i>&nbsp; </button></a>
                             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteWarning" onclick="deleteElement(<?php echo $bien['bien_ID'].",'".$bien['bien_nom']."','bien'";?>)">
                               <i class="fa fa-trash"></i>&nbsp; 
                             </button>

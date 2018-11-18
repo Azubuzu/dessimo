@@ -219,7 +219,7 @@
         <?php
         if (isset($_GET['bien_ID'])) {
 
-            $select_photos = $bdd->prepare("SELECT bien.nom AS bien_nom,bien.ID AS bien_ID,photo.name AS photo_nom,photo.selected,photo.ID AS photo_ID,photo.position FROM photo INNER JOIN bien ON bien.ID = fk_bien_ID WHERE fk_bien_ID = :bien_ID ORDER BY photo.position,photo.ID");
+            $select_photos = $bdd->prepare("SELECT bien.nom AS bien_nom,bien.ID AS bien_ID,photo.name AS photo_nom,photo.selected,photo.ID AS photo_ID,photo.position,photo.onPDF FROM photo INNER JOIN bien ON bien.ID = fk_bien_ID WHERE fk_bien_ID = :bien_ID ORDER BY photo.position,photo.ID");
             $select_photos->execute(
                 array(
                     ':bien_ID' => $_GET['bien_ID'], 
@@ -242,6 +242,7 @@
                                     <tr>
                                     <th>Photo</th>
                                     <th>Favori</th>
+                                    <th>Sur PDF</th>
                                     <th>Ordre</th>
                                     <th>Action</th>
                                     </tr>
@@ -261,6 +262,9 @@
                                         </td>
 
                                         <td style="width: 2%;"><?php echo ($photo['selected'] == 1) ? "Oui" : "Non"; ?></td>
+                                        <td style="width: 2%;">
+                                            <input type="checkbox" name="onPDF" onchange="change_onPDF(<?php echo $photo['photo_ID'] ?>,this.checked);" <?php echo ($photo['onPDF'] == 1) ? "checked" : ""; ?>>
+                                        </td>
 
                                         <td style="width: 10%;">
                                             <select id="order" class="form-control" onchange="change_order(<?php echo $photo['photo_ID'] ?>,this.value);">
@@ -337,6 +341,21 @@
         },
         success: function (response) {
             window.location.reload(false);
+        }
+        });
+    }
+
+    function change_onPDF(id,val)
+    {
+        $.ajax({
+        type: 'post',
+        url: '../vendor/script/change_onPDF.php',
+        data: {
+            photo_ID:id,
+            onPDF:val
+        },
+        success: function (response) {
+            //window.location.reload(false);
         }
         });
     }
