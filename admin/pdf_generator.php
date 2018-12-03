@@ -34,8 +34,8 @@
 
 		// set document information
 		$pdf->SetCreator(PDF_CREATOR);
-		$pdf->SetAuthor('Our Code World');
-		$pdf->SetTitle('Example Write Html');
+		$pdf->SetAuthor('DESSIMMO');
+		$pdf->SetTitle($bien['bien_nom']);
 
 		// set default header data
 		$pdf->SetHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, PDF_HEADER_TITLE, PDF_HEADER_STRING);
@@ -61,31 +61,99 @@
 		// add a page
 		$pdf->AddPage();
 
-		$html = '<h2>'.$bien['bien_nom'].'</h2>';
-		$html .= '<p>'.$bien['NPA'].' '.$bien["local_nom"].'</p>';
-		$html .= '<h4>Description</h4><p style="text-align:justify;">'.$bien['bien_desc'].'</p>';
+		$html = <<<EOF
+		<!-- EXAMPLE OF CSS STYLE -->
+		<style>
+		    .price {
+		    	text-align:center;
+		    	text-decoration: none;
+		    	font-size:24px;
+		    }
+
+		</style>
+EOF;
+
+		$html .= '<h1>'.$bien['bien_nom'].'</h1>';
+		$html .= '<p class="npa">'.$bien['adresse'];
+		$html .= '<br>'.$bien['NPA'].' '.$bien["local_nom"].'</p>';
+		$html .= '<span class="price">CHF '.number_format($bien['prix'], 0, ',', '\'').'</span>';
+		$html .= '<h2>Description</h2><p style="text-align:justify;">'.$bien['bien_desc'].'</p>';
+		$html .= '<h2>Commodité</h2><p style="text-align:justify;">'.$bien['commodite'].'</p>';
+		$html .= '<h2>informations Supplémentaires</h2>';
+
+		if($bien['piece'] != "") {
+          $html .= '<p class="detail">Pièces : '.$bien['piece'].'</p>';
+        }
+      
+
+      if($bien['chambre'] != "") {
+          $html .= '<p class="detail">Chambres : '.$bien['chambre'].'</p>';
+        }
+      
+
+      if($bien['chauffage'] != "") {
+          $html .= '<p class="detail">Chauffages : '.$bien['chauffage'].'</p>';
+        }
+      
+
+      if($bien['nbre_WC'] != "") {
+          $html .= '<p class="detail">Nombre de WC : '.$bien['nbre_WC'].'</p>';
+        }
+      
+
+      if($bien['niveau'] != "") {
+          $html .= '<p class="detail">Niveau : '.$bien['niveau'].'</p>';
+        }
+      
+
+      if($bien['nbre_niveau'] != "") {
+          $html .= '<p class="detail">Nombre de niveaux : '.$bien['nbre_niveau'].'</p>';
+        }
+      
+
+      if($bien['surface'] != "") {
+          $html .= '<p class="detail">Surface habitable : '.$bien['surface'].'</p>';
+        }
+      
+
+      if($bien['surface_terrain'] != "") {
+          $html .= '<p class="detail">Surface du terrain : '.$bien['surface_terrain'].'</p>';
+        }
+      
+
+      if($bien['annee'] != "") {
+          $html .= '<p class="detail">Année de constr. : '.$bien['annee'].'</p>';
+        }
+      
+
+      if($bien['charges'] != "") {
+          $html .= '<p class="detail">Charges : '.$bien['charges'].'</p>';
+        }
+      
+
+      if($bien['disponibilite'] != "") {
+          $html .= '<p class="detail">Disponibilité : '.$bien['disponibilite'].'</p>';
+        }
+      
 		 
-		$pdf->writeHTML($html, true, false, true, false, '');
-
-		$html = "";
-
-		foreach ($photos as $photo) {
-			$html .= '<img src="../images/upload/'.$photo['photo_nom'].'"><br>';
-		}
-
 		$pdf->writeHTML($html, true, false, true, false, '');
 
 		// add a page
 		$pdf->AddPage();
 
-		$html = '<h1>Hey</h1>';
-		// output the HTML content
+		$html = "<h2>Photos</h2>";
+
+		foreach ($photos as $photo) {
+			$html .= '<p><img src="../images/upload/'.$photo['photo_nom'].'"/></p>';
+		}
+
 		$pdf->writeHTML($html, true, false, true, false, '');
+
 
 		// reset pointer to the last page
 		$pdf->lastPage();
 		//Close and output PDF document
-		$pdf->Output('example_006.pdf', 'I');
+		$pdf->Output('DESSIMMO_'.time().'.pdf', 'I');
 
 	} else {
 		header('Location: page-login.php');
