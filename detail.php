@@ -141,7 +141,7 @@
       </tr>
 
       <?php 
-        if($bien['piece'] != "") {
+        if($bien['piece'] != "" && $bien['piece'] != 0) {
           ?>
             <tr>
             <td>Pièces</td>
@@ -152,7 +152,7 @@
       ?>
 
       <?php 
-        if($bien['chambre'] != "") {
+        if($bien['chambre'] != "" && $bien['chambre'] != 0) {
           ?>
             <tr>
             <td>Chambres</td>
@@ -163,7 +163,7 @@
       ?>
 
       <?php 
-        if($bien['chauffage'] != "") {
+        if($bien['chauffage'] != "" && $bien['chauffage'] != 0) {
           ?>
             <tr>
             <td>Chauffages</td>
@@ -174,7 +174,7 @@
       ?>
 
       <?php 
-        if($bien['nbre_WC'] != "") {
+        if($bien['nbre_WC'] != "" && $bien['nbre_WC'] != 0) {
           ?>
             <tr>
             <td>Nombre de WC</td>
@@ -185,7 +185,7 @@
       ?>
 
       <?php 
-        if($bien['niveau'] != "") {
+        if($bien['niveau'] != "" && $bien['niveau'] != 0) {
           ?>
             <tr>
             <td>Niveau</td>
@@ -196,7 +196,7 @@
       ?>
 
       <?php 
-        if($bien['nbre_niveau'] != "") {
+        if($bien['nbre_niveau'] != "" && $bien['nbre_niveau'] != 0) {
           ?>
             <tr>
             <td>Nombre de niveaux</td>
@@ -207,7 +207,7 @@
       ?>
 
       <?php 
-        if($bien['surface'] != "") {
+        if($bien['surface'] != "" && $bien['surface'] != 0) {
           ?>
             <tr>
             <td>Surface habitable</td>
@@ -218,7 +218,7 @@
       ?>
 
       <?php 
-        if($bien['surface_terrain'] != "") {
+        if($bien['surface_terrain'] != "" && $bien['surface_terrain'] != 0) {
           ?>
             <tr>
             <td>Surface terrain</td>
@@ -229,7 +229,7 @@
       ?>
 
       <?php 
-        if($bien['annee'] != "") {
+        if($bien['annee'] != "" && $bien['annee'] != 0) {
           ?>
             <tr>
             <td>Année de constr.</td>
@@ -240,7 +240,7 @@
       ?>
 
       <?php 
-        if($bien['adresse'] != "") {
+        if($bien['adresse'] != "" && $bien['adresse'] != 0) {
           ?>
             <tr>
             <td>Adresse</td>
@@ -251,7 +251,7 @@
       ?>
 
       <?php 
-        if($bien['charges'] != "") {
+        if($bien['charges'] != "" && $bien['charges'] != 0) {
           ?>
             <tr>
             <td>Charges</td>
@@ -262,7 +262,7 @@
       ?>
 
       <?php 
-        if($bien['disponibilite'] != "") {
+        if($bien['disponibilite'] != "" && $bien['disponibilite'] != 0) {
           ?>
             <tr>
             <td>Disponibilité</td>

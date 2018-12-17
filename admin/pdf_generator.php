@@ -81,57 +81,57 @@ EOF;
 		$html .= '<h2>Commodité</h2><p style="text-align:justify;">'.$bien['commodite'].'</p>';
 		$html .= '<h2>informations Supplémentaires</h2>';
 
-		if($bien['piece'] != "") {
+		if($bien['piece'] != "" && $bien['piece'] != 0) {
           $html .= '<p class="detail">Pièces : '.$bien['piece'].'</p>';
         }
       
 
-      if($bien['chambre'] != "") {
+      if($bien['chambre'] != "" && $bien['chambre'] != 0) {
           $html .= '<p class="detail">Chambres : '.$bien['chambre'].'</p>';
         }
       
 
-      if($bien['chauffage'] != "") {
+      if($bien['chauffage'] != "" && $bien['chauffage'] != 0) {
           $html .= '<p class="detail">Chauffages : '.$bien['chauffage'].'</p>';
         }
       
 
-      if($bien['nbre_WC'] != "") {
+      if($bien['nbre_WC'] != "" && $bien['nbre_WC'] != 0) {
           $html .= '<p class="detail">Nombre de WC : '.$bien['nbre_WC'].'</p>';
         }
       
 
-      if($bien['niveau'] != "") {
+      if($bien['niveau'] != "" && $bien['niveau'] != 0) {
           $html .= '<p class="detail">Niveau : '.$bien['niveau'].'</p>';
         }
       
 
-      if($bien['nbre_niveau'] != "") {
+      if($bien['nbre_niveau'] != "" && $bien['nbre_niveau'] != 0) {
           $html .= '<p class="detail">Nombre de niveaux : '.$bien['nbre_niveau'].'</p>';
         }
       
 
-      if($bien['surface'] != "") {
+      if($bien['surface'] != "" && $bien['surface'] != 0) {
           $html .= '<p class="detail">Surface habitable : '.$bien['surface'].'</p>';
         }
       
 
-      if($bien['surface_terrain'] != "") {
+      if($bien['surface_terrain'] != "" && $bien['surface_terrain'] != 0) {
           $html .= '<p class="detail">Surface du terrain : '.$bien['surface_terrain'].'</p>';
         }
       
 
-      if($bien['annee'] != "") {
+      if($bien['annee'] != "" && $bien['annee'] != 0) {
           $html .= '<p class="detail">Année de constr. : '.$bien['annee'].'</p>';
         }
       
 
-      if($bien['charges'] != "") {
+      if($bien['charges'] != "" && $bien['charges'] != 0) {
           $html .= '<p class="detail">Charges : '.$bien['charges'].'</p>';
         }
       
 
-      if($bien['disponibilite'] != "") {
+      if($bien['disponibilite'] != "" && $bien['disponibilite'] != 0) {
           $html .= '<p class="detail">Disponibilité : '.$bien['disponibilite'].'</p>';
         }
       
